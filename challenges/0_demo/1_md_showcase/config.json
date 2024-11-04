@@ -1,0 +1,11 @@
+{
+  "friendlyName": "Markdown Showcase",
+  "difficulty": "1",
+  "templates": [
+    {
+      "title": "Eingabe Codeblock",
+      "classname": "Main",
+      "content": "//Hier kommt der Code rein"
+    }
+  ]
+}

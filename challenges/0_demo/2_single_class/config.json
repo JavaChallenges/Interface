@@ -1,0 +1,11 @@
+{
+  "friendlyName": "Beispiel einfache Javaklasse",
+  "difficulty": "2",
+  "templates": [
+    {
+      "title": "Deine Lösung:",
+      "classname": "Main",
+      "content": "public class Main {\n    public void method() {\n        //Schreibe deinen Code hier\n    }\n}"
+    }
+  ]
+}

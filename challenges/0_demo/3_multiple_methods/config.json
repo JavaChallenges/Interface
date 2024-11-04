@@ -1,0 +1,11 @@
+{
+  "friendlyName": "Beispiel mehrere Methoden",
+  "difficulty": "3",
+  "templates": [
+    {
+      "title": "Deine Lösung:",
+      "classname": "Main",
+      "content": "public class Main {\n    public void method1() {\n        //Implementierung Methode 1\n    }\n    public void method2(String[] args) {\n        //Implementierung Methode 2\n    }\n}"
+    }
+  ]
+}
