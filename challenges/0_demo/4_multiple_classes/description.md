@@ -3,8 +3,8 @@ Einfachste Form einer Challenge. Es wird eine einzelne Klasse erstellt, die eine
 ### config.json
 ```json
 {
-  "friendlyName": "Beispiel mehrere Methoden",
-  "difficulty": "3",
+  "friendlyName": "Beispiel mehrere Klassen",
+  "difficulty": "4",
   "templates": [
     {
       "title": "Main.class:",

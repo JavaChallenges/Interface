@@ -1,6 +1,9 @@
 ## Beschreibung
 Ermitteln Sie die Anzahl, sowie die Summe der natürlichen Zahlen, die durch 2 oder 7 teilbar sind, bis zu einem gewissen Maximalwert (exklusiv) und geben Sie diese auf der Konsole aus. Schreiben Sie eine Methode\
-`public static void calcSumAndCountAllNumbersDivBy_2_Or_7(int max)`,\
+```java
+calcSumAndCountAllNumbersDivBy_2_Or_7(int max)
+```
+,\
 die die Anzahl und die Summe der Zahlen ausgibt.
 
 | Maximalwert | Teilbar durch 2        | Teilbar durch 7 | Anzahl | Summe |

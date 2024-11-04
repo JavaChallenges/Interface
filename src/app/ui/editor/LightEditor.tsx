@@ -13,7 +13,7 @@ export default function LightEditor({template, code, setCode, highlightedLines}:
     return (
         <Editor
             className={
-                "border-2 rounded-md mt-3 " +
+                "border-2 rounded-md my-3 " +
                 "border-primary-50 bg-lightShades-200 " +
                 "dark:bg-darkShades-200"
             }

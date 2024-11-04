@@ -64,7 +64,7 @@ export function CodeForm({templates, challengePath}: {templates:{title:string, c
             {
                 templates.map((template: { title: string; content: string; classname: string; }) =>
                     <>
-                        <label htmlFor={`code-${template.classname}`}>Deine Lösung:</label>
+                        <label htmlFor={`code-${template.classname}`}>{template.title}</label>
                         <input className={"hidden"} value={code[template.classname].replaceAll("\n", "/l/")} type="text"
                                id={`code-${template.classname}`} name={`code-${template.classname}`}
                                required/>

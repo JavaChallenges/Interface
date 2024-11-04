@@ -1,0 +1,11 @@
+{
+  "friendlyName": "Fehlertypen",
+  "difficulty": "5",
+  "templates": [
+    {
+      "title": "Beispielcode:",
+      "classname": "Main",
+      "content": " //Bespielcode hier einfügen"
+    }
+  ]
+}
