@@ -1,11 +1,10 @@
 "use server";
 import Sidemenu from "@/app/ui/sidemenu";
-import {loadChallenges} from "@/app/home/actions";
-import {revalidatePath} from "next/cache";
+import {loadSidebarInformation} from "@/app/home/actions";
 
 
 export default async function HomeLayout({children,}: { children: React.ReactNode }) {
-    const categories = await loadChallenges();
+    const categories = await loadSidebarInformation();
 
     return (
         <section style={{height: "calc( 100% - 60px )"}} className={" w-screen"}>
