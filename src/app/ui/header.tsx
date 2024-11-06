@@ -1,0 +1,52 @@
+"use client"
+import Link from "next/link";
+import {usePathname} from "next/navigation"
+
+export default function Header(pages: {pages:{ref:string, friendlyName:JSX.Element}[]}) {
+    const pathname = usePathname()
+    const elements= pages['pages'].map((page: { friendlyName: JSX.Element; ref: string; }) => Element(page.friendlyName, page.ref, pathname.includes(page.ref.toLowerCase())));
+    const options = pages['pages'].map((page: { friendlyName: JSX.Element; ref: string; }) => Option(page.friendlyName, page.ref, pathname.includes(page.ref.toLowerCase())));
+    return (
+        <header className="bg-lightShades-200 dark:bg-darkShades-200 p-3 justify-items-center">
+            <div>
+                <div className="sm:hidden">
+                    <label htmlFor="Tab" className="sr-only">Tab</label>
+
+                    <select id="Tab" className="w-full rounded-md border-gray-200">
+                        {options}
+                    </select>
+                </div>
+
+                <div className="hidden sm:block">
+                    <nav className="flex gap-6 " aria-label="Tabs">
+                        {elements}
+                    </nav>
+                </div>
+            </div>
+        </header>
+    );
+}
+
+function Option(friendlyName: JSX.Element, ref: string, currentPage: boolean){
+   return (
+       <option selected={currentPage}>{friendlyName}</option>
+   )
+}
+
+function Element(friendlyName: JSX.Element, ref: string, currentPage: boolean){
+    return (
+        <Link
+            href={`/${ref}`}
+            className={`
+            inline-flex shrink-0 items-center
+            rounded-lg p-2 text-sm font-medium
+            text-darkShades-100 dark:text-lightShades-100
+            ${currentPage ? "" : "hover:bg-lightShades-100 dark:hover:bg-darkShades-100 hover:text-lightShades-500 dark:hover:text-lightShades-200"}
+            ${currentPage ? "bg-primary-50 text-primary-400" : ""}
+            `}
+            aria-current={currentPage ? "page" : undefined}
+        >
+            {friendlyName}
+        </Link>
+    )
+}

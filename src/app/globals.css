@@ -2,20 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+* {
+    transition: background-color 0.2s, color 0.2s;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.markdown > *{
+    all: revert;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.markdown > table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    display: block;
+    margin-top: 0;
+    margin-bottom: 16px;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.markdown > table > thead > tr {
+    @apply bg-lightShades-200 dark:bg-darkShades-500;
+    @apply border-t border-lightShades-200 dark:border-darkShades-200;
+}
+
+.markdown > table > tbody > tr {
+    @apply bg-lightShades-100 dark:bg-darkShades-200;
+    @apply border-t border-lightShades-200 dark:border-darkShades-200;
+}
+
+
+
+.markdown > table > tbody > tr:nth-child(2n) {
+    @apply bg-primary-10 dark:bg-primary-500;
+}
+.markdown > table > tbody > tr > td, .markdown > table > thead > tr > th {
+    padding: 6px 13px;
+    @apply border border-lightShades-200 dark:border-darkShades-400;
+}
+
+.markdown > table > tbody > tr > td, .markdown > table > tbody > tr > th {
+    padding: 6px 13px;
+    @apply border border-lightShades-200 dark:border-darkShades-400;
+}
+
+.markdown > table > thead > th {
+    font-weight: 600;
+}
+
+.markdown > table img {
+    background-color: transparent;
+}
+
+code[class*="language-"], pre[class*="language-"] {
+    text-shadow: none!important;
+}
+
+.line-highlight{
+    @apply bg-red-400;
 }
