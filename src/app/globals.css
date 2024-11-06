@@ -60,7 +60,6 @@ code[class*="language-"], pre[class*="language-"] {
 
 .line-highlight{
     @apply bg-red-400;
-}
 
 .flickity-slider{
     display: flex;

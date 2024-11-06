@@ -1,4 +1,5 @@
 import Breadcrumps from "@/app/ui/breadcrumps";
+
 import {loadCategories, loadCategoryDetails, loadMarkdown} from "@/app/home/actions";
 import Slider from "@/app/ui/slider";
 import Challenge from "@/app/ui/challengepreview";
@@ -10,7 +11,6 @@ export const revalidate = 0;
 export default async function Page() {
     const categories = await loadCategories();
     const markdown = await loadMarkdown("");
-
     return (
         <>
             <Breadcrumps />

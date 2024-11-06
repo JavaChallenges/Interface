@@ -5,7 +5,6 @@ import {loadSidebarInformation} from "@/app/home/actions";
 
 export default async function HomeLayout({children,}: { children: React.ReactNode }) {
     const categories = await loadSidebarInformation();
-
     return (
         <section style={{height: "calc( 100% - 60px )"}} className={" w-screen"}>
             <div className="h-full flex flex-row flex-wrap pl-2 py-4 ">

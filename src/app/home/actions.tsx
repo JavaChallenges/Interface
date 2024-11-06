@@ -1,5 +1,6 @@
 import fs from "fs";
 
+
 export async function loadMarkdown( path: string): Promise<any> {
     try {
         return await fs.promises.readFile(`./challenges/${path}/description.md`, 'utf-8');
@@ -7,6 +8,7 @@ export async function loadMarkdown( path: string): Promise<any> {
         console.error('Error reading directory:', err);
     }
 }
+
 
 export async function loadCategoryDetails(category: string): Promise<{name: string, category: string, shortDescription: string, challenges: {shortDescription: string, name: string, friendlyName: string, difficulty: number}[] | null} | null> {
     try {
@@ -67,7 +69,6 @@ export async function loadChallengeDetails(category: string, challenge: string):
         console.error('Error reading directory:', err);
     }
 }
-
 
 export async function loadSidebarInformation(): Promise<any> {
     try {
