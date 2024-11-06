@@ -3,12 +3,17 @@ import {loadChallengeDetails, loadMarkdown} from "@/app/home/actions";
 import RenderedMarkdown from "@/app/ui/markdown";
 import Difficulty from "@/app/ui/difficulty";
 import {CodeForm} from "@/app/home/[categorie]/[challenge]/codeform";
+import {notFound} from "next/navigation";
 
 export default async function Page({params,}: { params: Promise<{ categorie: string, challenge: string }> }) {
     const categorie = (await params).categorie
     const challenge = (await params).challenge
     const details = await loadChallengeDetails(categorie, challenge);
-    const markdown = await loadMarkdown(categorie, challenge);
+    const markdown = await loadMarkdown(`${categorie}/${challenge}`);
+
+    if(!details|| !markdown){
+        return notFound();
+    }
 
     const path = [
         {ref: categorie, name: details.category},
