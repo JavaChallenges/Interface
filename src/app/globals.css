@@ -60,11 +60,13 @@ code[class*="language-"], pre[class*="language-"] {
 
 .line-highlight{
     @apply bg-red-400;
+}
 
 .flickity-slider{
     display: flex;
     align-items: center;
 }
+
 .flickity-enabled{
     @apply mt-2;
 }
