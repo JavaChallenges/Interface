@@ -23,7 +23,7 @@ export default async function Page({params,}: { params: Promise<{ categorie: str
     return (
         <>
             <Breadcrumps path={path}/>
-            <div className={"h-full overflow-y-auto pt-6 pr-4"}>
+            <div className={"h-full overflow-y-auto pt-6 pr-4 pb-6"}>
                 <h1 className="text-3xl font-bold">{details.challenge} <Difficulty difficulty={details.difficulty} size={4}/></h1>
                 <RenderedMarkdown markdown={markdown}/>
                 <CodeForm challengePath={`${categorie}/${challenge}`} templates={details.templates}/>

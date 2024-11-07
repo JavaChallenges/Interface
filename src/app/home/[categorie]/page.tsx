@@ -17,12 +17,12 @@ export default async function Page({params,}: { params: Promise<{ categorie: str
     return (
         <>
             <Breadcrumps path={path}/>
-            <div className={"h-full overflow-y-auto pt-6"}>
+            <div className={"h-full overflow-y-auto pt-6 pr-4 pb-6"}>
                 <h1 className="text-3xl font-bold text-darkShades-100 dark:text-lightShades-100 mb-2">{details.category}</h1>
                 <RenderedMarkdown markdown={markdown}/>
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-8">
-                    {details.challenges.map(challenge  => (
-                        <Challenge key={challenge.name} challenge={challenge} category={categorie} />
+                    {details.challenges.map(challenge => (
+                        <Challenge key={challenge.name} challenge={challenge} category={categorie}/>
                     ))}
                 </div>
             </div>

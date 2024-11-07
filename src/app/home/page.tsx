@@ -13,11 +13,11 @@ export default async function Page() {
     const markdown = await loadMarkdown("");
     return (
         <>
-            <Breadcrumps />
-            <div className={"h-full overflow-y-auto pt-6"}>
+            <Breadcrumps/>
+            <div className={"h-full overflow-y-auto pt-6 pr-4 pb-6"}>
                 <RenderedMarkdown markdown={markdown}/>
                 {categories.map((category, index) => (
-                  <CategoryCarousel className={"mb-10"} key={index} category={category}/>
+                    <CategoryCarousel className={"mb-10"} key={index} category={category}/>
                 ))}
             </div>
         </>
@@ -25,7 +25,7 @@ export default async function Page() {
 }
 
 
-async function CategoryCarousel({category, className}: {className?: string, category: string}) {
+async function CategoryCarousel({category, className}: { className?: string, category: string}) {
     const details = await loadCategoryDetails(category);
     if(!details || !details.challenges){
         return null;
