@@ -17,7 +17,7 @@ export default function Toggle({toggleAction}: { toggleAction: (event: never) =>
                     className="absolute inset-y-0 start-0 z-10 m-1 inline-flex size-6 items-center justify-center rounded-full bg-white text-gray-400 transition-all peer-checked:start-6 peer-checked:text-green-600"
                 >
             <svg
-                data-unchecked-icon
+                data-unchecked-icon=""
                 xmlns="http://www.w3.org/2000/svg"
                 className="size-4"
                 viewBox="0 0 20 20"
@@ -31,7 +31,7 @@ export default function Toggle({toggleAction}: { toggleAction: (event: never) =>
             </svg>
 
             <svg
-                data-checked-icon
+                data-checked-icon=""
                 xmlns="http://www.w3.org/2000/svg"
                 className="hidden size-4"
                 viewBox="0 0 20 20"

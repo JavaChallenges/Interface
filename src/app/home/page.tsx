@@ -33,7 +33,7 @@ async function CategoryCarousel({category, className}: { className?: string, cat
     return (
         <div className={className}>
             <Divider content={
-                <Link href={`/home/${category}`} className={"font-medium text-xl text-darkShades-100 dark:text-lightShades-100"}>{details.category}</Link>
+                <Link href={`/home/${category}`} className={"font-medium text-xl text-darkShades-100 dark:text-lightShades-100"}>{details.friendlyName}</Link>
             }/>
             <div className={"text-center text-darkShades-500 dark:text-lightShades-400"}>{details.shortDescription}</div>
             <Slider content={details.challenges.map(challenge => (

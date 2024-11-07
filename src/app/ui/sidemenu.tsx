@@ -1,25 +1,33 @@
 "use client"
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import Difficulty from "@/app/ui/difficulty";
+import {ChallengeDetails, SidebarInfo} from "@/app/typecollection";
 
-export default function Sidemenu(categories: { categories: { name: string, friendlyName: string,  challenges?: { name: string, friendlyName: string, difficulty: number }[]}[]}) {
+export default function Sidemenu({sidebarInfo}: {sidebarInfo: SidebarInfo}) {
 
     const pathname = usePathname()
     return (
         <ul className="space-y-1">
-            {categories["categories"].map((categorie) => {
-                if (categorie.challenges) {
-                    return challenges(categorie.friendlyName, categorie.name, categorie.challenges ,pathname,  pathname.includes(categorie.name) );
+            {sidebarInfo.map((category) => {
+                if (category.challenges) {
+                    return challenges(
+                        {
+                            friendlyName: category.friendlyName,
+                            currentCategory: pathname,
+                            categoryName: category.name,
+                            active: pathname.includes(category.name),
+                            challenges: category.challenges
+                        }
+                    )
                 } else {
-                    return simpleCategorie(categorie.name, categorie.friendlyName, (pathname.includes(categorie.name) && categorie.name !== "/") || (pathname === "/home" && categorie.name === "/"));
+                    return simpleCategory(category.name, category.friendlyName, (pathname.includes(category.name) && category.name !== "/") || (pathname === "/home" && category.name === "/"));
                 }
             })}
         </ul>
     );
 }
 
-function simpleCategorie(name: string, friendlyName: string, active: boolean) {
+function simpleCategory(name: string, friendlyName: string, active: boolean) {
     return (
         <li>
             <Link href={`/home/${name}`}
@@ -35,11 +43,14 @@ function simpleCategorie(name: string, friendlyName: string, active: boolean) {
     );
 }
 
-function challenges(friendlyName: string, categoryName: string, challenges: {
-    name: string,
+
+function challenges({friendlyName, categoryName, currentCategory, active, challenges} : {
     friendlyName: string,
-    difficulty: number
-}[], currentCategorie: string, active: boolean) {
+    currentCategory: string,
+    categoryName: string,
+    active: boolean,
+    challenges: ChallengeDetails[]
+}) {
     return (
         <li>
             <details open={active} className="group [&_summary::-webkit-details-marker]:hidden">
@@ -69,18 +80,18 @@ function challenges(friendlyName: string, categoryName: string, challenges: {
                 </summary>
 
                 <ul className="mt-2 space-y-1 px-4">
-                    {challenges.map((challenge) => challengeEntry(challenge.name, categoryName, challenge.friendlyName, challenge.difficulty, active && currentCategorie.includes(challenge.name)))}
+                    {challenges.map((challenge) => challengeEntry({challenge: challenge, categoryName: categoryName, active: active && currentCategory.includes(challenge.name)}))}
                 </ul>
             </details>
         </li>
     );
 }
 
-function challengeEntry(name: string, categorieName: string, friendlyName: string, difficulty: number, active: boolean) {
+function challengeEntry({challenge, active, categoryName}: {challenge: ChallengeDetails, categoryName: string, active: boolean}) {
     return (
         <li>
             <Link
-                href={`/home/${categorieName}/${name}`}
+                href={`/home/${categoryName}/${challenge.name}`}
                 className={`
                     block rounded-lg px-4 py-2 text-sm font-medium
                     ${active ? "bg-lightShades-100 dark:bg-darkShades-500" : ""}
@@ -88,7 +99,7 @@ function challengeEntry(name: string, categorieName: string, friendlyName: strin
                     hover:bg-lightShades-100 dark:hover:bg-darkShades-500
                 `}
             >
-                {friendlyName}
+                {challenge.friendlyName}
             </Link>
         </li>
     );

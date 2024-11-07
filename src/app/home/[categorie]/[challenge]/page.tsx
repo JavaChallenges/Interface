@@ -1,32 +1,33 @@
 import Breadcrumps from "@/app/ui/breadcrumps";
-import {loadChallengeDetails, loadMarkdown} from "@/app/home/actions";
+import {loadCategoryDetails, loadChallengeDetails, loadMarkdown} from "@/app/home/actions";
 import RenderedMarkdown from "@/app/ui/markdown";
 import Difficulty from "@/app/ui/difficulty";
 import {CodeForm} from "@/app/home/[categorie]/[challenge]/codeform";
 import {notFound} from "next/navigation";
 
 export default async function Page({params,}: { params: Promise<{ categorie: string, challenge: string }> }) {
-    const categorie = (await params).categorie
+    const categorieName = (await params).categorie;
+    const categorieDetails = await loadCategoryDetails(categorieName);
     const challenge = (await params).challenge
-    const details = await loadChallengeDetails(categorie, challenge);
-    const markdown = await loadMarkdown(`${categorie}/${challenge}`);
+    const challengeDetails = await loadChallengeDetails(categorieName, challenge);
+    const markdown = await loadMarkdown(`${categorieName}/${challenge}`);
 
-    if(!details|| !markdown){
+    if(!challengeDetails|| !markdown){
         return notFound();
     }
 
     const path = [
-        {ref: categorie, name: details.category},
-        {ref: categorie+"/"+challenge, name: details.challenge},
+        {ref: categorieDetails.name, friendlyName: categorieDetails.friendlyName},
+        {ref: categorieDetails.name+"/"+challengeDetails.name, friendlyName: challengeDetails.friendlyName},
     ]
 
     return (
         <>
             <Breadcrumps path={path}/>
             <div className={"h-full overflow-y-auto pt-6 pr-4 pb-6"}>
-                <h1 className="text-3xl font-bold">{details.challenge} <Difficulty difficulty={details.difficulty} size={4}/></h1>
+                <h1 className="text-3xl font-bold">{challengeDetails.friendlyName} <Difficulty difficulty={challengeDetails.difficulty} size={4}/></h1>
                 <RenderedMarkdown markdown={markdown}/>
-                <CodeForm challengePath={`${categorie}/${challenge}`} templates={details.templates}/>
+                <CodeForm challengePath={`${categorieDetails.name}/${challengeDetails.name}`} templates={challengeDetails.templates}/>
             </div>
         </>
     );

@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/app/ui/header";
 import HomeIcon from "@/app/ui/icons/home";
 import SettingsIcon from "@/app/ui/icons/settings";
+import {ReactNode} from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,7 +20,7 @@ const geistMono = localFont({
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
 
     const pages = [

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import HomeIcon from "@/app/ui/icons/home";
 
-export default function Breadcrumps({path}: { path?: {ref: string, name: string}[]}) {
+export default function Breadcrumps({path}: { path?: {ref: string, friendlyName: string}[]}) {
 
     return (
     <nav className={"" +
@@ -20,7 +20,7 @@ export default function Breadcrumps({path}: { path?: {ref: string, name: string}
                 </Link>
             </li>
             {path?path.map((item) => {
-                return breadcrum(item.name, item.ref);
+                return breadcrum(item.friendlyName, item.ref);
             }):""}
         </ol>
     </nav>

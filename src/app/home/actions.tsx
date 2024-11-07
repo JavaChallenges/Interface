@@ -1,27 +1,27 @@
 import fs from "fs";
+import {
+    CategoryDetails,
+    ChallengeDetails,
+    JSONObject,
+    JSONValue,
+    SidebarEntry,
+    SidebarInfo
+} from "@/app/typecollection";
 
+type template = {title:string, content: string, classname: string}
 
-export async function loadMarkdown( path: string): Promise<any> {
-    try {
-        return await fs.promises.readFile(`./challenges/${path}/description.md`, 'utf-8');
-    } catch (err) {
-        console.error('Error reading directory:', err);
-    }
-}
-
-
-export async function loadCategoryDetails(category: string): Promise<{name: string, category: string, shortDescription: string, challenges: {shortDescription: string, name: string, friendlyName: string, difficulty: number}[] | null} | null> {
+export async function loadCategoryDetails(category: string): Promise<CategoryDetails> {
     try {
      const categoryConfigJSON = await readJsonFile(`./challenges/${category}/config.json`);
         return {
             name: category,
-            category: categoryConfigJSON.friendlyName,
-            shortDescription: categoryConfigJSON.shortDescription,
-            challenges: await loadCategoryChallenges(category)
+            friendlyName: categoryConfigJSON.friendlyName as string,
+            shortDescription: categoryConfigJSON.shortDescription as string,
+            challenges: await loadAllChallengesOfCategory(category)
         };
     }catch (err) {
         console.error('Error reading directory:', err);
-        return null;
+        throw err;
     }
 }
 
@@ -30,49 +30,27 @@ export async function loadCategories(): Promise<string[]> {
     return files.filter(file => file.isDirectory()).map(folder => folder.name)
 }
 
-async function loadCategoryChallenges(categoryName: string) :Promise<{name: string, friendlyName: string, difficulty: number, shortDescription: string}[] | null> {
+async function loadAllChallengesOfCategory(categoryName: string) :Promise<ChallengeDetails[]> {
     try {
-        const result: {name: string, shortDescription: string, friendlyName: string, difficulty: number}[] = [];
+        const result: ChallengeDetails[] = [];
 
         const challengeFiles = await fs.promises.readdir(`./challenges/${categoryName}`, { withFileTypes: true });
         const challengeNames = challengeFiles.filter(file => file.isDirectory()).map(folder => folder.name);
 
         for(const challengeName of challengeNames) {
-            const challengeConfigJSON = await readJsonFile(`./challenges/${categoryName}/${challengeName}/config.json`);
-            const challenge = {
-                name: challengeName,
-                friendlyName: challengeConfigJSON.friendlyName,
-                shortDescription: challengeConfigJSON.shortDescription? challengeConfigJSON.shortDescription : "-/-",
-                difficulty: Number.parseInt(challengeConfigJSON.difficulty)
-            };
-            result.push(challenge);
+            result.push(await loadChallengeDetails(categoryName, challengeName));
         }
 
         return result;
     } catch (err) {
         console.error('Error reading directory:', err);
-        return null;
+        throw err;
     }
 }
 
-export async function loadChallengeDetails(category: string, challenge: string): Promise<any> {
+export async function loadSidebarInformation(): Promise<SidebarInfo> {
     try {
-        const categoryConfigJSON = await readJsonFile(`./challenges/${category}/config.json`);
-        const challengeConfigJSON = await readJsonFile(`./challenges/${category}/${challenge}/config.json`);
-        return {
-            category: categoryConfigJSON.friendlyName,
-            challenge: challengeConfigJSON.friendlyName,
-            difficulty: challengeConfigJSON.difficulty,
-            templates: challengeConfigJSON.templates
-        };
-    } catch (err) {
-        console.error('Error reading directory:', err);
-    }
-}
-
-export async function loadSidebarInformation(): Promise<any> {
-    try {
-        const result: {name: string, friendlyName: string, challenges?: {name: string, friendlyName: string}[]}[] = [];
+        const result: SidebarInfo = [];
 
         const files = await fs.promises.readdir("./challenges", { withFileTypes: true });
         const categorieNames = files.filter(file => file.isDirectory()).map(folder => folder.name);
@@ -80,16 +58,14 @@ export async function loadSidebarInformation(): Promise<any> {
         result.push({name: '/', friendlyName: 'Übersicht'});
         for (const categoryName of categorieNames) {
             const categoryConfigJSON = await readJsonFile(`./challenges/${categoryName}/config.json`);
-            const category: {name: string, friendlyName: string, challenges?:{name: string, friendlyName:string}[]} = {name: categoryName, friendlyName: categoryConfigJSON.friendlyName};
+            const category: SidebarEntry = {name: categoryName, friendlyName: categoryConfigJSON.friendlyName as string};
 
             const challengeFiles = await fs.promises.readdir(`./challenges/${categoryName}`, { withFileTypes: true });
             const challengeNames = challengeFiles.filter(file => file.isDirectory()).map(folder => folder.name);
 
             for(const challengeName of challengeNames) {
-                const challengeConfigJSON = await readJsonFile(`./challenges/${categoryName}/${challengeName}/config.json`);
-                const challenge = {name: challengeName, friendlyName: challengeConfigJSON.friendlyName, difficulty: Number.parseInt(challengeConfigJSON.difficulty)};
-                if (!category.challenges) category.challenges = [];
-                category.challenges.push(challenge);
+                category.challenges = category.challenges || [];
+                category.challenges.push(await loadChallengeDetails(categoryName, challengeName));
             }
 
             result.push(category);
@@ -97,16 +73,57 @@ export async function loadSidebarInformation(): Promise<any> {
         return result;
     } catch (err) {
         console.error('Error reading directory:', err);
+        throw err;
     }
 }
 
 
-async function readJsonFile(filePath: string): Promise<any> {
+export async function loadChallengeDetails(category: string, challenge: string): Promise<ChallengeDetails> {
+    try {
+        const challengeConfigJSON = await readJsonFile(`./challenges/${category}/${challenge}/config.json`);
+        return {
+            name: challenge,
+            friendlyName: challengeConfigJSON.friendlyName? challengeConfigJSON.friendlyName as string : "ERROR LOADING",
+            difficulty: challengeConfigJSON.difficulty? Number.parseInt(challengeConfigJSON.difficulty as string) : 0,
+            shortDescription: challengeConfigJSON.shortDescription? challengeConfigJSON.shortDescription as string : "ERROR LOADING",
+            templates: challengeConfigJSON.templates? loadTemplates(challengeConfigJSON.templates as JSONValue[]): []
+        };
+    } catch (err) {
+        console.error('Error reading directory:', err);
+        throw err;
+    }
+}
+
+function loadTemplates(templates:JSONValue[]): template[] {
+    const templateArray: template[] = [];
+    for(const template of templates) {
+        const templateObject = template as JSONObject;
+        templateArray.push({
+            title: templateObject.title as string,
+            content: templateObject.content as string,
+            classname: templateObject.classname as string
+        });
+    }
+    return templateArray;
+}
+
+
+async function readJsonFile(filePath: string): Promise<JSONObject> {
     try {
         const data = await fs.promises.readFile(filePath, 'utf-8');
         return JSON.parse(data);
     } catch (error) {
         console.error('Error reading JSON file:', filePath, error);
         throw error;
+    }
+}
+
+
+export async function loadMarkdown( path: string): Promise<string> {
+    try {
+        return await fs.promises.readFile(`./challenges/${path}/description.md`, 'utf-8');
+    } catch (err) {
+        console.error('Error reading directory:', err);
+        throw err;
     }
 }

@@ -62,11 +62,13 @@ code[class*="language-"], pre[class*="language-"] {
     @apply bg-red-400;
 }
 
+/*noinspection CssUnusedSymbol*/
 .flickity-slider{
     display: flex;
     align-items: center;
 }
 
+/*noinspection CssUnusedSymbol*/
 .flickity-enabled{
     @apply mt-2;
 }

@@ -90,8 +90,8 @@ async function deleteFolderRecursive(path: string) {
 }
 
 async function test(uuid: UUID): Promise<{statuscode: number, tests: {name: string, failtype?: string, failmessage?: string}[]}> {
-    return new Promise((resolve, reject) => {
-        exec(`mvn test -f ./workspace/${uuid}/pom.xml`, (error, stdout) => {
+    return new Promise((resolve) => {
+        exec(`mvn test -f ./workspace/${uuid}/pom.xml`, () => {
             const tests: {name:string, failtype?:string, failmessage?:string}[] = []
             let testamount = 0;
             let failed = 0;
@@ -101,16 +101,16 @@ async function test(uuid: UUID): Promise<{statuscode: number, tests: {name: stri
                if(file.endsWith('.xml')) {
                    const xml = fs.readFileSync(`./workspace/${uuid}/target/surefire-reports/${file}`, 'utf8');
                    const json = JSON.parse(convert.xml2json(xml, {compact: false, spaces: 4}));
-                   json.elements[0].elements.forEach((element: any) => {
-                      if(element.name === "testcase") {
-                          testamount++
-                          if(element.elements){
-                              tests.push({name: element.attributes.name, failtype: element.elements[0].attributes.type, failmessage: element.elements[0].attributes.message});
-                                failed++;
-                          } else {
-                              tests.push({name: element.attributes.name});
-                          }
-                      }
+                   json.elements[0].elements.forEach((element: {name: string, attributes: {name: string}, elements?: [{attributes: {type: string, message: string}}]}) => {
+                       if(element.name === "testcase") {
+                           testamount++
+                           if(element.elements){
+                               tests.push({name: element.attributes.name, failtype: element.elements[0].attributes.type, failmessage: element.elements[0].attributes.message});
+                               failed++;
+                           } else {
+                               tests.push({name: element.attributes.name});
+                           }
+                       }
                    });
                }
             });

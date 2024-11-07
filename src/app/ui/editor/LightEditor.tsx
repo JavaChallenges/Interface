@@ -6,9 +6,10 @@ import {errorHighlight} from "@/app/ui/editor/actions";
 hljs.registerLanguage('java', java);
 
 export default function LightEditor({template, code, setCode, highlightedLines}: {
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     highlightedLines?: {[key: string]: number[]} ,
     template:{title: string; content: string; classname: string;},
-    code: string, setCode: (code: (prevCode: any) => any) => void
+    code: string, setCode: (code: (prevCode: {[key: string]: string}) => {[key: string]: string}) => void
 }) {
     return (
         <Editor
