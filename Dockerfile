@@ -28,11 +28,11 @@ FROM base AS runner
 RUN apk add maven
 RUN apk add openjdk11
 # Set NODE_ENV to production
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 # Disable Next.js telemetry
 # Learn more here: https://nextjs.org/telemetry
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Set correct permissions for nextjs user and don't run as root
 RUN mkdir .next
