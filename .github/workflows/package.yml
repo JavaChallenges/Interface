@@ -72,6 +72,6 @@ jobs:
           echo "${{ secrets.ARTIFACT_SSH_KEY }}" > ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.ARTIFACT_HOST }} > ~/.ssh/known_hosts
       - name: connect and pull
-        run: ssh ${{ secrets.USER }}@${{ secrets.ARTIFACT_HOST }} "cd ${{ secrets.APP_PATH }} && docker compose pull && docker compose down && docker compose up -d && exit"
+        run: ssh ${{ secrets.USER }}@${{ secrets.ARTIFACT_HOST }} "cd ${{ secrets.APP_PATH }} && docker compose pull && docker compose down && docker compose up -d && docker system prune --all --volumes -f && exit"
       - name: cleanup
         run: rm -rf ~/.ssh

@@ -23,16 +23,23 @@ function deleteFileIfExists(path: string) {
 
 function downloadAndExtractChallenges() {
     console.log("Downloading challenges...");
-    exec('wget https://github.com/JavaChallenges/Challenges/archive/refs/heads/master.zip', (error, stdout, stderr) => {
+    let url
+    if(process.env.INDEV) {
+        console.log("Indiv variante wird geladen");
+        url = "https://github.com/JavaChallenges/Challenges/archive/refs/heads/development.zip"
+    } else {
+        url = "https://github.com/JavaChallenges/Challenges/archive/refs/heads/master.zip"
+    }
+    exec(`wget -O master.zip ${url}`, (error, stdout, stderr) => {
         logExecOutput(error, stdout, stderr);
         if (!error) {
             exec('unzip master.zip', (error, stdout, stderr) => {
                 logExecOutput(error, stdout, stderr);
                 if (!error) {
-                    exec('mv Challenges-master/challenges/ .', (error, stdout, stderr) => {
+                    exec('mv Challenges-*/challenges/ .', (error, stdout, stderr) => {
                         logExecOutput(error, stdout, stderr);
                         if (!error) {
-                            exec('rm -r Challenges-master', (error, stdout, stderr) => {
+                            exec('rm -r Challenges-*', (error, stdout, stderr) => {
                                 logExecOutput(error, stdout, stderr);
                                 if (!error) {
                                     deleteFileIfExists("master.zip");
