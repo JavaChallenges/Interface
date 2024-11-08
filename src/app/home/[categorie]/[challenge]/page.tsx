@@ -1,7 +1,7 @@
 
 import Breadcrumps from "@/app/ui/breadcrumps";
 import {loadCategoryDetails, loadChallengeDetails, loadMarkdown} from "@/app/home/actions";
-import RenderedMarkdown from "@/app/ui/markdown";
+import RenderedMarkdown from "@/app/home/ui/markdown";
 import {CodeForm} from "@/app/home/[categorie]/[challenge]/codeform";
 import {notFound} from "next/navigation";
 import {Title} from "@/app/home/[categorie]/[challenge]/Title";

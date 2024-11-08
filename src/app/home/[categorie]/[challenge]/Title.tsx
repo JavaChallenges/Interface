@@ -1,7 +1,7 @@
 "use client"
 
 import {ChallengeDetails} from "@/app/typecollection";
-import Difficulty from "@/app/ui/difficulty";
+import Difficulty from "@/app/home/ui/difficulty";
 import CheckmarkIcon from "@/app/ui/icons/checkmark";
 
 export function Title({path, challengeDetails}:{path: string, challengeDetails: ChallengeDetails}){

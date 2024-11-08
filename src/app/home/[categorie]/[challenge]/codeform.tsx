@@ -6,7 +6,7 @@ import {validateCode} from "@/app/home/[categorie]/[challenge]/actions";
 import Loader from "@/app/ui/loader";
 import ErrorAlert from "@/app/ui/alerts/errorAlert";
 import SoftAlert from "@/app/ui/alerts/softAlert";
-import RenderedEditor from "@/app/ui/editor/RenderedEditor";
+import RenderedEditor from "@/app/home/ui/editor/RenderedEditor";
 
 const initialState: {
     errormessage?: string,

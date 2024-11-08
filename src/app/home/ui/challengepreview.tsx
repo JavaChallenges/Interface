@@ -1,5 +1,5 @@
 'use client';
-import Difficulty from "@/app/ui/difficulty";
+import Difficulty from "@/app/home/ui/difficulty";
 import BadgeIcon from "@/app/ui/icons/badge";
 
 export default function Challenge({challenge, category, className}: {className?: string, challenge: {name: string, shortDescription: string, friendlyName: string, difficulty: number}, category: string}) {

@@ -2,8 +2,8 @@ import Breadcrumps from "@/app/ui/breadcrumps";
 
 import {loadCategories, loadCategoryDetails, loadMarkdown} from "@/app/home/actions";
 import Slider from "@/app/ui/slider";
-import Challenge from "@/app/ui/challengepreview";
-import RenderedMarkdown from "@/app/ui/markdown";
+import Challenge from "@/app/home/ui/challengepreview";
+import RenderedMarkdown from "@/app/home/ui/markdown";
 import Link from "next/link";
 import Divider from "@/app/ui/divider";
 export const revalidate = 0;

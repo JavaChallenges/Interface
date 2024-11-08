@@ -1,7 +1,7 @@
-import {ReactNode, useEffect, useRef, useState} from "react";
+import React, {ReactNode, useEffect, useRef, useState} from "react";
 import CrossIcon from "@/app/ui/icons/cross";
 
-export function Modal({isOpen, onClose, hasCloseBtn, children}: {isOpen: boolean, onClose: () => void, hasCloseBtn: boolean, children?: ReactNode}) {
+export function Modal({isOpen, onClose, hasCloseBtn, children, title, description}: {title: string, description: string, isOpen: boolean, onClose: () => void, hasCloseBtn: boolean, children?: ReactNode}) {
     const [isModalOpen, setModalOpen] = useState(isOpen);
     const modalRef = useRef<HTMLDialogElement | null>(null);
 
@@ -35,17 +35,18 @@ export function Modal({isOpen, onClose, hasCloseBtn, children}: {isOpen: boolean
     }, [isModalOpen]);
 
     return (
+
         <dialog ref={modalRef} onKeyDown={handleKeyDown} className="modal">
-            <div className="rounded-lg bg-white p-8 shadow-2xl">
+            <div className="border-2 border-primary-100 rounded-lg bg-lightShades-100 dark:bg-darkShades-300 p-8 shadow-2xl">
                 {hasCloseBtn && (
-                    <button className="border-none" onClick={handleCloseModal}>
+                    <button className="border-none w-full flex justify-end" onClick={handleCloseModal}>
                         <CrossIcon className={"size-5"}/>
                     </button>
                 )}
-                <h2 className="text-lg font-bold">Are you sure you want to do that?</h2>
+                <h2 className="text-lg font-bold">{title}</h2>
 
                 <p className="mt-2 text-sm text-gray-500">
-                    Doing that could have cause some issues elsewhere, are you 100% sure it's OK?
+                    {description}
                 </p>
 
                 <div className="mt-4 flex gap-2">

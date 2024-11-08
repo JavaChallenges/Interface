@@ -2,7 +2,7 @@ import Editor from "react-simple-code-editor";
 import hljs from 'highlight.js';
 import 'highlight.js/styles/vs.css';
 import java from 'highlight.js/lib/languages/java';
-import {errorHighlight} from "@/app/ui/editor/actions";
+import {errorHighlight} from "@/app/home/ui/editor/actions";
 hljs.registerLanguage('java', java);
 export const revalidate = 0;
 
