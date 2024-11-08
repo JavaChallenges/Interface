@@ -4,6 +4,7 @@ import 'highlight.js/styles/vs.css';
 import java from 'highlight.js/lib/languages/java';
 import {errorHighlight} from "@/app/ui/editor/actions";
 hljs.registerLanguage('java', java);
+export const revalidate = 0;
 
 export default function LightEditor({template, code, setCode, highlightedLines}: {
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
@@ -18,7 +19,6 @@ export default function LightEditor({template, code, setCode, highlightedLines}:
                 "border-primary-50 bg-lightShades-200 " +
                 "dark:bg-darkShades-200"
             }
-            // lineHighlight={state.statuscode === 0 ? "1" : state.statuscode === 2 ? "2" : state.statuscode === 3 ? "3" : "4"}
             value={code}
             onValueChange={newCode => setCode(prevCode => ({
                 ...prevCode,
@@ -27,6 +27,7 @@ export default function LightEditor({template, code, setCode, highlightedLines}:
             highlight={code => {
                 return errorHighlight(code, highlightedLines?.[template.classname] || []);
             }}
+            onChange={()=>{}}
             padding={10}
             style={{
                 fontFamily: '"Fira code", "Fira Mono", monospace',
