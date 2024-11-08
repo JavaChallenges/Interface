@@ -6,19 +6,20 @@ import {errorHighlight} from "@/app/ui/editor/actions";
 hljs.registerLanguage('java', java);
 export const revalidate = 0;
 
-export default function LightEditor({template, code, setCode, highlightedLines}: {
+export default function RenderedEditor({enabled, template, code, setCode, highlightedLines, className}: {
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     highlightedLines?: {[key: string]: number[]} ,
+    className?: string,
+    enabled: boolean,
     template:{title: string; content: string; classname: string;},
     code: string, setCode: (code: (prevCode: {[key: string]: string}) => {[key: string]: string}) => void
 }) {
     return (
         <Editor
-            className={
-                "border-2 rounded-md my-3 " +
-                "border-primary-50 bg-lightShades-200 " +
-                "dark:bg-darkShades-200"
-            }
+            className={`
+                ${className} border-2 rounded-md my-3 bg-lightShades-200 dark:bg-darkShades-200
+            `}
+            readOnly={!enabled}
             value={code}
             onValueChange={newCode => setCode(prevCode => ({
                 ...prevCode,
