@@ -7,7 +7,7 @@ import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 import { nord, vs } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
-import 'katex/dist/katex.min.css' // `rehype-katex` does not import the CSS for you
+import 'katex/dist/katex.min.css'
 import {useTheme} from "next-themes";
 
 export default function RenderedMarkdown({markdown}: { markdown: string }) {

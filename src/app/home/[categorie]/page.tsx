@@ -1,8 +1,8 @@
 import Breadcrumps from "@/app/ui/breadcrumps";
 import {loadCategoryDetails, loadMarkdown} from "@/app/home/actions";
 import {notFound} from "next/navigation";
-import RenderedMarkdown from "@/app/ui/markdown";
-import Challenge from "@/app/ui/challengepreview";
+import RenderedMarkdown from "@/app/home/ui/markdown";
+import Challenge from "@/app/home/ui/challengepreview";
 
 export default async function Page({params,}: { params: Promise<{ categorie: string}> }) {
     const categorie = (await params).categorie

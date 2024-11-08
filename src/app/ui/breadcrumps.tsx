@@ -19,15 +19,15 @@ export default function Breadcrumps({path}: { path?: {ref: string, friendlyName:
                     <HomeIcon className={"size-4"}/>
                 </Link>
             </li>
-            {path?path.map((item) => {
-                return breadcrum(item.friendlyName, item.ref);
+            {path?path.map((item, index) => {
+                return <Breadcrum key={index} name={item.friendlyName} link={item.ref}/>;
             }):""}
         </ol>
     </nav>
     )
 }
 
-function breadcrum(name: string, ref: string){
+function Breadcrum({name, link}: {name: string, link: string}) {
     return (
         <>
             <li className="rtl:rotate-180">
@@ -46,7 +46,7 @@ function breadcrum(name: string, ref: string){
             </li>
 
             <li>
-                <Link href={`/home/${ref}`} className="block transition text-darkShades-100 hover:text-primary-200 dark:text-lightShades-100 dark:hover:text-primary-100">{name}</Link>
+                <Link href={`/home/${link}`} className="block transition text-darkShades-100 hover:text-primary-200 dark:text-lightShades-100 dark:hover:text-primary-100">{name}</Link>
             </li>
         </>
     )

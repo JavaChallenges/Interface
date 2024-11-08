@@ -72,3 +72,7 @@ code[class*="language-"], pre[class*="language-"] {
 .flickity-enabled{
     @apply mt-2;
 }
+
+::backdrop {
+   @apply bg-white dark:bg-darkShades-100 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg drop-shadow-lg
+}

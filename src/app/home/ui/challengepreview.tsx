@@ -1,7 +1,9 @@
-import Difficulty from "@/app/ui/difficulty";
+'use client';
+import Difficulty from "@/app/home/ui/difficulty";
 import BadgeIcon from "@/app/ui/icons/badge";
 
 export default function Challenge({challenge, category, className}: {className?: string, challenge: {name: string, shortDescription: string, friendlyName: string, difficulty: number}, category: string}) {
+    const solved = localStorage.getItem(`progress_${category}/${challenge.name}`) === "solved";
     return (
         <div className={className}>
             <article
@@ -29,7 +31,7 @@ export default function Challenge({challenge, category, className}: {className?:
                         </div>
                     </div>
                 </div>
-                <Badge/>
+                {solved ? <Badge/> : <span/>}
             </article>
         </div>
     )
@@ -37,7 +39,7 @@ export default function Challenge({challenge, category, className}: {className?:
 
 function Badge() {
     return (
-        <div className="flex justify-end mt-auto hidden">
+        <div className="flex justify-end mt-auto">
             <strong
                 className="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-green-600 px-3 py-1.5 text-white"
             >
