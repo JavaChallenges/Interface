@@ -29,6 +29,8 @@ function downloadAndExtractChallenges() {
         url = "https://github.com/JavaChallenges/Challenges/archive/refs/heads/development.zip"
     } else {
         url = "https://github.com/JavaChallenges/Challenges/archive/refs/heads/master.zip"
+        // Delete playground folder as it should not be in production
+        deleteFolderRecursive("./challenges/0_playground");
     }
     exec(`wget -O master.zip ${url}`, (error, stdout, stderr) => {
         logExecOutput(error, stdout, stderr);
