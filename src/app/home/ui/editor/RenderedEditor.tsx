@@ -17,7 +17,7 @@ export default function RenderedEditor({enabled, template, code, setCode, highli
     return (
         <Editor
             className={`
-                ${className} border-2 rounded-md my-3 bg-lightShades-200 dark:bg-darkShades-200
+                ${className} border-2 rounded-md bg-lightShades-200 dark:bg-darkShades-200
             `}
             readOnly={!enabled}
             value={code}

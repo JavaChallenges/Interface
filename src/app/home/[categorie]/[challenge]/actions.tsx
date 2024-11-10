@@ -35,10 +35,12 @@ export async function validateCode(
     const errorLines:{[key: string]: number[]} = {};
     readFormData(formData, errorLines, classes);
 
+    const whitelist = JSON.parse(formData.get("whitelist") as string);
+
     try {
         const challengepath = "./challenges/" + formData.get("challengepath");
         copyTestFiles(challengepath, path.join("./workspace/", uuid));
-        const {statuscode, tests} = await compileAndTest(uuid, classes);
+        const {statuscode, tests} = await compileAndTest(whitelist, uuid, classes);
 
         revalidatePath("/[categorie]/[challenge]");
         await deleteFolderRecursive(path.join("./workspace/", uuid));
@@ -59,6 +61,39 @@ function readFormData(formData: FormData, errorLines: {[key: string]: number[]},
         }
     });
 }
+
+
+function checkWhitelist(content: string, whitelist: string[]): string {
+    /*
+    Remove all imports from the code to prevent the user from using any undesired libraries
+    */
+    const regex = /import .*;/gm;
+    const matches = content.match(regex);
+    if(matches) {
+        for (const match of matches) {
+            for (const whitelistitem of whitelist) {
+                if(!match.includes(whitelistitem)) {
+                    console.log(match);
+                    content = content.replace(match, "");
+                }
+            }
+        }
+    }
+    return content
+}
+
+function checkBlacklist(content: string): string {
+    const data = fs.readFileSync("importBlacklist.json", "utf8");
+    const blacklist = JSON.parse(data);
+    const blockedImports = blacklist["blacklist"] as string[];
+    for (const blockedImport of blockedImports) {
+        const regex = new RegExp(`import ${blockedImport}.*;`, "gm");
+        content = content.replace(regex, "");
+    }
+
+    return content;
+}
+
 
 function getErrorPositionsFromErrormessage(errormessage: string) {
     const errorLines:{[key: string]: number[]} = {};
@@ -95,8 +130,8 @@ async function deleteFolderRecursive(path: string) {
     }
 }
 
-async function compileAndTest(uuid: UUID, classes: {name: string, content: string}[]): Promise<{statuscode: number, tests: {name: string, failtype?: string, failmessage?: string}[]}> {
-    copySourceFiles(uuid, classes);
+async function compileAndTest(whitelist:{[key: string]: string[]}, uuid: UUID, classes: {name: string, content: string}[]): Promise<{statuscode: number, tests: {name: string, failtype?: string, failmessage?: string}[]}> {
+    writeSourceFiles(whitelist, uuid, classes);
     return new Promise((resolve, reject) => {
         exec(`mvn test -f ./workspace/${uuid}/pom.xml`, (error, stdout) => {
             const tests: {name:string, failtype?:string, failmessage?:string}[] = []
@@ -153,7 +188,7 @@ function filterErrorMessages(errormessage: string):string {
     return errormessage
 }
 
-function copySourceFiles(uuid: string, classes: {name: string, content: string}[]) {
+function writeSourceFiles(whitelist: {[key: string]: string[]}, uuid: string, classes: {name: string, content: string}[]) {
     const folderPath = path.join("./workspace/", uuid + "/src/");
     if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath, { recursive: true });
@@ -161,7 +196,9 @@ function copySourceFiles(uuid: string, classes: {name: string, content: string}[
 
     classes.map((jclass) => {
         const filePath = path.join(folderPath, jclass.name + '.java');
-        fs.writeFileSync(filePath, jclass.content, 'utf8');
+        let content = checkWhitelist(jclass.content, whitelist[jclass.name]);
+        content = checkBlacklist(content);
+        fs.writeFileSync(filePath, content, 'utf8');
     });
 }
 
