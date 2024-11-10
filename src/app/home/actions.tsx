@@ -5,10 +5,8 @@ import {
     JSONObject,
     JSONValue,
     SidebarEntry,
-    SidebarInfo
+    SidebarInfo, Template
 } from "@/app/typecollection";
-
-type template = {title:string, content: string, classname: string}
 
 export async function loadCategoryDetails(category: string): Promise<CategoryDetails> {
     try {
@@ -94,21 +92,22 @@ export async function loadChallengeDetails(category: string, challenge: string):
     }
 }
 
-function loadTemplates(templates:JSONValue[]): template[] {
-    const templateArray: template[] = [];
+function loadTemplates(templates:JSONValue[]): Template[] {
+    const templateArray: Template[] = [];
     for(const template of templates) {
         const templateObject = template as JSONObject;
         templateArray.push({
             title: templateObject.title as string,
             content: templateObject.content as string,
-            classname: templateObject.classname as string
+            classname: templateObject.classname as string,
+            whitelist: templateObject.whitelist? templateObject.whitelist as string[] : []
         });
     }
     return templateArray;
 }
 
 
-async function readJsonFile(filePath: string): Promise<JSONObject> {
+export async function readJsonFile(filePath: string): Promise<JSONObject> {
     try {
         const data = await fs.promises.readFile(filePath, 'utf-8');
         return JSON.parse(data);

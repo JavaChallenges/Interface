@@ -4,7 +4,7 @@ import {loadCategoryDetails, loadChallengeDetails, loadMarkdown} from "@/app/hom
 import RenderedMarkdown from "@/app/home/ui/markdown";
 import {CodeForm} from "@/app/home/[categorie]/[challenge]/codeform";
 import {notFound} from "next/navigation";
-import {Title} from "@/app/home/[categorie]/[challenge]/Title";
+import {Title} from "@/app/home/[categorie]/[challenge]/title";
 
 export default async function Page({params,}: { params: Promise<{ categorie: string, challenge: string }> }) {
     const categorieName = (await params).categorie;
