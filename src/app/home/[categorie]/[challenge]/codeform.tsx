@@ -7,7 +7,7 @@ import Loader from "@/app/ui/loader";
 import ErrorAlert from "@/app/ui/alerts/errorAlert";
 import SoftAlert from "@/app/ui/alerts/softAlert";
 import RenderedEditor from "@/app/home/ui/editor/RenderedEditor";
-import {Template} from "@/app/typecollection";
+import {Template} from "@/utils/typecollection";
 
 const initialState: {
     errormessage?: string,

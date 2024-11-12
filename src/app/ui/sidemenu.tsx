@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import {ChallengeDetails, SidebarInfo} from "@/app/typecollection";
+import {ChallengeDetails, SidebarInfo} from "@/utils/typecollection";
 import CheckmarkIcon from "@/app/ui/icons/checkmark";
 
 export default function Sidemenu({sidebarInfo}: {sidebarInfo: SidebarInfo}) {
@@ -15,7 +15,7 @@ export default function Sidemenu({sidebarInfo}: {sidebarInfo: SidebarInfo}) {
                         )
                 } else {
                    return (
-                     <SimpleCategory key={index} name={category.name} friendlyName={category.friendlyName} active={pathname.includes(category.name)}/>
+                     <SimpleCategory key={index} name={category.name} friendlyName={category.friendlyName} active={(pathname.includes(category.name) && category.name !== "/") || pathname === "/home"}/>
                    )
                 }
             })}
@@ -93,7 +93,7 @@ function Challenges({friendlyName, categoryName, currentCategory, active, challe
 }
 
 function ChallengeEntry({challenge, active, categoryName}: {challenge: ChallengeDetails, categoryName: string, active: boolean}) {
-    const solved = localStorage.getItem(`progress_${categoryName}/${challenge.name}`) === "solved";
+    const solved = global?.localStorage?.getItem(`progress_${categoryName}/${challenge.name}`) === "solved";
     return (
         <li>
             <Link
