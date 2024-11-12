@@ -13,7 +13,7 @@ export default async function Page({params,}: { params: Promise<{ categorie: str
     const challengeDetails = await loadChallengeDetails(categorieName, challenge);
     const markdown = await loadMarkdown(`${categorieName}/${challenge}`);
 
-    if(!challengeDetails|| !markdown){
+    if(!challengeDetails|| !markdown || !categorieDetails){
         return notFound();
     }
 

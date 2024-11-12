@@ -1,38 +1,71 @@
 'use client';
 import Difficulty from "@/app/home/ui/difficulty";
 import BadgeIcon from "@/app/ui/icons/badge";
+import {ChallengeDetails} from "@/utils/typecollection";
+import {RenderedTag} from "@/app/ui/rendered-tag";
+import React from "react";
 
-export default function Challenge({challenge, category, className}: {className?: string, challenge: {name: string, shortDescription: string, friendlyName: string, difficulty: number}, category: string}) {
+export function Challenge({challenge, category, className}: {
+    className?: string,
+    challenge: ChallengeDetails,
+    category: string,
+}) {
     const solved = localStorage.getItem(`progress_${category}/${challenge.name}`) === "solved";
     return (
         <div className={className}>
             <article
                 className="rounded-xl border-2 flex flex-col border-lightShades-300 dark:accent-darkShades-300 bg-lightShades-100 dark:bg-darkShades-100 text-darkShades-100 dark:text-lightShades-100">
-                <div className="flex items-start gap-4 p-4 sm:p-6 lg:p-8">
+                <div className="flex items-start gap-4 p-4">
                     <div>
                         <h3 className="font-medium text-inherit sm:text-lg">
                             <a href={`/home/${category}/${challenge.name}`}
                                className="hover:underline"> {challenge.friendlyName} </a>
                         </h3>
                         <div className="flow-root">
-                            <dl className="-my-3 text-inherit divide-y divide-gray-100 text-sm grow">
-
-                                <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-2 sm:gap-4">
+                            <dl className="text-inherit divide-y divide-darkShades-600 dark:divide-lightShades-300 text-sm grow">
+                                <div className="grid grid-cols-3 gap-1 py-2">
                                     <dt className="font-medium text-inherit">Schwierigkeit</dt>
-                                    <Difficulty className={"ml-auto"}
-                                                difficulty={challenge.difficulty} size={3}/>
+                                    <dd className="dark:text-lightShades-200 text-darkShades-200 text-right col-span-2">
+                                        <Difficulty className={"ml-auto"}
+                                                    difficulty={challenge.difficulty} size={3}/>
+                                    </dd>
                                 </div>
 
-                                <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-                                    <dt className="font-medium text-inherit">Beschreibung</dt>
-                                    <dd className="dark:text-lightShades-200 text-darkShades-200 sm:col-span-2 text-right">{challenge.shortDescription}</dd>
-                                </div>
+                                <Section title={"Beschreibung"}>
+                                    {challenge.shortDescription}
+                                </Section>
+                                {challenge.tags && challenge.tags.length > 0 ?
+                                    <div className="grid grid-cols-4 gap-1 py-2">
+                                        <dt className="font-medium text-inherit">Tags</dt>
+                                        <dd className="dark:text-lightShades-200 text-darkShades-200 text-right col-span-3">
+                                            {
+                                                challenge.tags.map((tag, index) => {
+                                                    return (
+                                                        <RenderedTag key={index} tag={tag}/>
+                                                    )
+                                                })
+                                            }
+                                        </dd>
+                                    </div>
+                                    : null
+                                }
                             </dl>
                         </div>
                     </div>
                 </div>
                 {solved ? <Badge/> : <span/>}
             </article>
+        </div>
+    )
+}
+
+function Section({children, title}: { children: React.ReactNode, title: string }) {
+    return (
+        <div className="grid grid-cols-1 gap-1 py-2">
+            <dt className="font-medium text-inherit">{title}</dt>
+            <dd className="dark:text-lightShades-200 text-darkShades-200 text-left col-span-2">
+                {children}
+            </dd>
         </div>
     )
 }

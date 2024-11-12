@@ -73,7 +73,6 @@ function checkWhitelist(content: string, whitelist: string[]): string {
         for (const match of matches) {
             for (const whitelistitem of whitelist) {
                 if(!match.includes(whitelistitem)) {
-                    console.log(match);
                     content = content.replace(match, "");
                 }
             }
