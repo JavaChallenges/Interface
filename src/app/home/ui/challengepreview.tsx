@@ -14,8 +14,8 @@ export function Challenge({challenge, category, className}: {
     return (
         <div className={className}>
             <article
-                className="rounded-xl border-2 flex flex-col border-lightShades-300 dark:accent-darkShades-300 bg-lightShades-100 dark:bg-darkShades-100 text-darkShades-100 dark:text-lightShades-100">
-                <div className="flex items-start gap-4 p-4">
+                className="rounded-xl w-full border-2 flex flex-col border-lightShades-300 dark:accent-darkShades-300 bg-lightShades-100 dark:bg-darkShades-100 text-darkShades-100 dark:text-lightShades-100">
+                <div className="gap-4 p-4">
                     <div>
                         <h3 className="font-medium text-inherit sm:text-lg">
                             <a href={`/home/${category}/${challenge.name}`}

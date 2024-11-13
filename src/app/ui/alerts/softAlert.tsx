@@ -82,7 +82,6 @@ export default function SoftAlert({title, message, type}: {
 }
 
 function TestResultListItem(test: TestResult) {
-
     const style = "size-3 inline-block align-middle mr-1"
     return (
         <div key={test.name} className={"block pb-1"}>

@@ -68,12 +68,14 @@ export function CodeForm({templates, challengePath}: {templates: Template[], cha
 
 
     const { pending } = useFormStatus();
-    if(!pending && state.testresults) {
+    if(!pending) {
         templates.map((template: Template) => {
             localStorage.setItem(`code_${challengePath}/${template.classname}`, code[template.classname]);
         })
-        if(state.testresults.length > 0 && state.statuscode === 0){
-            localStorage.setItem(`progress_${challengePath}`, "solved");
+        if(state.testresults){
+            if(state.testresults.length > 0 && state.statuscode === 0){
+                localStorage.setItem(`progress_${challengePath}`, "solved");
+            }
         }
     }
     const whitelists:{[key:string]:string[]} = {};

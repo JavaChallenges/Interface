@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs, {readFileSync} from "fs";
 import {
     CategoryDetails,
     ChallengeDetails,
@@ -116,7 +116,7 @@ export async function loadChallengeDetails(category: string, challenge: string):
                 friendlyName: challengeConfigJSON.friendlyName? challengeConfigJSON.friendlyName as string : "ERROR LOADING",
                 difficulty: challengeConfigJSON.difficulty? Number.parseInt(challengeConfigJSON.difficulty as string) : 0,
                 shortDescription: challengeConfigJSON.shortDescription? challengeConfigJSON.shortDescription as string : "ERROR LOADING",
-                templates: challengeConfigJSON.templates? loadTemplates(challengeConfigJSON.templates as JSONValue[]): [],
+                templates: challengeConfigJSON.templates? loadTemplates(challengeConfigJSON.templates as JSONValue[], `./challenges/${category}/${challenge}`): [],
                 tags: challengeConfigJSON.tags? tags : [],
                 categoryRef: category
             };
@@ -129,13 +129,17 @@ export async function loadChallengeDetails(category: string, challenge: string):
     }
 }
 
-function loadTemplates(templates:JSONValue[]): Template[] {
+function loadTemplates(templates:JSONValue[], path:string): Template[] {
     const templateArray: Template[] = [];
     for(const template of templates) {
         const templateObject = template as JSONObject;
+        let content = templateObject.content as string;
+        if(content.endsWith(".java")){
+            content = readFileSync(`${path}/templates/${content}`, 'utf-8');
+        }
         templateArray.push({
             title: templateObject.title as string,
-            content: templateObject.content as string,
+            content: content,
             classname: templateObject.classname as string,
             whitelist: templateObject.whitelist? templateObject.whitelist as string[] : []
         });

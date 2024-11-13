@@ -168,9 +168,9 @@ async function compileAndTest(whitelist:{[key: string]: string[]}, uuid: UUID, c
                        if(element.name === "testcase") {
                            testamount++
                            if(element.elements){
-                               if(element.elements[0].name === "failure"){
+                               if(element.elements[0].name === "failure") {
                                    failed++;
-                                   if(element.elements[1] && element.elements[1].name === "system-out") {
+                                   if (element.elements[1] && element.elements[1].name === "system-out") {
                                        tests.push({
                                            name: element.attributes.name,
                                            failtype: element.elements[0].attributes.type,
@@ -186,6 +186,15 @@ async function compileAndTest(whitelist:{[key: string]: string[]}, uuid: UUID, c
                                            failError: element.elements[0].elements[0].cdata,
                                        });
                                    }
+                               } else if(element.elements[0].name === "error"){
+                                   console.log(element.elements[0]);
+                                   failed++;
+                                   tests.push({
+                                       name: element.attributes.name,
+                                       failtype: element.elements[0].attributes.type,
+                                       failmessage: "Error occured during execution",
+                                       failError: element.elements[0].elements[0].cdata,
+                                   });
                                } else if(element.elements[0].name === "system-out"){
                                    tests.push({name: element.attributes.name, systemout: element.elements[0].elements[0].cdata});
                                }
