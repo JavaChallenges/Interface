@@ -44,6 +44,8 @@ COPY --from=deps /app/node_modules ./node_modules
 
 COPY package.json package-lock.json* ./
 COPY importBlacklist.json ./
+COPY impressum.md ./
+COPY importBlacklist.json ./
 
 # Exposed port (for orchestrators and dynamic reverse proxies)
 EXPOSE 3000
