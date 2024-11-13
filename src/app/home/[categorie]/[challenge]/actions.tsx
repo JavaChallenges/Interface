@@ -14,13 +14,14 @@ import path from "node:path";
 import fs from "fs";
 import {exec} from "node:child_process";
 import convert from "xml-js";
+import {TestResult} from "@/utils/typecollection";
 
 export async function validateCode(
     prevState: {
         errormessage?: string,
         statuscode: number,
         errorLines:  {[key: string]: number[]},
-        testresults?: {name: string, failtype?: string, failmessage?: string}[],
+        testresults?: TestResult[],
     },
     formData: FormData,
 ):Promise<{
@@ -129,11 +130,11 @@ async function deleteFolderRecursive(path: string) {
     }
 }
 
-async function compileAndTest(whitelist:{[key: string]: string[]}, uuid: UUID, classes: {name: string, content: string}[]): Promise<{statuscode: number, tests: {name: string, failtype?: string, failmessage?: string}[]}> {
+async function compileAndTest(whitelist:{[key: string]: string[]}, uuid: UUID, classes: {name: string, content: string}[]): Promise<{statuscode: number, tests: TestResult[]}> {
     writeSourceFiles(whitelist, uuid, classes);
     return new Promise((resolve, reject) => {
         exec(`mvn test -f ./workspace/${uuid}/pom.xml`, (error, stdout) => {
-            const tests: {name:string, failtype?:string, failmessage?:string}[] = []
+            const tests: TestResult[] = []
             let testamount = 0;
             let failed = 0;
 
@@ -141,17 +142,53 @@ async function compileAndTest(whitelist:{[key: string]: string[]}, uuid: UUID, c
                 reject(`${filterErrorMessages(stdout)}`);
                 return;
             }
-            
+
             fs.readdirSync(`./workspace/${uuid}/target/surefire-reports`).forEach(file => {
                if(file.endsWith('.xml')) {
                    const xml = fs.readFileSync(`./workspace/${uuid}/target/surefire-reports/${file}`, 'utf8');
                    const json = JSON.parse(convert.xml2json(xml, {compact: false, spaces: 4}));
-                   json.elements[0].elements.forEach((element: {name: string, attributes: {name: string}, elements?: [{attributes: {type: string, message: string}}]}) => {
+                   json.elements[0].elements.forEach((
+                       element: {
+                           name: string;
+                           attributes: {
+                               name: string;
+                           };
+                           elements?: {
+                               name: string;
+                               attributes: {
+                                   type: string;
+                                   message: string;
+                               };
+                               elements: {
+                                   cdata: string;
+                               }[];
+                           }[];
+                       }
+                   ) => {
                        if(element.name === "testcase") {
                            testamount++
                            if(element.elements){
-                               tests.push({name: element.attributes.name, failtype: element.elements[0].attributes.type, failmessage: element.elements[0].attributes.message});
-                               failed++;
+                               if(element.elements[0].name === "failure"){
+                                   failed++;
+                                   if(element.elements[1] && element.elements[1].name === "system-out") {
+                                       tests.push({
+                                           name: element.attributes.name,
+                                           failtype: element.elements[0].attributes.type,
+                                           failmessage: element.elements[0].attributes.message,
+                                           failError: element.elements[0].elements[0].cdata,
+                                           systemout: element.elements[1].elements[0].cdata
+                                       });
+                                   } else {
+                                       tests.push({
+                                           name: element.attributes.name,
+                                           failtype: element.elements[0].attributes.type,
+                                           failmessage: element.elements[0].attributes.message,
+                                           failError: element.elements[0].elements[0].cdata,
+                                       });
+                                   }
+                               } else if(element.elements[0].name === "system-out"){
+                                   tests.push({name: element.attributes.name, systemout: element.elements[0].elements[0].cdata});
+                               }
                            } else {
                                tests.push({name: element.attributes.name});
                            }
@@ -159,11 +196,11 @@ async function compileAndTest(whitelist:{[key: string]: string[]}, uuid: UUID, c
                    });
                }
             });
-            
+
             let statuscode = 0;
             if(failed > 0) {
                 statuscode = 2;
-            } 
+            }
             if(failed === testamount) {
                 statuscode = 3;
             }

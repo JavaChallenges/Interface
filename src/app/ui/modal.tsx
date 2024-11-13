@@ -1,7 +1,7 @@
 import React, {ReactNode, useEffect, useRef, useState} from "react";
 import CrossIcon from "@/app/ui/icons/cross";
 
-export function Modal({isOpen, onClose, hasCloseBtn, children, title, description}: {title: string, description: string, isOpen: boolean, onClose: () => void, hasCloseBtn: boolean, children?: ReactNode}) {
+export function Modal({isOpen, onClose, hasCloseBtn, children, title, description, className}: {className?:string, title: string, description: string|ReactNode, isOpen: boolean, onClose: () => void, hasCloseBtn: boolean, children?: ReactNode}) {
     const [isModalOpen, setModalOpen] = useState(isOpen);
     const modalRef = useRef<HTMLDialogElement | null>(null);
 
@@ -36,10 +36,13 @@ export function Modal({isOpen, onClose, hasCloseBtn, children, title, descriptio
 
     return (
 
-        <dialog ref={modalRef} onKeyDown={handleKeyDown} className="modal">
-            <div className="border-2 border-primary-100 rounded-lg bg-lightShades-100 dark:bg-darkShades-300 p-8 shadow-2xl">
+        <dialog ref={modalRef} onKeyDown={handleKeyDown} className={`${className} modal`}>
+            <div className="border-2 border-primary-100 h-full rounded-lg bg-lightShades-100 dark:bg-darkShades-300 p-8 shadow-2xl">
                 {hasCloseBtn && (
-                    <button className="border-none w-full flex justify-end" onClick={handleCloseModal}>
+                    <button className="border-none w-full flex justify-end" onClick={(event) => {
+                        event.preventDefault();
+                        handleCloseModal();
+                    }}>
                         <CrossIcon className={"size-5"}/>
                     </button>
                 )}
@@ -49,7 +52,7 @@ export function Modal({isOpen, onClose, hasCloseBtn, children, title, descriptio
                     {description}
                 </p>
 
-                <div className="mt-4 flex gap-2">
+                <div className="mt-4 w-full">
                     {children}
                 </div>
             </div>
