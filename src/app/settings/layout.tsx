@@ -2,7 +2,7 @@ import {ReactNode} from "react";
 
 export default function HomeLayout({children,}: { children: ReactNode }) {
     return (
-        <section className={"h-full w-full overflow-y-auto px-32"}>
+        <section style={{height: "calc( 100% - 80px )"}} className={"h-full w-full overflow-y-auto px-32"}>
 
             {children}
         </section>

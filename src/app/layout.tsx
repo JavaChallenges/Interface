@@ -5,6 +5,7 @@ import HomeIcon from "@/app/ui/icons/home";
 import SettingsIcon from "@/app/ui/icons/settings";
 import {ReactNode} from "react";
 import {ThemeProvider} from "next-themes";
+import {Footer} from "@/app/ui/footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,6 +37,7 @@ export default function RootLayout({
 
                     <Header pages={pages}/>
                     {children}
+                    <Footer/>
                 </ThemeProvider>
             </body>
         </html>
