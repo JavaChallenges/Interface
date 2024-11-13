@@ -11,7 +11,7 @@ export default async function Page({params,}: { params: Promise<{ categorie: str
     const categorieDetails = await loadCategoryDetails(categorieName);
     const challenge = (await params).challenge
     const challengeDetails = await loadChallengeDetails(categorieName, challenge);
-    const markdown = await loadMarkdown(`${categorieName}/${challenge}`);
+    const markdown = await loadMarkdown(`./challenges/${categorieName}/${challenge}/description.md`);
 
     if(!challengeDetails|| !markdown || !categorieDetails){
         return notFound();

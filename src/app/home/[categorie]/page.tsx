@@ -7,7 +7,7 @@ import {Challenge} from "@/app/home/ui/challengepreview";
 export default async function Page({params,}: { params: Promise<{ categorie: string}> }) {
     const categorie = (await params).categorie
     const details = await loadCategoryDetails(categorie);
-    const markdown = await loadMarkdown(categorie);
+    const markdown = await loadMarkdown(`./challenges/${categorie}/description.md`);
 
     if(!details || !details.challenges || details.challenges.length === 0){
         return notFound();

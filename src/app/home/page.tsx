@@ -14,7 +14,7 @@ export const revalidate = 0;
 
 export default async function Page() {
     const categories = await loadCategories();
-    const markdown = await loadMarkdown("");
+    const markdown = await loadMarkdown(`./challenges/description.md`);
 
     const usedTags = await loadUsedAllTags();
     let allTags = null;

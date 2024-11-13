@@ -161,7 +161,7 @@ export async function readJsonFile(filePath: string): Promise<JSONObject|null> {
 
 export async function loadMarkdown( path: string): Promise<string|null> {
     try {
-        return await fs.promises.readFile(`./challenges/${path}/description.md`, 'utf-8');
+        return await fs.promises.readFile(path, 'utf-8');
     } catch {
         console.error('Error reading directory markdown unknown for:', path);
         return null
