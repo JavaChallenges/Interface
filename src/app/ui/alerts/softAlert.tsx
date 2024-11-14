@@ -4,10 +4,15 @@ import AlertIcon from "@/app/ui/icons/alert";
 import AttentionIcon from "@/app/ui/icons/attention";
 import FailIcon from "@/app/ui/icons/fail";
 import CheckmarkIcon from "@/app/ui/icons/checkmark";
+import {TestResult} from "@/utils/typecollection";
+import {Modal} from "@/app/ui/modal";
+import {useState} from "react";
+import {Tooltip} from "@/app/ui/tooltip";
+import OpenIcon from "@/app/ui/icons/open";
 
 export default function SoftAlert({title, message, type}: {
     title: string,
-    message?: string | {name: string, failtype?: string, failmessage?: string}[],
+    message?: string | TestResult[],
     type: number
 }) {
     let border ;
@@ -59,21 +64,24 @@ export default function SoftAlert({title, message, type}: {
                 </span>
                 <div className="flex-1">
                     <strong className="block font-medium text-darkShades-100 dark:text-lightShades-100"> {title} </strong>
-
-                    <p className="mt-1 text-sm text-darkShades-600 dark:text-lightShades-200">
+                    <div className="mt-1 text-sm text-darkShades-600 dark:text-lightShades-200">
                         {
-                            typeof message === "string" ? message : message?.map((test: {name: string, failtype?: string, failmessage?: string}) => {
-                                return testResult(test)
+                            typeof message === "string" ?
+                                message :
+                                message?.map((test: TestResult) => {
+                                return (
+                                    TestResultListItem(test)
+                                )
                             })
                         }
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
 
-function testResult(test: {name: string, failtype?: string, failmessage?: string}) {
+function TestResultListItem(test: TestResult) {
     const style = "size-3 inline-block align-middle mr-1"
     return (
         <div key={test.name} className={"block pb-1"}>
@@ -81,8 +89,88 @@ function testResult(test: {name: string, failtype?: string, failmessage?: string
                 {test.failmessage ? <FailIcon className={style + " text-red-600"}/> : <CheckmarkIcon className={style + " text-green-600"}/>}
                 <strong className={"inline-flex"}>{test.name}</strong>
                 {test.failmessage ? <p className={"inline-flex"}> - {test.failmessage}</p> : ""}
+                <SystemOutModal test={test}/>
             </div>
-            {test.failtype ? <p className={"block"}>{test.failtype}</p> : ""}
+            <div className={"ml-4 flex items-center"}>
+                {test.failtype ? <p className={"block"}>{test.failtype}</p> : ""}
+                <ErrorModal test={test}/>
+            </div>
         </div>
+    )
+}
+
+function ErrorModal({test}: {test: TestResult}) {
+    const [isOutModalOpen, setOutModalOpen] = useState(false);
+    return ( test.failError ?
+            <>
+                <Modal
+                    className={"w-1/2"}
+                    title={`${test.name} - Stacktrace`}
+                    description={
+                        <p className={"text-sm text-gray-500"}>
+                            Fehlerprotokoll <br/> <span className={"text-xs font-bold"}>[Stacktrace]</span>
+                        </p>
+                    }
+                    isOpen={isOutModalOpen}
+                    onClose={() =>{
+                        setOutModalOpen(false)
+                    }} hasCloseBtn={true}>
+                    <div className={"overflow-y-auto h-72"}>
+                        {test.failError.split("\n").map((line, index) => {
+                            return (
+                                <p className={"block w-full break-words"} key={index}>{line}</p>
+                            )
+                        })}
+                    </div>
+                </Modal>
+                <Tooltip tooltip={'Fehlerprotokoll Anzeigen'}>
+                    <button
+                        onClick={(event) => {
+                            event.preventDefault()
+                            setOutModalOpen(true);
+                        }}>
+                        <OpenIcon className={"size-3 mx-2 text-gray-600"}/>
+                    </button>
+                </Tooltip>
+            </>
+            : null
+    )
+}
+
+function SystemOutModal({test}: {test: TestResult}) {
+    const [isOutModalOpen, setOutModalOpen] = useState(false);
+    return ( test.systemout ?
+        <>
+            <Modal
+                className={"w-1/2"}
+                title={`${test.name} - stdout`}
+                description={
+                    <p className={"text-sm text-gray-500"}>
+                        Standart Output (stdout) <br/> <span className={"text-xs font-bold"}>[Augabe aus System.out.*]</span>
+                    </p>
+                }
+                isOpen={isOutModalOpen}
+                onClose={() =>{
+                    setOutModalOpen(false)
+                }} hasCloseBtn={true}>
+                <div className={"overflow-y-auto h-72"}>
+                    {test.systemout.split("\n").map((line, index) => {
+                        return (
+                            <p className={"block w-full mb-2 break-words border-b-[1px] border-b-lightShades-200"} key={index}>{line}</p>
+                        )
+                    })}
+                </div>
+            </Modal>
+            <Tooltip tooltip={'Standard Ausgabe anzeigen'}>
+                <button
+                    onClick={(event) => {
+                        event.preventDefault()
+                        setOutModalOpen(true);
+                    }}>
+                    <OpenIcon className={"size-3 mx-2 text-gray-600"}/>
+                </button>
+            </Tooltip>
+        </>
+            : null
     )
 }

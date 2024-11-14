@@ -1,9 +1,11 @@
 import localFont from "next/font/local";
-import { ThemeProvider } from "next-themes"
 import "./globals.css";
 import Header from "@/app/ui/header";
 import HomeIcon from "@/app/ui/icons/home";
 import SettingsIcon from "@/app/ui/icons/settings";
+import {ReactNode} from "react";
+import {ThemeProvider} from "next-themes";
+import {Footer} from "@/app/ui/footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,7 +21,7 @@ const geistMono = localFont({
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
 
     const pages = [
@@ -27,15 +29,17 @@ export default function RootLayout({
         {ref: "settings", friendlyName: <span className={"inline-flex shrink-0 items-center"}><SettingsIcon className={"size-5 pr-1"} />  Einstellungen</span>},
     ];
     return (
-        <html suppressHydrationWarning lang="en">
-        <ThemeProvider attribute="class">
-              <body
+        <html suppressHydrationWarning lang="de">
+            <body
                 className={`${geistSans.variable} ${geistMono.variable} h-screen w-screen overflow-hidden flex-col flex bg-lightShades-100 dark:bg-darkShades-100 antialiased`}
-              >
-                  <Header pages={pages} />
-                  {children}
-              </body>
-        </ThemeProvider>
-    </html>
-  );
+            >
+                <ThemeProvider attribute="class">
+
+                    <Header pages={pages}/>
+                    {children}
+                    <Footer/>
+                </ThemeProvider>
+            </body>
+        </html>
+    );
 }

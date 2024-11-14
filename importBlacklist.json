@@ -1,0 +1,8 @@
+{
+  "blacklist": [
+    "java.io",
+    "java.nio",
+    "java.sql",
+    "java.imageio"
+  ]
+}

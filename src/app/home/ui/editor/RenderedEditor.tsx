@@ -1,23 +1,25 @@
 import Editor from "react-simple-code-editor";
 import hljs from 'highlight.js';
-import 'highlight.js/styles/nord.css';
+import 'highlight.js/styles/vs.css';
 import java from 'highlight.js/lib/languages/java';
-import {errorHighlight} from "@/app/ui/editor/actions";
+import {errorHighlight} from "@/app/home/ui/editor/actions";
 hljs.registerLanguage('java', java);
+export const revalidate = 0;
 
-export default function DarkEditor({template, code, setCode, highlightedLines}: {
+export default function RenderedEditor({enabled, template, code, setCode, highlightedLines, className}: {
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     highlightedLines?: {[key: string]: number[]} ,
+    className?: string,
+    enabled: boolean,
     template:{title: string; content: string; classname: string;},
-    code: string, setCode: (code: (prevCode: any) => any) => void
+    code: string, setCode: (code: (prevCode: {[key: string]: string}) => {[key: string]: string}) => void
 }) {
     return (
         <Editor
-            className={
-                "border-2 rounded-md mt-3 " +
-                "border-primary-50 bg-lightShades-200 " +
-                "dark:bg-darkShades-200"
-            }
-            // lineHighlight={state.statuscode === 0 ? "1" : state.statuscode === 2 ? "2" : state.statuscode === 3 ? "3" : "4"}
+            className={`
+                ${className} border-2 rounded-md bg-lightShades-200 dark:bg-darkShades-200
+            `}
+            readOnly={!enabled}
             value={code}
             onValueChange={newCode => setCode(prevCode => ({
                 ...prevCode,
@@ -26,6 +28,7 @@ export default function DarkEditor({template, code, setCode, highlightedLines}: 
             highlight={code => {
                 return errorHighlight(code, highlightedLines?.[template.classname] || []);
             }}
+            onChange={()=>{}}
             padding={10}
             style={{
                 fontFamily: '"Fira code", "Fira Mono", monospace',

@@ -4,36 +4,20 @@ import {usePathname} from "next/navigation"
 
 export default function Header(pages: {pages:{ref:string, friendlyName:JSX.Element}[]}) {
     const pathname = usePathname()
-    const elements= pages['pages'].map((page: { friendlyName: JSX.Element; ref: string; }) => Element(page.friendlyName, page.ref, pathname.includes(page.ref.toLowerCase())));
-    const options = pages['pages'].map((page: { friendlyName: JSX.Element; ref: string; }) => Option(page.friendlyName, page.ref, pathname.includes(page.ref.toLowerCase())));
+    //Element(page.friendlyName, page.link, )
+    const elements= pages['pages'].map((page: { friendlyName: JSX.Element; ref: string; }, index) => (<Element key={index} friendlyName={page.friendlyName} ref={page.ref} currentPage={pathname.includes(page.ref.toLowerCase())}/>) );
     return (
         <header className="bg-lightShades-200 dark:bg-darkShades-200 p-3 justify-items-center">
-            <div>
-                <div className="sm:hidden">
-                    <label htmlFor="Tab" className="sr-only">Tab</label>
-
-                    <select id="Tab" className="w-full rounded-md border-gray-200">
-                        {options}
-                    </select>
-                </div>
-
-                <div className="hidden sm:block">
-                    <nav className="flex gap-6 " aria-label="Tabs">
-                        {elements}
-                    </nav>
-                </div>
+            <div className="hidden sm:block">
+                <nav className="flex gap-6 " aria-label="Tabs">
+                    {elements}
+                </nav>
             </div>
         </header>
     );
 }
 
-function Option(friendlyName: JSX.Element, ref: string, currentPage: boolean){
-   return (
-       <option selected={currentPage}>{friendlyName}</option>
-   )
-}
-
-function Element(friendlyName: JSX.Element, ref: string, currentPage: boolean){
+function Element({friendlyName, ref, currentPage}:{friendlyName: JSX.Element, ref: string, currentPage: boolean}){
     return (
         <Link
             href={`/${ref}`}

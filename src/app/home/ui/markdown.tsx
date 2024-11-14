@@ -7,7 +7,7 @@ import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 import { nord, vs } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
-import 'katex/dist/katex.min.css' // `rehype-katex` does not import the CSS for you
+import 'katex/dist/katex.min.css'
 import {useTheme} from "next-themes";
 
 export default function RenderedMarkdown({markdown}: { markdown: string }) {
@@ -18,9 +18,9 @@ export default function RenderedMarkdown({markdown}: { markdown: string }) {
                   remarkPlugins={[remarkGfm, remarkMath]}
                   rehypePlugins={[rehypeRaw, rehypeKatex]}
                   components={{
-                      code({ node, inline, className, children, ...props }: any) {
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                      code({ inline, className, children, ...props }: { inline?: boolean, className?: string, children?: React.ReactNode }) {
                           const match = /language-(\w+)/.exec(className || '');
-
                           return !inline && match ? (
                               <SyntaxHighlighter style={style} PreTag="div" language={match[1]} {...props}>
                                   {String(children).replace(/\n$/, '')}
