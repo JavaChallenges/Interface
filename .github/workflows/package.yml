@@ -4,8 +4,8 @@ name: Create and publish a Docker image
 # Configures this workflow to run every time a change is pushed to the branch called `release`.
 on:
   push:
-    branches:
-      - 'master'
+    tags:
+      - 'v*.*.*'
 
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
 env:
@@ -39,6 +39,11 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=tag
+            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=short
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
+            type=raw,value=prerelease,enable=${{ github.ref == format('refs/heads/{0}', 'development') }}
       # This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`. If the build succeeds, it pushes the image to GitHub Packages.
       # It uses the `context` parameter to define the build's context as the set of files located in the specified path. For more information, see "[Usage](https://github.com/docker/build-push-action#usage)" in the README of the `docker/build-push-action` repository.
       # It uses the `tags` and `labels` parameters to tag and label the image with the output from the "meta" step.
@@ -60,9 +65,10 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
-  deploy:
+  deploy-production:
     needs: build-and-push-image
-    name: deploy image
+    name: Deploy to production
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
     steps:
@@ -75,5 +81,22 @@ jobs:
           ssh-keyscan -H ${{ secrets.ARTIFACT_HOST }} > ~/.ssh/known_hosts
       - name: connect and pull
         run: ssh ${{ secrets.USER }}@${{ secrets.ARTIFACT_HOST }} "cd ${{ secrets.APP_PATH }} && docker compose pull && docker compose down && docker compose up -d && docker system prune --all --volumes -f && exit"
+      - name: cleanup
+        run: rm -rf ~/.ssh
+  deploy-prerelease:
+    needs: build-and-push-image
+    name: Deploy to prerelease
+    if: github.ref == 'refs/heads/development'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: install ssh keys
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.ARTIFACT_SSH_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.ARTIFACT_HOST }} > ~/.ssh/known_hosts
+      - name: connect and pull
+        run: |
+          ssh ${{ secrets.USER }}@${{ secrets.ARTIFACT_HOST }} "./update_indev.sh && exit"
       - name: cleanup
         run: rm -rf ~/.ssh
