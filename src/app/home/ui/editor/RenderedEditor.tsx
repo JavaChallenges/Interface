@@ -3,6 +3,7 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/vs.css';
 import java from 'highlight.js/lib/languages/java';
 import {errorHighlight} from "@/app/home/ui/editor/actions";
+
 hljs.registerLanguage('java', java);
 export const revalidate = 0;
 
@@ -17,7 +18,7 @@ export default function RenderedEditor({enabled, template, code, setCode, highli
     return (
         <Editor
             className={`
-                ${className} border-2 rounded-md bg-lightShades-200 dark:bg-darkShades-200
+                ${className} border-2 rounded-md bg-lightShades-200 dark:bg-[#2E3440]
             `}
             readOnly={!enabled}
             value={code}

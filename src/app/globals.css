@@ -6,7 +6,7 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
-.markdown > *{
+.markdown > * {
     all: revert;
 }
 
@@ -32,10 +32,10 @@
 }
 
 
-
 .markdown > table > tbody > tr:nth-child(2n) {
     @apply bg-primary-10 dark:bg-primary-500;
 }
+
 .markdown > table > tbody > tr > td, .markdown > table > thead > tr > th {
     padding: 6px 13px;
     @apply border border-lightShades-200 dark:border-darkShades-400;
@@ -55,24 +55,376 @@
 }
 
 code[class*="language-"], pre[class*="language-"] {
-    text-shadow: none!important;
+    text-shadow: none !important;
 }
 
-.line-highlight{
+.line-highlight {
     @apply bg-red-400;
 }
 
 /*noinspection CssUnusedSymbol*/
-.flickity-slider{
+.flickity-slider {
     display: flex;
     align-items: center;
 }
 
 /*noinspection CssUnusedSymbol*/
-.flickity-enabled{
+.flickity-enabled {
     @apply mt-2;
 }
 
 ::backdrop {
-   @apply bg-white dark:bg-darkShades-100 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg drop-shadow-lg
+    @apply bg-white dark:bg-darkShades-100 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg drop-shadow-lg
+}
+
+
+/*
+
+Visual Studio-like style based on original C# coloring by Jason Diamond <jason@diamond.name>
+
+*/
+
+.hljs-comment,
+.hljs-quote,
+.hljs-variable {
+    @apply text-[#008000]
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-name,
+.hljs-tag {
+    @apply text-[#00f]
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-literal,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-addition {
+    @apply text-[#a31515]
+}
+
+.hljs-deletion,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-meta {
+    @apply text-[#808080]
+}
+
+.hljs-doctag {
+    @apply text-[#808080]
+}
+
+.hljs-attr {
+    @apply text-[#f00]
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link {
+    @apply text-[#00b0e8]
+}
+
+
+/*
+Nord
+ */
+
+
+.hljs,
+.hljs-subst {
+    @apply dark:text-[#D8DEE9]
+}
+
+.hljs-selector-tag {
+    @apply dark:text-[#81A1C1]
+}
+
+.hljs-selector-id {
+    @apply dark:text-[#8FBCBB] font-bold
+}
+
+.hljs-selector-class {
+    @apply dark:text-[#8FBCBB]
+}
+
+.hljs-selector-attr {
+    @apply dark:text-[#8FBCBB]
+}
+
+.hljs-property {
+    @apply dark:text-[#88C0D0]
+}
+
+.hljs-selector-pseudo {
+    @apply dark:text-[#88C0D0]
+}
+
+.hljs-addition {
+    @apply dark:bg-[#a3be8c]/[.5]
+}
+
+.hljs-deletion {
+    @apply dark:bg-[#bf616a]/[.5]
+}
+
+.hljs-built_in,
+.hljs-type {
+    @apply dark:text-[#8FBCBB]
+}
+
+.hljs-class {
+    @apply dark:text-[#8FBCBB]
+}
+
+.hljs-function {
+    @apply dark:text-[#88C0D0]
+}
+
+.hljs-title.hljs-function,
+.hljs-function > .hljs-title {
+    @apply dark:text-[#88C0D0]
+}
+
+.hljs-keyword,
+.hljs-literal,
+.hljs-symbol {
+    @apply dark:text-[#81A1C1]
+}
+
+.hljs-number {
+    @apply dark:text-[#B48EAD]
+}
+
+.hljs-regexp {
+    @apply dark:text-[#EBCB8B]
+}
+
+.hljs-string {
+    @apply dark:text-[#A3BE8C]
+}
+
+.hljs-title {
+    @apply dark:text-[#8FBCBB]
+}
+
+.hljs-params {
+    @apply dark:text-[#D8DEE9]
+}
+
+.hljs-bullet {
+    @apply dark:text-[#81A1C1]
+}
+
+.hljs-code {
+    @apply dark:text-[#8FBCBB]
+}
+
+.hljs-emphasis {
+    @apply italic
+}
+
+.hljs-formula {
+    @apply dark:text-[#8FBCBB]
+}
+
+.hljs-strong {
+    @apply font-bold
+}
+
+.hljs-link:hover {
+    @apply underline
+}
+
+.hljs-quote {
+    @apply dark:text-[#4C566A]
+}
+
+.hljs-comment {
+    @apply dark:text-[#4C566A]
+}
+
+.hljs-doctag {
+    @apply dark:text-[#8FBCBB]
+}
+
+.hljs-meta,
+.hljs-meta .hljs-keyword {
+    @apply dark:text-[#5E81AC]
+}
+
+.hljs-meta .hljs-string {
+    @apply dark:text-[#A3BE8C]
+}
+
+.hljs-attr {
+    @apply dark:text-[#8FBCBB]
+}
+
+.hljs-attribute {
+    @apply dark:text-[#D8DEE9]
+}
+
+.hljs-name {
+    @apply dark:text-[#81A1C1]
+}
+
+.hljs-section {
+    @apply dark:text-[#88C0D0]
+}
+
+.hljs-tag {
+    @apply dark:text-[#81A1C1]
+}
+
+.hljs-variable {
+    @apply dark:text-[#D8DEE9]
+}
+
+.hljs-template-variable {
+    @apply dark:text-[#D8DEE9]
+}
+
+.hljs-template-tag {
+    @apply dark:text-[#5E81AC]
+}
+
+/* per language customizations */
+
+.language-abnf .hljs-attribute {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-abnf .hljs-symbol {
+    @apply dark:text-[#EBCB8B]
+}
+
+.language-apache .hljs-attribute {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-apache .hljs-section {
+    @apply dark:text-[#81A1C1]
+}
+
+.language-arduino .hljs-built_in {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-aspectj .hljs-meta {
+    @apply dark:text-[#D08770]
+}
+
+.language-aspectj > .hljs-title {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-bnf .hljs-attribute {
+    @apply dark:text-[#8FBCBB]
+}
+
+.language-clojure .hljs-name {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-clojure .hljs-symbol {
+    @apply dark:text-[#EBCB8B]
+}
+
+.language-coq .hljs-built_in {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-cpp .hljs-meta .hljs-string {
+    @apply dark:text-[#8FBCBB]
+}
+
+.language-css .hljs-built_in {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-css .hljs-keyword {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-diff .hljs-meta {
+    @apply dark:text-[#8FBCBB]
+}
+
+.language-ebnf .hljs-attribute {
+    @apply dark:text-[#8FBCBB]
+}
+
+.language-glsl .hljs-built_in {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-groovy .hljs-meta:not(:first-child) {
+    @apply dark:text-[#D08770]
+}
+
+.language-haxe .hljs-meta {
+    @apply dark:text-[#D08770]
+}
+
+.language-java .hljs-meta {
+    @apply dark:text-[#D08770]
+}
+
+.language-ldif .hljs-attribute {
+    @apply dark:text-[#8FBCBB]
+}
+
+.language-lisp .hljs-name {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-lua .hljs-built_in {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-moonscript .hljs-built_in {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-nginx .hljs-attribute {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-nginx .hljs-section {
+    @apply dark:text-[#5E81AC]
+}
+
+.language-pf .hljs-built_in {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-processing .hljs-built_in {
+    @apply dark:text-[#88C0D0]
+}
+
+.language-scss .hljs-keyword {
+    @apply dark:text-[#81A1C1]
+}
+
+.language-stylus .hljs-keyword {
+    @apply dark:text-[#81A1C1]
+}
+
+.language-swift .hljs-meta {
+    @apply dark:text-[#D08770]
+}
+
+.language-vim .hljs-built_in {
+    @apply dark:text-[#88C0D0] italic
+}
+
+.language-yaml .hljs-meta {
+    @apply dark:text-[#D08770]
 }
