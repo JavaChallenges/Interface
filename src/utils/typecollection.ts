@@ -17,3 +17,4 @@ export type ChallengeDetails = {name:string, categoryRef: string, friendlyName: 
 export type SidebarInfo = SidebarEntry[]
 export type SidebarEntry = {name: string, friendlyName: string, challenges?: ChallengeDetails[]}
 export type CategoryDetails = {name: string, friendlyName: string, shortDescription: string, challenges: ChallengeDetails[]}
+export type Contribrutor = { name: string, type: string, contributions: number, avatar_url: string, url: string }

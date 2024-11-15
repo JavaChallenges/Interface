@@ -4,8 +4,10 @@ import {DownloadButton} from "@/app/settings/options/download";
 import {Upload} from "@/app/settings/options/upload";
 import Theme from "@/app/settings/options/theme";
 import React from "react";
-import fs from "fs";
-import Link from "next/link";
+import {Info} from "@/app/settings/options/info";
+import {Octokit} from "@octokit/rest";
+import {Contribrutor} from "@/utils/typecollection";
+
 
 export const revalidate = 0;
 
@@ -32,7 +34,10 @@ export default async function Settings() {
                 </div>
             </Section>
             <Section title={"Informationen"}>
-                <Version className={""}/>
+                <Info
+                    contributorsInterface={await loadContributors("JavaChallenges", "Interface")}
+                    contributorsChallenges={await loadContributors("JavaChallenges", "Challenges")}
+                />
             </Section>
         </>
     );
@@ -48,18 +53,20 @@ function Section({children, title}: { children: React.ReactNode, title: string }
     )
 }
 
-async function Version({className}: { className?: string }) {
-    let version;
-    try {
-        version = fs.readFileSync('./VERSION', 'utf8');
-    } catch {
-        version = "Lokale Development Version";
+async function loadContributors(owner: string, repo: string): Promise<Contribrutor[]> {
+    const octokit = new Octokit();
+    const res = await octokit.repos.listContributors({owner: owner, repo: repo})
+    const contributors: Contribrutor[] = [];
+    if (res) {
+        res.data.forEach((resElement) => {
+            contributors.push({
+                name: resElement.login ? resElement.login : "unknown",
+                type: resElement.type,
+                contributions: resElement.contributions,
+                avatar_url: resElement.avatar_url ? resElement.avatar_url : "",
+                url: resElement.html_url ? resElement.html_url : ""
+            })
+        })
     }
-    return (
-        <div className={`${className} text-right`}>
-            <p className={"text-xs"}>Version</p>
-            <Link className={"text-sm hover:underline"} target="_blank" rel="noopener noreferrer"
-                  href={`https://github.com/JavaChallenges/Interface/releases/tag/${version}`}>{version}</Link>
-        </div>
-    )
+    return contributors;
 }
