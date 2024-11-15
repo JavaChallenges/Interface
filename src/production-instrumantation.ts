@@ -1,9 +1,19 @@
 import fs from "fs";
-import { exec } from "child_process";
+import {exec} from "child_process";
 
-console.log("Startup...");
+let version;
+try {
+    version = fs.readFileSync('./VERSION', 'utf8').trim().replace("\n", "");
+} catch {
+    version = "Lokale Entwicklungsversion"
+}
 
-console.log("Cleaning up workspace and challenges folder...");
+console.log("=====================================")
+console.log("Starte Challenge Interface")
+console.log("Version: " + version)
+console.log("=====================================")
+
+console.log("Challenge und Workspace Ordner aufräumen...");
 deleteFolderRecursive("./workspace/");
 deleteFolderRecursive("./challenges/");
 createFolderIfNotExists("./workspace/");
@@ -32,17 +42,13 @@ function downloadAndExtractChallenges() {
         // Delete playground folder as it should not be in production
         deleteFolderRecursive("./challenges/0_playground");
     }
-    exec(`wget -O master.zip ${url}`, (error, stdout, stderr) => {
-        logExecOutput(error, stdout, stderr);
+    exec(`wget -O master.zip ${url}`, (error) => {
         if (!error) {
-            exec('unzip master.zip', (error, stdout, stderr) => {
-                logExecOutput(error, stdout, stderr);
+            exec('unzip master.zip', (error) => {
                 if (!error) {
-                    exec('mv Challenges-*/challenges/ .', (error, stdout, stderr) => {
-                        logExecOutput(error, stdout, stderr);
+                    exec('mv Challenges-*/challenges/ .', (error) => {
                         if (!error) {
-                            exec('rm -r Challenges-*', (error, stdout, stderr) => {
-                                logExecOutput(error, stdout, stderr);
+                            exec('rm -r Challenges-*', (error) => {
                                 if (!error) {
                                     deleteFileIfExists("master.zip");
                                 }
@@ -66,13 +72,5 @@ function deleteFolderRecursive(path: string) {
             }
         });
         fs.rmdirSync(path);
-    }
-}
-
-function logExecOutput(error: Error | null, stdout: string, stderr: string) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
-    if (error) {
-        console.log('exec error: ' + error);
     }
 }
