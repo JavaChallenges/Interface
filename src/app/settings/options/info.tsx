@@ -4,10 +4,18 @@ import React from "react";
 import BugIcon from "@/app/ui/icons/bug";
 import OpenIcon from "@/app/ui/icons/open";
 import LightbulbIcon from "@/app/ui/icons/lightbulb";
+import ContributeIcon from "@/app/ui/icons/contribute";
+import Contributors from "@/app/ui/contributors";
+import {Contribrutor} from "@/utils/typecollection";
 
-export function Info() {
+export function Info({contributorsInterface, contributorsChallenges}: {
+    contributorsInterface: Contribrutor[],
+    contributorsChallenges: Contribrutor[]
+}) {
     return (
         <>
+            <Contributors contributorsInterface={contributorsInterface}
+                          contributorsChallenges={contributorsChallenges}/>
             <Version/>
             <GithubLinks/>
         </>
@@ -25,7 +33,7 @@ function IconLink({href, name, icon}: { href: string, name: string, icon: React.
 
 function GithubLinks() {
     return (
-        <span className={"mt-2 flex justify-around"}>
+        <span className={"mt-10 flex justify-around"}>
             <IconLink
                 href={"https://github.com/JavaChallenges/Interface/issues/new/choose"}
                 name={"Verbesserung vorschlagen"}
@@ -37,9 +45,9 @@ function GithubLinks() {
                 icon={<BugIcon className={"size-4 mr-2"}/>}
             />
             <IconLink
-                href={}
-                name={}
-                icon={}
+                href={"https://github.com/JavaChallenges/Interface/issues/new/choose"}
+                name={"Selbst mithelfen"}
+                icon={<ContributeIcon className={"size-4 mr-2"}/>}
             />
         </span>
     )
