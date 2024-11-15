@@ -4,9 +4,12 @@ Als allererstes, vielen Dank, dass du dir die Zeit nehmen möchtest deinen Teil 
 
 Alle Arten von Hilfe ist erwünscht und wird wertgeschätzt. Im [Inhaltsverzeichnis](#table-of-contents) findest Du verschiedene Möglichkeiten zu helfen und Details darüber, wie dieses Projekt bearbeitet wird. Bitte stelle sicher, dass du den jeweils entsprechenden Abschnitt gelesen hast, bevor Du anfängst etwas beizutragen. Das macht es nicht nur uns einfacher deine Unterstützung in das Projekt aufzunehmen, sondern ersparrt auch dir unnötige Arbeit. Wir freuen uns auf deine Beiträge. 🎉
 
-> Dir gefällt das Projekt, aber Du hast keine Zeit etwas beizutragen? Das ist auch in Ordnung. Es gibt eine andere einfache Möglichkeiten, das Projekt zu unterstützen und deine Wertschätzung zu zeigen:
+> Dir gefällt das Projekt, aber Du hast keine Zeit etwas beizutragen? Das ist auch in Ordnung. Es gibt andere einfache Möglichkeiten, das Projekt zu unterstützen und deine Wertschätzung zu zeigen:
 > - Verleihe dem Projekt einen Stern
 > - Gib uns Feedback darüber ob du mit Hilfe des Projekts besser lernen konntest und was wir besser machen können 
+
+> [!TIP]\
+> In hier geht es um den technischen Teil der Website von JavaChallenges, wenn du bei der Erstellung von Challenges helfen möchtest, schau [hier](https://github.com/JavaChallenges/Challenges/contribute) vorbei
 
 ## Inhaltsverzeichnis
 
@@ -37,7 +40,8 @@ Wir werden uns dann so schnell wie möglich um das Problem kümmern.
 
 ## Ich möchte einen Beitrag leisten
 
-> ### Rechtlicher Hinweis
+> [!CAUTION]\
+> Rechtlicher Hinweis\
 > Wenn Du einen Beitrag zu diesem Projekt leistest, musst Du versichern, dass Du 100% des Inhalts verfasst hast, dass Du die erforderlichen Rechte an dem Inhalt hast und dass der Inhalt, den Du beiträgst, unter der Projektlizenz zur Verfügung gestellt werden darf.
 
 ### Bugs melden
@@ -89,18 +93,39 @@ Verbesserungsvorschläge werden als [GitHub issues](/issues) verfolgt.
 - Eröffne ein [Issue](/issues/new) mit dem Template "Neue Funktion" oder "Verbesserungsvorschlag" abhängig davon, was auf deinen Vorschlag besser zutrifft.
 
 ### Dein erster Codebeitrag
-<!-- TODO
-Einrichtung der Umgebung, IDE und typische Anleitungen für den Einstieg einbeziehen?
--->
+1. Fork it (<https://github.com/JavaChallenges/Interface/fork>)
+2. Erstelle einen Feature Branch (`git checkout -b feature/fooBar`)
+3. Commite deine Änderungen (`git commit -am 'feat(foo): barBaz'`)[Halte dich hierbei bitte an unsere [Styleguides](#styleguides)]
+4. Pushe sie auf den Feature Branch (`git push origin feature/fooBar`)
+5. Erstelle eine neue Pull Request
 
-### Verbessern Sie die Dokumentation
-<!-- TODO
-Aktualisieren, Verbessern und Korrigieren der Dokumentation
--->
+### Du möchtest etwas inhaltliches Beitragen?
+Wenn du lieber an den eigentlichen Challenges mitarbeiten möchtest dann schau mal [hier](https://github.com/JavaChallenges/Challenges/contribute) vorbei.
+
+## Development setup
+Benötigte Umgebungsversionen:
+* Node: `>=22.0.0`
+* NPM: `>=10.9.0`
+* GIT: `latest`
+* Docker: `latest`(Optional)
+
+```sh
+npm install
+npm run dev
+```
 
 ## Styleguides
 ### Commit-Nachrichten
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+
+Um die Versionierung und die Erstellung der Changelogs zu automatisieren nutzen wir semantic-release mit dem [Angular Commit Message Format](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#-commit-message-format).
+Damit dies jederzeit Reibungslos funktioniert, bitten wir jeden Helfer darum, sich an diesen Standart zu halten.
+
+Es gibt verschiedene Tools, die es einem erleichtern, den Standart einzuhalten. Für IDEA IDEs wäre dies bspw. [GithubToolbox](https://plugins.jetbrains.com/plugin/7499-gittoolbox). Wir empfehlen es dringend ein solches Tool zu verwenden. 
+
+Diese RegEx kann verwendet werden um die Commit-Message auf Richtigkeit zu prüfen: `(?:feat|fix|perf|style|test|chore|ci|build|revert|docs|refactor)(?:\(.*\))?: [A-Z].*\s?\s?.*?` 
 
 ## Dem Projektteam beitreten
+Wenn du längerfristig an dem Projekt mitarbeiten möchtest, bist du herzlich dazu eingeladen. Fang einfach damit an ein paar Pull Requests einzureichen und komm auf einen von uns zu.
 
 _Dieser Leitfaden basiert auf [contributing.md](https://contributing.md/generator)!_
