@@ -36,19 +36,15 @@ function GithubLinks() {
                 name={"Fehler melden"}
                 icon={<BugIcon className={"size-4 mr-2"}/>}
             />
+            <IconLink
+                href={}
+                name={}
+                icon={}
+            />
         </span>
     )
 }
 
-function ReportBug() {
-    return (
-        <Link target={"_blank"} rel="noopener noreferrer" className={"hover:underline"}
-              href={"https://github.com/JavaChallenges/Interface/issues/new/choose"}>
-            <span className={"flex items-center"}><BugIcon className={"size-4 mr-2"}/>Fehler melden<OpenIcon
-                className={'size-2.5 ml-1'}/></span>
-        </Link>
-    )
-}
 
 async function Version({className}: { className?: string }) {
     let version;
