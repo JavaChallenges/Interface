@@ -20,11 +20,11 @@
               { "type": "chore", "release": "patch" },
               { "type": "ci", "release": "patch" },
               { "type": "build", "release": "patch" },
-              { "type": "revert", "release": "patch" }
+              { "type": "revert", "release": "patch" },
               { "type": "docs", "scope": "README", "release": "patch" },
               { "type": "docs", "scope": "*", "release": false },
               { "type": "refactor", "release": "patch" },
-              { "scope": "no-release", "release": false }
+              { "scope": "no-release", "release": false },
             ]
           }
         ],
@@ -38,7 +38,7 @@
 		[
 			"@semantic-release/github",
 			{
-				"assets": "pack/*.tgz"
+				"assets": "pack/*.tgz",
 			}
 		]
 	]
