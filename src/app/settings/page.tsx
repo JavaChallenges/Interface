@@ -4,8 +4,12 @@ import {DownloadButton} from "@/app/settings/options/download";
 import {Upload} from "@/app/settings/options/upload";
 import Theme from "@/app/settings/options/theme";
 import React from "react";
+import fs from "fs";
+import Link from "next/link";
 
-export default function Settings() {
+export const revalidate = 0;
+
+export default async function Settings() {
     return (
         <>
             <Section title={'Aussehen'}><Theme/></Section>
@@ -27,6 +31,9 @@ export default function Settings() {
                     <ResetButton/>
                 </div>
             </Section>
+            <Section title={"Informationen"}>
+                <Version className={""}/>
+            </Section>
         </>
     );
 }
@@ -38,5 +45,21 @@ function Section({children, title}: { children: React.ReactNode, title: string }
             <h2 className={"inline-block pr-2 text-[32px] -translate-y-[28px] font-bold bg-lightShades-100 dark:bg-darkShades-100"}>{title}</h2>
                 <div className={"px-48"}>{children}</div>
         </section>
+    )
+}
+
+async function Version({className}: { className?: string }) {
+    let version;
+    try {
+        version = fs.readFileSync('./VERSION', 'utf8');
+    } catch {
+        version = "Lokale Development Version";
+    }
+    return (
+        <div className={`${className} text-right`}>
+            <p className={"text-xs"}>Version</p>
+            <Link className={"text-sm hover:underline"} target="_blank" rel="noopener noreferrer"
+                  href={`https://github.com/JavaChallenges/Interface/releases/tag/${version}`}>{version}</Link>
+        </div>
     )
 }

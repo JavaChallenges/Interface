@@ -34,6 +34,12 @@ ENV NODE_ENV=production
 # Learn more here: https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 
+WORKDIR /app
+
+ARG VERSION
+
+RUN touch VERSION && echo $VERSION > VERSION
+
 # Set correct permissions for nextjs user and don't run as root
 RUN mkdir .next
 
