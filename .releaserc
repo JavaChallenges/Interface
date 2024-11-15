@@ -20,7 +20,7 @@
               { "type": "chore", "release": "patch" },
               { "type": "ci", "release": "patch" },
               { "type": "build", "release": "patch" },
-              { "type": "revert", "release": "patch" }
+              { "type": "revert", "release": "patch" },
               { "type": "docs", "scope": "README", "release": "patch" },
               { "type": "docs", "scope": "*", "release": false },
               { "type": "refactor", "release": "patch" },
