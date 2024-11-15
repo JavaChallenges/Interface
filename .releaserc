@@ -8,6 +8,7 @@
         }
     ],
 	"plugins": [
+	    [
           "@semantic-release/commit-analyzer",
           {
             "preset": "angular",
@@ -24,10 +25,10 @@
               { "type": "docs", "scope": "README", "release": "patch" },
               { "type": "docs", "scope": "*", "release": false },
               { "type": "refactor", "release": "patch" },
-              { "scope": "no-release", "release": false },
+              { "scope": "no-release", "release": false }
             ]
           }
-        ],
+	    ],
 		"@semantic-release/release-notes-generator",
 		[
 			"@semantic-release/changelog",
@@ -38,8 +39,8 @@
 		[
 			"@semantic-release/github",
 			{
-				"assets": "pack/*.tgz",
-			},
-		],
-	],
+				"assets": "pack/*.tgz"
+			}
+		]
+	]
 }
