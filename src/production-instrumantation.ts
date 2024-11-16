@@ -1,6 +1,7 @@
 import fs from "fs";
 import {exec} from "child_process";
 import path from "node:path";
+import {getVersion} from "@/utils/helpers";
 
 let version;
 try {
@@ -34,33 +35,35 @@ function deleteFileIfExists(path: string) {
 
 function downloadAndExtractChallenges() {
     console.log("Downloading challenges...");
-    let url
     if(process.env.INDEV) {
         console.log("Indev variante wird geladen");
-        url = "https://github.com/JavaChallenges/Challenges/archive/refs/heads/development.zip"
-    } else {
-        url = "https://github.com/JavaChallenges/Challenges/archive/refs/heads/master.zip"
     }
-    exec(`wget -O master.zip ${url}`, (error) => {
-        if (!error) {
-            exec('unzip master.zip', (error) => {
-                if (!error) {
-                    exec('mv Challenges-*/challenges/ .', (error) => {
-                        if (!error) {
-                            exec('rm -r Challenges-*', (error) => {
-                                if (!error) {
-                                    deleteFileIfExists("master.zip");
-                                }
-                                if (!process.env.INDEV) {
-                                    deleteFolderRecursive("./challenges/0_playground");
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    });
+    getVersion(process.env.INDEV !== undefined).then((version) => {
+        const url = `https://github.com/JavaChallenges/Challenges/archive/refs/tags/${version}.zip`
+        exec(`wget -O master.zip ${url}`, (error) => {
+            if (!error) {
+                exec('unzip master.zip', (error) => {
+                    if (!error) {
+                        exec('mv Challenges-*/challenges/ .', (error) => {
+                            if (!error) {
+                                exec('rm -r Challenges-*', (error) => {
+                                    if (!error) {
+                                        deleteFileIfExists("master.zip");
+                                    }
+                                    if (!process.env.INDEV) {
+                                        deleteFolderRecursive("./challenges/0_playground");
+                                    }
+                                    const cmd = `touch ./challenges/VERSION && echo "${version}" > ./challenges/VERSION`;
+                                    exec(cmd, () => {
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    })
 }
 
 function deleteFolderRecursive(folderPath: string) {
