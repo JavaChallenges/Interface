@@ -16,3 +16,31 @@ export const newShade = (hexColor: string, magnitude: number) => {
         return hexColor;
     }
 };
+
+export async function getVersion(indev: boolean): Promise<string> {
+    const data = await fetchJsonFromUrl("https://api.github.com/repos/JavaChallenges/Challenges/releases")
+    let version;
+    for (const release of data) {
+        if (indev && release.prerelease) {
+            version = release.name
+            break
+        }
+        if (!indev && !release.prerelease) {
+            version = release.name
+            break
+        }
+    }
+    return version;
+}
+
+async function fetchJsonFromUrl(url: string) {
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            return await response.json();
+        }
+    } catch (error) {
+        console.error('Error fetching JSON data:', error);
+        throw error;
+    }
+}
