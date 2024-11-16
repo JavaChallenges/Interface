@@ -1,5 +1,6 @@
 import fs from "fs";
 import {exec} from "child_process";
+import path from "node:path";
 
 let version;
 try {
@@ -39,8 +40,6 @@ function downloadAndExtractChallenges() {
         url = "https://github.com/JavaChallenges/Challenges/archive/refs/heads/development.zip"
     } else {
         url = "https://github.com/JavaChallenges/Challenges/archive/refs/heads/master.zip"
-        // Delete playground folder as it should not be in production
-        deleteFolderRecursive("./challenges/0_playground");
     }
     exec(`wget -O master.zip ${url}`, (error) => {
         if (!error) {
@@ -52,6 +51,9 @@ function downloadAndExtractChallenges() {
                                 if (!error) {
                                     deleteFileIfExists("master.zip");
                                 }
+                                if (!process.env.INDEV) {
+                                    deleteFolderRecursive("./challenges/0_playground");
+                                }
                             });
                         }
                     });
@@ -61,16 +63,18 @@ function downloadAndExtractChallenges() {
     });
 }
 
-function deleteFolderRecursive(path: string) {
-    if (fs.existsSync(path)) {
-        fs.readdirSync(path).forEach((file) => {
-            const curPath = `${path}/${file}`;
-            if (fs.lstatSync(curPath).isDirectory()) {
-                deleteFolderRecursive(curPath);
+function deleteFolderRecursive(folderPath: string) {
+    if (fs.existsSync(folderPath)) {
+        fs.readdirSync(folderPath).forEach((file) => {
+            const currentPath = path.join(folderPath, file);
+            if (fs.lstatSync(currentPath).isDirectory()) {
+                // Recursively delete subdirectory
+                deleteFolderRecursive(currentPath);
             } else {
-                fs.unlinkSync(curPath);
+                // Delete file
+                fs.unlinkSync(currentPath);
             }
         });
-        fs.rmdirSync(path);
+        fs.rmdirSync(folderPath);
     }
 }
