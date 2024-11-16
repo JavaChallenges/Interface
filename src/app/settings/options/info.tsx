@@ -16,7 +16,7 @@ export function Info({contributorsInterface, contributorsChallenges}: {
         <>
             <Contributors contributorsInterface={contributorsInterface}
                           contributorsChallenges={contributorsChallenges}/>
-            <Version/>
+            <Versions/>
             <GithubLinks/>
         </>
     )
@@ -54,18 +54,38 @@ function GithubLinks() {
 }
 
 
-async function Version({className}: { className?: string }) {
-    let version;
+async function Versions({className}: { className?: string }) {
+    let interfaceVersion;
     try {
-        version = fs.readFileSync('./VERSION', 'utf8');
+        interfaceVersion = fs.readFileSync('./VERSION', 'utf8');
     } catch {
-        version = "Lokale Development Version";
+        interfaceVersion = "Lokale Development Version";
+    }
+
+    let challengeVersion;
+    try {
+        challengeVersion = fs.readFileSync('./challenges/VERSION', 'utf8');
+    } catch {
+        if (process.env.INDEV) {
+            challengeVersion = "Development Version";
+        } else {
+            challengeVersion = "Lokale Development Version";
+        }
     }
     return (
         <div className={`${className} text-right`}>
-            <p className={"text-xs"}>Version</p>
-            <Link className={"text-sm hover:underline"} target="_blank" rel="noopener noreferrer"
-                  href={`https://github.com/JavaChallenges/Interface/releases/tag/${version}`}>{version}</Link>
+            <p className={"text-xs"}>Versionen</p>
+            <span className={"text-sm"}>
+                Interface:{" "}
+                <Link
+                    className={"hover:underline"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://github.com/JavaChallenges/Interface/releases/tag/${interfaceVersion}`}>
+                    {interfaceVersion}
+                </Link>
+            </span>
+            <p className={"text-sm"}>Challenges: {challengeVersion}</p>
         </div>
     )
 }
