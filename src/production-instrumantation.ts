@@ -53,9 +53,7 @@ function downloadAndExtractChallenges() {
                                     if (!process.env.INDEV) {
                                         deleteFolderRecursive("./challenges/0_playground");
                                     }
-                                    const cmd = `touch ./challenges/VERSION && echo "${version}" > ./challenges/VERSION`;
-                                    exec(cmd, () => {
-                                    });
+                                    fs.writeFileSync("./challenges/VERSION", version, 'utf8');
                                 });
                             }
                         });
