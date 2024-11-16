@@ -35,7 +35,7 @@ function downloadAndExtractChallenges() {
     console.log("Downloading challenges...");
     let url
     if(process.env.INDEV) {
-        console.log("Indiv variante wird geladen");
+        console.log("Indev variante wird geladen");
         url = "https://github.com/JavaChallenges/Challenges/archive/refs/heads/development.zip"
     } else {
         url = "https://github.com/JavaChallenges/Challenges/archive/refs/heads/master.zip"
