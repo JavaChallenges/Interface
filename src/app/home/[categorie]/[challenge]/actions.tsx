@@ -97,7 +97,7 @@ function checkBlacklist(content: string): string {
 
 function getErrorPositionsFromErrormessage(errormessage: string) {
     const errorLines:{[key: string]: number[]} = {};
-    const regex = /([aA0-zZ9]+)\.java:\[(\d+),(\d+)]/gm
+    const regex = /([a-zA-Z0-9]+)\.java:\[(\d+),(\d+)]/gm
 
     const matches = [...errormessage.matchAll(regex)];
 
