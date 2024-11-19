@@ -26,7 +26,7 @@ export function Info({contributorsInterface, contributorsChallenges}: {
 function IconLink({href, name, icon}: { href: string, name: string, icon: React.ReactNode }) {
     return (
         <Link target={"_blank"} rel="noopener noreferrer" className={"hover:underline"} href={href}>
-            <span className={"flex items-center"}>{icon}{name}<OpenIcon className={'size-2.5 ml-1'}/></span>
+            <span className={"flex items-center text-darkShades-100 dark:text-lightShades-100"}>{icon}{name}<OpenIcon className={'size-2.5 ml-1'}/></span>
         </Link>
     )
 }

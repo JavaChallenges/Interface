@@ -6,6 +6,7 @@ import SettingsIcon from "@/app/ui/icons/settings";
 import {ReactNode} from "react";
 import {ThemeProvider} from "next-themes";
 import {Footer} from "@/app/ui/footer";
+import MobileNotice from "@/app/ui/mobile";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,10 +35,15 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${geistMono.variable} h-screen w-screen overflow-hidden flex-col flex bg-lightShades-100 dark:bg-darkShades-100 antialiased`}
             >
                 <ThemeProvider attribute="class">
-
-                    <Header pages={pages}/>
-                    {children}
-                    <Footer/>
+                    <main className={"h-screen w-screen hidden md:block"}>
+                        <Header pages={pages}/>
+                            {children}
+                        <Footer/>
+                    </main>
+                    <main className={"h-screen w-screen md:hidden block"}>
+                        <MobileNotice/>
+                        <Footer/>
+                    </main>
                 </ThemeProvider>
             </body>
         </html>
