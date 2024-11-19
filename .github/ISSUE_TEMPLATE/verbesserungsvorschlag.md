@@ -7,6 +7,9 @@ assignees: ''
 
 ---
 
+## Bevor du fortfährst
+Bitte lies dir die [Richtlinien für Verbesserungsvorschlage](https://github.com/JavaChallenges/Interface/blob/f787cd6d07e57048af37ea37ba3e4a1ca00b6c73/.github/CONTRIBUTING.md#verbesserungsvorschl%C3%A4ge) durch. Wir freuen uns über jede Idee, aber es ist wichtig, dass du die Richtlinien gelesen hast, bevor du fortfährst.
+
 ## Verbesserungsvorschlag
 **Löst deine Idee ein Problem, dass du derzeit mit der Seite hast? Bitte erläutere.**
 Bitte versuch so eindeutig wie möglich zu erklären, welches Problem du derzeit mit der Website hast.

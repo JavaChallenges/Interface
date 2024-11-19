@@ -35,17 +35,17 @@ function GithubLinks() {
     return (
         <span className={"mt-10 flex justify-around"}>
             <IconLink
-                href={"https://github.com/JavaChallenges/Interface/issues/new/choose"}
+                href={"https://github.com/JavaChallenges/Interface/issues/new?assignees=&labels=enhancement%2C+needs-review&projects=&template=verbesserungsvorschlag.md&title=%5BVerbesserungsvorschlag%5D+DEIN+TITEL"}
                 name={"Verbesserung vorschlagen"}
                 icon={<LightbulbIcon className={"size-4 mr-2"}/>}
             />
             <IconLink
-                href={"https://github.com/JavaChallenges/Interface/issues/new/choose"}
+                href={"https://github.com/JavaChallenges/Interface/issues/new?assignees=&labels=bug%2C+needs-review&projects=&template=bug_report.md&title=%5BBUG%5D+DEIN+TITEL"}
                 name={"Fehler melden"}
                 icon={<BugIcon className={"size-4 mr-2"}/>}
             />
             <IconLink
-                href={"https://github.com/JavaChallenges/Interface/issues/new/choose"}
+                href={"https://github.com/JavaChallenges/Interface/blob/f787cd6d07e57048af37ea37ba3e4a1ca00b6c73/.github/CONTRIBUTING.md"}
                 name={"Selbst mithelfen"}
                 icon={<ContributeIcon className={"size-4 mr-2"}/>}
             />
