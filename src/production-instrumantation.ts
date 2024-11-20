@@ -21,18 +21,34 @@ deleteFolderRecursive("./challenges/");
 createFolderIfNotExists("./workspace/");
 downloadAndExtractChallenges();
 
+/**
+ * Creates a folder if it does not already exist.
+ *
+ * @param {string} path - The path of the folder to create.
+ */
 export function createFolderIfNotExists(path: string) {
     if (!fs.existsSync(path)) {
         fs.mkdirSync(path);
     }
 }
 
+/**
+ * Deletes a file if it exists.
+ *
+ * @param {string} path - The path of the file to delete.
+ */
 export function deleteFileIfExists(path: string) {
     if (fs.existsSync(path)) {
         fs.unlinkSync(path);
     }
 }
 
+/**
+ * Downloads and extracts challenges from a GitHub repository.
+ *
+ * This function fetches the latest version of the challenges, downloads the zip file,
+ * extracts it, and moves the challenges to the appropriate directory.
+ */
 export function downloadAndExtractChallenges() {
     console.log("Downloading challenges...");
     if(process.env.INDEV) {
@@ -64,6 +80,11 @@ export function downloadAndExtractChallenges() {
     })
 }
 
+/**
+ * Recursively deletes a folder and its contents.
+ *
+ * @param {string} folderPath - The path of the folder to delete.
+ */
 export function deleteFolderRecursive(folderPath: string) {
     if (fs.existsSync(folderPath)) {
         fs.readdirSync(folderPath).forEach((file) => {
