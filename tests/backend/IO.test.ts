@@ -1,5 +1,5 @@
 import fs from "fs";
-import {loadCategories, loadMarkdown, loadTemplates, readJsonFile} from "@/app/backend/IO";
+import {loadAllTags, loadCategories, loadMarkdown, loadTemplates, readJsonFile} from "@/app/backend/IO";
 import {JSONObject} from "@/utils/typecollection";
 
 jest.mock('fs', () => ({
@@ -152,5 +152,50 @@ describe('loadCategories', () => {
         expect(consoleSpy).toHaveBeenCalledWith('Error reading categories:', expect.any(Error));
 
         consoleSpy.mockRestore();
+    });
+});
+
+/**
+ * Test suite for the `loadAllTags` function.
+ */
+describe('loadAllTags', () => {
+    /**
+     * Test case for successfully reading and parsing the tags JSON file.
+     * It should return an array of Tag objects when the file is read successfully.
+     */
+    it('should return an array of Tag objects when file is read successfully', async () => {
+        const mockData = JSON.stringify({
+            tag1: { color1: 'red' },
+            tag2: { color2: 'blue' }
+        });
+        (fs.promises.readFile as jest.Mock).mockResolvedValue(mockData);
+
+        const result = await loadAllTags();
+        expect(result).toEqual([
+            { name: 'color1', color: 'red' },
+            { name: 'color2', color: 'blue' }
+        ]);
+    });
+
+    /**
+     * Test case for handling an empty JSON file.
+     * It should return an empty array when the JSON file is empty.
+     */
+    it('should return an empty array when the JSON file is empty', async () => {
+        const mockData = JSON.stringify({});
+        (fs.promises.readFile as jest.Mock).mockResolvedValue(mockData);
+
+        const result = await loadAllTags();
+        expect(result).toEqual([]);
+    });
+
+    /**
+     * Test case for handling file reading errors.
+     * It should throw an error when file reading fails.
+     */
+    it('should throw an error when file reading fails', async () => {
+        (fs.promises.readFile as jest.Mock).mockRejectedValue(new Error('File read error'));
+
+        await expect(loadAllTags()).rejects.toThrow('File read error');
     });
 });

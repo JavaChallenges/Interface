@@ -1,9 +1,9 @@
-import { matchColorToTagName } from '@/app/home/tags/[tag]/actions';
+import { matchColorToTagName } from '@/app/home/tags/[tag]/tagloader';
 import * as actions from '@/app/home/challengeloader';
 import {loadAllChallengesOfCategory, loadCategories, loadTemplates, readJsonFile} from "@/app/backend/IO";
 import {loadAllChallenges, loadCategoryDetails, loadSidebarInformation} from "@/app/home/challengeloader";
 
-jest.mock('@/app/home/tags/[tag]/actions', () => ({
+jest.mock('@/app/home/tags/[tag]/tagloader', () => ({
     matchColorToTagName: jest.fn()
 }));
 
