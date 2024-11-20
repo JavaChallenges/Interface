@@ -1,3 +1,5 @@
+"use server"
+
 import {ChallengeDetails, JSONObject, JSONValue, Tag, Template} from "@/utils/typecollection";
 import fs, { readFileSync } from "fs";
 import { loadChallengeDetails } from "@/app/home/challengeloader";
@@ -38,7 +40,7 @@ export async function loadMarkdown(path: string): Promise<string | null> {
  * @param {string} path - The base path to the templates directory.
  * @returns {Template[]} - An array of loaded templates.
  */
-export function loadTemplates(templates: JSONValue[], path: string): Template[] {
+export async function loadTemplates(templates: JSONValue[], path: string): Promise<Template[]> {
     const templateArray: Template[] = [];
     for (const template of templates) {
         const templateObject = template as JSONObject;

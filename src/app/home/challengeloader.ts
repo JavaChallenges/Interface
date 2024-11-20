@@ -33,7 +33,7 @@ export async function loadChallengeDetails(category: string, challenge: string):
                 friendlyName: challengeConfigJSON.friendlyName? challengeConfigJSON.friendlyName as string : "ERROR LOADING",
                 difficulty: challengeConfigJSON.difficulty? Number.parseInt(challengeConfigJSON.difficulty as string) : 0,
                 shortDescription: challengeConfigJSON.shortDescription? challengeConfigJSON.shortDescription as string : "ERROR LOADING",
-                templates: challengeConfigJSON.templates? loadTemplates(challengeConfigJSON.templates as JSONValue[], `./challenges/${category}/${challenge}`): [],
+                templates: challengeConfigJSON.templates? await loadTemplates(challengeConfigJSON.templates as JSONValue[], `./challenges/${category}/${challenge}`): [],
                 tags: challengeConfigJSON.tags? tags : [],
                 categoryRef: category
             };

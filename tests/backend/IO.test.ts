@@ -81,14 +81,14 @@ describe('loadTemplates', () => {
     /**
      * Test case for loading templates with non-.java content directly.
      */
-    it('should load templates with non-.java content directly', () => {
+    it('should load templates with non-.java content directly', async () => {
         const mockTemplates = [
             { title: 'Template1', content: 'Some content', classname: 'Class1', whitelist: ['item1'] },
             { title: 'Template2', content: 'Another content', classname: 'Class2' }
         ];
         const mockPath = 'path/to';
 
-        const result = loadTemplates((mockTemplates as JSONObject[]), mockPath);
+        const result = await loadTemplates((mockTemplates as JSONObject[]), mockPath);
 
         expect(result).toEqual([
             { title: 'Template1', content: 'Some content', classname: 'Class1', whitelist: ['item1'] },
@@ -100,7 +100,7 @@ describe('loadTemplates', () => {
     /**
      * Test case for loading templates with .java content from file.
      */
-    it('should load templates with .java content from file', () => {
+    it('should load templates with .java content from file', async () => {
         const mockTemplates = [
             { title: 'Template1', content: 'template1.java', classname: 'Class1', whitelist: ['item1'] },
             { title: 'Template2', content: 'template2.java', classname: 'Class2' }
@@ -110,7 +110,7 @@ describe('loadTemplates', () => {
 
         (fs.readFileSync as jest.Mock).mockReturnValue(mockFileContent);
 
-        const result = loadTemplates((mockTemplates as JSONObject[]), mockPath);
+        const result = await loadTemplates((mockTemplates as JSONObject[]), mockPath);
 
         expect(result).toEqual([
             { title: 'Template1', content: mockFileContent, classname: 'Class1', whitelist: ['item1'] },

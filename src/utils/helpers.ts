@@ -51,10 +51,10 @@ export async function getVersion(indev: boolean): Promise<string> {
  * Fetches JSON data from a given URL.
  *
  * @param {string} url - The URL to fetch JSON data from.
- * @returns {Promise<any>} - A promise that resolves to the fetched JSON data.
+ * @returns - A promise that resolves to the fetched JSON data.
  * @throws Will throw an error if the fetch operation fails.
  */
-async function fetchJsonFromUrl(url: string): Promise<any> {
+async function fetchJsonFromUrl(url: string) {
     try {
         const response = await fetch(url);
         if (response.ok) {
