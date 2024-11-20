@@ -1,6 +1,7 @@
 import {ChallengeDetails, JSONObject, JSONValue, Tag, Template} from "@/utils/typecollection";
 import fs, { readFileSync } from "fs";
 import { loadChallengeDetails } from "@/app/home/challengeloader";
+import path from "node:path";
 
 /**
  * Reads a JSON file and parses its content.
@@ -116,4 +117,24 @@ export async function loadAllTags(): Promise<Tag[]> {
         tags.push({ name: key, color: json[tag][key] });
     }
     return tags;
+}
+
+/**
+ * Recursively deletes a folder and its contents.
+ * @param {string} dirPath - The path to the directory to delete.
+ * @returns {Promise<void>} - A promise that resolves when the directory and its contents have been deleted.
+ */
+export async function deleteFolderRecursive(dirPath: string): Promise<void> {
+    if (fs.existsSync(dirPath)) {
+        const files = fs.readdirSync(dirPath);
+        for (const file of files) {
+            const curPath = path.join(dirPath, file);
+            if (fs.lstatSync(curPath).isDirectory()) {
+                await deleteFolderRecursive(curPath);
+            } else {
+                fs.unlinkSync(curPath);
+            }
+        }
+        fs.rmdirSync(dirPath);
+    }
 }

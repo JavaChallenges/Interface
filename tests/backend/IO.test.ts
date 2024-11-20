@@ -1,6 +1,14 @@
 import fs from "fs";
-import {loadAllTags, loadCategories, loadMarkdown, loadTemplates, readJsonFile} from "@/app/backend/IO";
+import {
+    deleteFolderRecursive,
+    loadAllTags,
+    loadCategories,
+    loadMarkdown,
+    loadTemplates,
+    readJsonFile
+} from "@/app/backend/IO";
 import {JSONObject} from "@/utils/typecollection";
+import path from "node:path";
 
 jest.mock('fs', () => ({
     promises: {
@@ -8,6 +16,11 @@ jest.mock('fs', () => ({
         readdir: jest.fn(),
     },
     readFileSync: jest.fn(),
+    existsSync: jest.fn(),
+    readdirSync: jest.fn(),
+    lstatSync: jest.fn(),
+    unlinkSync: jest.fn(),
+    rmdirSync: jest.fn(),
 }));
 
 describe('readJsonFile', () => {
@@ -197,5 +210,67 @@ describe('loadAllTags', () => {
         (fs.promises.readFile as jest.Mock).mockRejectedValue(new Error('File read error'));
 
         await expect(loadAllTags()).rejects.toThrow('File read error');
+    });
+});
+
+/**
+ * Test suite for the `deleteFolderRecursive` function.
+ */
+describe("deleteFolderRecursive", () => {
+
+    /**
+     * Test case for deleting all files and directories recursively.
+     * It mocks the file system to simulate the presence of files and directories,
+     * and verifies that the function deletes them as expected.
+     */
+    it("should delete all files and directories recursively", async () => {
+        (fs.existsSync as jest.Mock).mockReturnValue(true);
+        (fs.readdirSync as jest.Mock).mockReturnValue(["file1.txt", "dir1"]);
+        (fs.lstatSync as jest.Mock).mockImplementation((filePath) => ({
+            isDirectory: () => filePath === path.join("testDir", "dir1"),
+        }));
+
+        await deleteFolderRecursive("testDir");
+
+        expect(fs.unlinkSync).toHaveBeenCalledWith(path.join("testDir", "file1.txt"));
+        expect(fs.rmdirSync).toHaveBeenCalledWith(path.join("testDir", "dir1"));
+        expect(fs.rmdirSync).toHaveBeenCalledWith("testDir");
+    });
+
+    /**
+     * Test case for handling an empty directory.
+     * It mocks the file system to simulate an empty directory,
+     * and verifies that the function deletes the directory as expected.
+     */
+    it("should handle empty directory", async () => {
+        (fs.existsSync as jest.Mock).mockReturnValue(true);
+        (fs.readdirSync as jest.Mock).mockReturnValue([]);
+
+        await deleteFolderRecursive("emptyDir");
+
+        expect(fs.rmdirSync).toHaveBeenCalledWith("emptyDir");
+    });
+
+    /**
+     * Test case for handling nested directories.
+     * It mocks the file system to simulate nested directories,
+     * and verifies that the function deletes them recursively as expected.
+     */
+    it("should handle nested directories", async () => {
+        (fs.existsSync as jest.Mock).mockReturnValue(true);
+        (fs.readdirSync as jest.Mock).mockImplementation((dirPath) => {
+            if (dirPath === "testDir") return ["dir1"];
+            if (dirPath === path.join("testDir", "dir1")) return ["file1.txt"];
+            return [];
+        });
+        (fs.lstatSync as jest.Mock).mockImplementation((filePath) => ({
+            isDirectory: () => filePath === path.join("testDir", "dir1"),
+        }));
+
+        await deleteFolderRecursive("testDir");
+
+        expect(fs.unlinkSync).toHaveBeenCalledWith(path.join("testDir", "dir1", "file1.txt"));
+        expect(fs.rmdirSync).toHaveBeenCalledWith(path.join("testDir", "dir1"));
+        expect(fs.rmdirSync).toHaveBeenCalledWith("testDir");
     });
 });
