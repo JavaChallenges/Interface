@@ -8,7 +8,13 @@ import {
 import {matchColorToTagName} from "@/app/home/tags/[tag]/actions";
 import {loadAllChallengesOfCategory, loadCategories, loadTemplates, readJsonFile} from "@/app/backend/IO";
 
-
+/**
+ * Loads the details of a specific challenge within a category.
+ * @param {string} category - The name of the category.
+ * @param {string} challenge - The name of the challenge.
+ * @returns {Promise<ChallengeDetails|null>} - A promise that resolves to the challenge details or null if not found.
+ * @throws Will throw an error if reading the directory fails.
+ */
 export async function loadChallengeDetails(category: string, challenge: string): Promise<ChallengeDetails|null> {
     try {
         const challengeConfigJSON = await readJsonFile(`./challenges/${category}/${challenge}/config.json`);
@@ -40,25 +46,34 @@ export async function loadChallengeDetails(category: string, challenge: string):
     }
 }
 
-
+/**
+ * Loads the details of a specific category.
+ * @param {string} category - The name of the category.
+ * @returns {Promise<CategoryDetails|null>} - A promise that resolves to the category details or null if not found.
+ * @throws Will throw an error if reading the directory fails.
+ */
 export async function loadCategoryDetails(category: string): Promise<CategoryDetails|null> {
     try {
-     const categoryConfigJSON = await readJsonFile(`./challenges/${category}/config.json`);
-     if(categoryConfigJSON){
-         return {
-             name: category,
-             friendlyName: categoryConfigJSON.friendlyName as string,
-             shortDescription: categoryConfigJSON.shortDescription as string,
-             challenges: await loadAllChallengesOfCategory(category)
-         };
-     } else {
-         return null;
-     }
+        const categoryConfigJSON = await readJsonFile(`./challenges/${category}/config.json`);
+        if(categoryConfigJSON){
+            return {
+                name: category,
+                friendlyName: categoryConfigJSON.friendlyName as string,
+                shortDescription: categoryConfigJSON.shortDescription as string,
+                challenges: await loadAllChallengesOfCategory(category)
+            };
+        } else {
+            return null;
+        }
     }catch (err) {
         throw err;
     }
 }
 
+/**
+ * Loads all challenges across all categories.
+ * @returns {Promise<ChallengeDetails[]>} - A promise that resolves to an array of all challenge details.
+ */
 export async function loadAllChallenges(){
     const categories = await loadCategories();
     const result: ChallengeDetails[] = [];
@@ -69,6 +84,11 @@ export async function loadAllChallenges(){
     return result;
 }
 
+/**
+ * Loads the sidebar information, including categories and their challenges.
+ * @returns {Promise<SidebarInfo>} - A promise that resolves to the sidebar information.
+ * @throws Will throw an error if reading the directory fails.
+ */
 export async function loadSidebarInformation(): Promise<SidebarInfo> {
     try {
         const result: SidebarInfo = [];

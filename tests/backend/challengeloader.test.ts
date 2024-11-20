@@ -34,6 +34,9 @@ describe('loadChallengeDetails', () => {
         jest.clearAllMocks();
     });
 
+    /**
+     * Test case for successfully loading challenge details.
+     */
     it('should load challenge details successfully', async () => {
         (loadTemplates as jest.Mock).mockReturnValue(templates);
         (readJsonFile as jest.Mock).mockResolvedValue(challengeConfigJSON);
@@ -60,6 +63,9 @@ describe('loadChallengeDetails', () => {
         });
     });
 
+    /**
+     * Test case for handling missing challenge config.
+     */
     it('should return null if challenge config is not found', async () => {
         (readJsonFile as jest.Mock).mockResolvedValue(null);
 
@@ -70,6 +76,9 @@ describe('loadChallengeDetails', () => {
 });
 
 describe('loadCategoryDetails', () => {
+    /**
+     * Test case for successfully loading category details.
+     */
     it('should load category details successfully', async () => {
         const mockCategory = 'exampleCategory';
         const mockCategoryConfig = {
@@ -94,6 +103,9 @@ describe('loadCategoryDetails', () => {
         });
     });
 
+    /**
+     * Test case for handling missing category config.
+     */
     it('should return null if category config is not found', async () => {
         const mockCategory = 'nonExistentCategory';
 
@@ -104,6 +116,9 @@ describe('loadCategoryDetails', () => {
         expect(result).toBeNull();
     });
 
+    /**
+     * Test case for handling errors when reading the file.
+     */
     it('should throw an error if reading the file fails', async () => {
         const mockCategory = 'errorCategory';
 
@@ -114,6 +129,9 @@ describe('loadCategoryDetails', () => {
 });
 
 describe('loadAllChallenges', () => {
+    /**
+     * Test case for successfully loading all challenges.
+     */
     it('should load all challenges successfully', async () => {
         const mockCategories = ['category1', 'category2'];
         const mockChallengesCategory1 = [
@@ -135,6 +153,9 @@ describe('loadAllChallenges', () => {
         expect(result).toEqual([...mockChallengesCategory1, ...mockChallengesCategory2]);
     });
 
+    /**
+     * Test case for handling no categories found.
+     */
     it('should return an empty array if no categories are found', async () => {
         (loadCategories as jest.Mock).mockResolvedValue([]);
 
@@ -143,6 +164,9 @@ describe('loadAllChallenges', () => {
         expect(result).toEqual([]);
     });
 
+    /**
+     * Test case for handling errors when loading categories.
+     */
     it('should throw an error if loading categories fails', async () => {
         (loadCategories as jest.Mock).mockRejectedValue(new Error('Load categories error'));
 
@@ -151,6 +175,9 @@ describe('loadAllChallenges', () => {
 });
 
 describe('loadSidebarInformation', () => {
+    /**
+     * Test case for successfully loading sidebar information.
+     */
     it('should load sidebar information successfully', async () => {
         const mockCategories = ['category1', 'category2'];
         const mockCategoryDetails1 = {
@@ -201,6 +228,9 @@ describe('loadSidebarInformation', () => {
         ]);
     });
 
+    /**
+     * Test case for handling no categories found.
+     */
     it('should return an empty array if no categories are found', async () => {
         (loadCategories as jest.Mock).mockResolvedValue([]);
 
@@ -209,6 +239,9 @@ describe('loadSidebarInformation', () => {
         expect(result).toEqual([{ name: '/', friendlyName: 'Übersicht' }]);
     });
 
+    /**
+     * Test case for handling errors when loading categories.
+     */
     it('should throw an error if loading categories fails', async () => {
         (loadCategories as jest.Mock).mockRejectedValue(new Error('Load categories error'));
 
