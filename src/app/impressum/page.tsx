@@ -1,5 +1,5 @@
 import React from "react";
-import {loadMarkdown} from "@/app/home/actions";
+import {loadMarkdown} from "@/app/home/challengeloader";
 import RenderedMarkdown from "@/app/home/ui/markdown";
 import {notFound} from "next/navigation";
 

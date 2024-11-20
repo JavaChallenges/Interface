@@ -1,4 +1,4 @@
-import {loadAllChallenges} from "@/app/home/actions";
+import {loadAllChallenges} from "@/app/home/challengeloader";
 import fs from "fs";
 import {ChallengeDetails, Tag} from "@/utils/typecollection";
 

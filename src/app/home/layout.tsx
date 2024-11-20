@@ -1,6 +1,6 @@
 "use server";
 import Sidemenu from "@/app/ui/sidemenu";
-import {loadSidebarInformation} from "@/app/home/actions";
+import {loadSidebarInformation} from "@/app/home/challengeloader";
 import {ReactNode} from "react";
 
 
