@@ -2,7 +2,6 @@ import fs from "fs";
 import {loadCategories, loadMarkdown, loadTemplates, readJsonFile} from "@/app/backend/IO";
 import {JSONObject} from "@/utils/typecollection";
 
-
 jest.mock('fs', () => ({
     promises: {
         readFile: jest.fn(),
@@ -12,6 +11,9 @@ jest.mock('fs', () => ({
 }));
 
 describe('readJsonFile', () => {
+    /**
+     * Test case for successfully reading and parsing a JSON file.
+     */
     it('should return parsed JSON object when file is read successfully', async () => {
         const mockData = JSON.stringify({ key: 'value' });
         (fs.promises.readFile as jest.Mock).mockResolvedValue(mockData);
@@ -20,6 +22,9 @@ describe('readJsonFile', () => {
         expect(result).toEqual({ key: 'value' });
     });
 
+    /**
+     * Test case for handling errors when reading a JSON file.
+     */
     it('should return null and log error when file reading fails', async () => {
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         (fs.promises.readFile as jest.Mock).mockRejectedValue(new Error('File read error'));
@@ -33,6 +38,9 @@ describe('readJsonFile', () => {
 });
 
 describe('loadMarkdown', () => {
+    /**
+     * Test case for successfully reading a markdown file.
+     */
     it('should return file content when file is read successfully', async () => {
         const mockData = 'Markdown content';
         (fs.promises.readFile as jest.Mock).mockResolvedValue(mockData);
@@ -41,6 +49,9 @@ describe('loadMarkdown', () => {
         expect(result).toBe(mockData);
     });
 
+    /**
+     * Test case for handling errors when reading a markdown file.
+     */
     it('should return null and log error when file reading fails', async () => {
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         (fs.promises.readFile as jest.Mock).mockRejectedValue(new Error('File read error'));
@@ -54,6 +65,9 @@ describe('loadMarkdown', () => {
 });
 
 describe('loadTemplates', () => {
+    /**
+     * Test case for loading templates with non-.java content directly.
+     */
     it('should load templates with non-.java content directly', () => {
         const mockTemplates = [
             { title: 'Template1', content: 'Some content', classname: 'Class1', whitelist: ['item1'] },
@@ -69,6 +83,10 @@ describe('loadTemplates', () => {
         ]);
         expect(fs.readFileSync).not.toHaveBeenCalled();
     });
+
+    /**
+     * Test case for loading templates with .java content from file.
+     */
     it('should load templates with .java content from file', () => {
         const mockTemplates = [
             { title: 'Template1', content: 'template1.java', classname: 'Class1', whitelist: ['item1'] },
@@ -91,6 +109,9 @@ describe('loadTemplates', () => {
 });
 
 describe('loadCategories', () => {
+    /**
+     * Test case for successfully loading category names from directories.
+     */
     it('should return an array of folder names when directories are present', async () => {
         const mockFiles = [
             { name: 'category1', isDirectory: () => true },
@@ -104,6 +125,9 @@ describe('loadCategories', () => {
         expect(result).toEqual(['category1', 'category2']);
     });
 
+    /**
+     * Test case for handling no directories present.
+     */
     it('should return an empty array when no directories are present', async () => {
         const mockFiles = [
             { name: 'file1.txt', isDirectory: () => false },
@@ -116,6 +140,9 @@ describe('loadCategories', () => {
         expect(result).toEqual([]);
     });
 
+    /**
+     * Test case for handling errors when reading directories.
+     */
     it('should return an empty array and log error when readdir fails', async () => {
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         (fs.promises.readdir as jest.Mock).mockRejectedValue(new Error('Read error'));
