@@ -2,8 +2,9 @@ module.exports = {
   // Remove the collectCoverage option
   // collectCoverage: true,
   coverageProvider: 'v8',
+  //'**/*.{js,jsx,ts,tsx}',
   collectCoverageFrom: [
-    '**/*.{js,jsx,ts,tsx}',
+    '<rootDir>/src/**/*.ts',
     '!**/*.d.ts',
     '!**/node_modules/**',
     '!<rootDir>/out/**',
