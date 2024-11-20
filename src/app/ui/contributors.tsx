@@ -16,12 +16,6 @@ export default function Contributors({contributorsInterface, contributorsChallen
     );
 }
 
-/*
-        <div className={"w-full grid lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-x-8"}>
-            {contributorsInterface.map((contributor, index) => <Contributor key={index}  contributor={contributor}/>)}
-        </div>
- */
-
 function ContributionCategory({contributors, title}: { contributors: Contribrutor[], title: string }) {
     return (
         <div className={"flex flex-col"}>
@@ -45,10 +39,10 @@ function Contributor({contributor}: { contributor: Contribrutor }) {
 
                 <div>
                     <Link href={contributor.url}><h4
-                        className="text-lg/tight font-medium hover:underline text-gray-900">{contributor.name}</h4>
+                        className="text-lg/tight font-medium hover:underline text-darkShades-100 dark:text-lightShades-100">{contributor.name}</h4>
                     </Link>
 
-                    <p className="mt-0.5 text-sm text-gray-700">
+                    <p className="mt-0.5 text-sm text-darkShades-300 dark:text-lightShades-300">
                         Contributions: {contributor.contributions}
                     </p>
                 </div>
