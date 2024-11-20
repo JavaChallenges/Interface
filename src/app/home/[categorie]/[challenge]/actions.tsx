@@ -16,6 +16,8 @@ import { deleteFolderRecursive } from "@/app/backend/IO";
 import { filterErrorMessages, getErrorPositionsFromErrormessage } from "@/app/backend/compileCleanup";
 import { copyTestFiles, parseTestresult, writeSourceFiles } from "@/app/backend/compileIO";
 
+//TODO Test
+
 /**
  * Validates the provided code by compiling and running tests.
  *
