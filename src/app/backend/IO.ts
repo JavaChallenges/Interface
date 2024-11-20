@@ -1,4 +1,4 @@
-import { ChallengeDetails, JSONObject, JSONValue, Template } from "@/utils/typecollection";
+import {ChallengeDetails, JSONObject, JSONValue, Tag, Template} from "@/utils/typecollection";
 import fs, { readFileSync } from "fs";
 import { loadChallengeDetails } from "@/app/home/challengeloader";
 
@@ -94,4 +94,26 @@ export async function loadAllChallengesOfCategory(categoryName: string): Promise
         console.error('Error reading directory:', err);
         throw err;
     }
+}
+
+
+/**
+ * Loads all tags from a JSON file.
+ *
+ * This function reads the `tags.json` file located in the `./challenges` directory,
+ * parses its content, and constructs an array of `Tag` objects. Each `Tag` object
+ * contains a `name` and a `color` property.
+ *
+ * @returns {Promise<Tag[]>} - A promise that resolves to an array of `Tag` objects.
+ * @throws Will throw an error if reading the file fails.
+ */
+export async function loadAllTags(): Promise<Tag[]> {
+    const tags: Tag[] = [];
+    const json = JSON.parse(await fs.promises.readFile("./challenges/tags.json", 'utf-8'));
+    for (const tag in json) {
+        const entry = json[tag];
+        const key = Object.keys(entry)[0];
+        tags.push({ name: key, color: json[tag][key] });
+    }
+    return tags;
 }

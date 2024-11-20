@@ -5,7 +5,7 @@ import {
     SidebarEntry,
     SidebarInfo
 } from "@/utils/typecollection";
-import {matchColorToTagName} from "@/app/home/tags/[tag]/actions";
+import {matchColorToTagName} from "@/app/home/tags/[tag]/tagloader";
 import {loadAllChallengesOfCategory, loadCategories, loadTemplates, readJsonFile} from "@/app/backend/IO";
 
 /**

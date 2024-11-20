@@ -1,19 +1,9 @@
 import {loadAllChallenges} from "@/app/home/challengeloader";
-import fs from "fs";
 import {ChallengeDetails, Tag} from "@/utils/typecollection";
+import {loadAllTags} from "@/app/backend/IO";
 
-export async function loadAllTags():Promise<Tag[]>{
-    const tags:Tag[] = []
-    const json = JSON.parse(await fs.promises.readFile("./challenges/tags.json", 'utf-8'));
-    for (const tag in json) {
-        const entry = json[tag];
-        const key = Object.keys(entry)[0]
-        tags.push({name: key, color: json[tag][key]});
-    }
-    return tags;
-}
 
-function containesTag(tag: Tag, tags: Tag[]): boolean {
+function containsTag(tag: Tag, tags: Tag[]): boolean {
     for (const t of tags) {
         if (t.name === tag.name) {
             return true;
@@ -22,11 +12,11 @@ function containesTag(tag: Tag, tags: Tag[]): boolean {
     return false;
 }
 
-export async function getAllTagedChallenges(tag: Tag): Promise<ChallengeDetails[]> {
+export async function filterChallengesByTag(tag: Tag): Promise<ChallengeDetails[]> {
     const challenges = await loadAllChallenges();
     const taggedChallenges:ChallengeDetails[] = [];
     for (const challenge of challenges) {
-        if (challenge.tags && containesTag(tag, challenge.tags)) {
+        if (challenge.tags && containsTag(tag, challenge.tags)) {
             taggedChallenges.push(challenge);
         }
     }
@@ -53,7 +43,7 @@ export async function loadUsedAllTags(){
     const usedTags:{amount: number, tag: Tag}[] = [];
     for (const tag of tags) {
         for(const challenge of challenges){
-            if(challenge.tags && containesTag(tag, challenge.tags)){
+            if(challenge.tags && containsTag(tag, challenge.tags)){
                 let found = false;
                 for(const usedTag of usedTags){
                     if(usedTag.tag.name === tag.name){

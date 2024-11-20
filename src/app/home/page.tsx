@@ -6,10 +6,10 @@ import Link from "next/link";
 import Divider from "@/app/ui/divider";
 import {Tag} from "@/utils/typecollection";
 import {RenderedTag} from "@/app/ui/rendered-tag";
-import {loadAllTags, loadUsedAllTags} from "@/app/home/tags/[tag]/actions";
 import {Challenge} from "@/app/home/ui/challengepreview";
-import {loadCategories, loadMarkdown} from "@/app/backend/IO";
+import {loadAllTags, loadCategories, loadMarkdown} from "@/app/backend/IO";
 import {loadCategoryDetails} from "@/app/home/challengeloader";
+import {loadUsedAllTags} from "@/app/home/tags/[tag]/tagloader";
 
 export const revalidate = 0;
 
