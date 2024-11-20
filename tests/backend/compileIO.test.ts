@@ -7,6 +7,9 @@ jest.mock("fs");
 jest.mock("node:path");
 jest.mock("@/app/backend/compileCleanup");
 
+/**
+ * Test suite for the `writeSourceFiles` function.
+ */
 describe("writeSourceFiles", () => {
     const uuid = "test-uuid";
     const classes = [
@@ -22,6 +25,9 @@ describe("writeSourceFiles", () => {
         jest.clearAllMocks();
     });
 
+    /**
+     * Test case to verify that the directory is created if it does not exist.
+     */
     it("creates the directory if it does not exist", async () => {
         (fs.existsSync as jest.Mock).mockReturnValue(false);
         (fs.mkdirSync as jest.Mock).mockImplementation(() => {});
@@ -31,6 +37,9 @@ describe("writeSourceFiles", () => {
         expect(fs.mkdirSync).toHaveBeenCalledWith(path.join("./workspace/", `${uuid}/src/`), { recursive: true });
     });
 
+    /**
+     * Test case to verify that the directory is not created if it already exists.
+     */
     it("does not create the directory if it already exists", async () => {
         (fs.existsSync as jest.Mock).mockReturnValue(true);
 
@@ -39,6 +48,9 @@ describe("writeSourceFiles", () => {
         expect(fs.mkdirSync).not.toHaveBeenCalled();
     });
 
+    /**
+     * Test case to verify that the source files are written with the correct content.
+     */
     it("writes the source files with the correct content", async () => {
         (fs.existsSync as jest.Mock).mockReturnValue(true);
         (checkWhitelist as jest.Mock).mockImplementation((content) => content);
@@ -50,6 +62,9 @@ describe("writeSourceFiles", () => {
         expect(fs.writeFileSync).toHaveBeenCalledWith(path.join("./workspace/", `${uuid}/src/`, "TestClass2.java"), "filtered content", "utf8");
     });
 
+    /**
+     * Test case to verify that no files are written when the classes array is empty.
+     */
     it("handles empty classes array", async () => {
         (fs.existsSync as jest.Mock).mockReturnValue(true);
 
@@ -58,6 +73,9 @@ describe("writeSourceFiles", () => {
         expect(fs.writeFileSync).not.toHaveBeenCalled();
     });
 
+    /**
+     * Test case to verify that files are written even if some whitelist entries are missing.
+     */
     it("handles missing whitelist entries", async () => {
         (fs.existsSync as jest.Mock).mockReturnValue(true);
         (checkWhitelist as jest.Mock).mockImplementation((content) => content);
@@ -75,7 +93,13 @@ describe("writeSourceFiles", () => {
     });
 });
 
+/**
+ * Test suite for the `copyTestFiles` function.
+ */
 describe("copyTestFiles", () => {
+    /**
+     * Test case to verify that .java files are copied from source to test directory.
+     */
     it("copies .java files from source to test directory", () => {
         (fs.existsSync as jest.Mock).mockReturnValue(true);
         (fs.readdirSync as jest.Mock).mockReturnValue(["Test1.java", "Test2.java"]);
@@ -86,6 +110,9 @@ describe("copyTestFiles", () => {
         expect(fs.copyFileSync).toHaveBeenCalledWith(path.join("srcDir", "Test2.java"), path.join("destDir", "tests", "Test2.java"));
     });
 
+    /**
+     * Test case to verify that non-java files are not copied from source to test directory.
+     */
     it("does not copy non-java files from source to test directory", () => {
         (fs.existsSync as jest.Mock).mockReturnValue(true);
         (fs.readdirSync as jest.Mock).mockReturnValue(["Test1.java", "README.md"]);
@@ -95,18 +122,33 @@ describe("copyTestFiles", () => {
         expect(fs.copyFileSync).toHaveBeenCalledWith(path.join("srcDir", "Test1.java"), path.join("destDir", "tests", "Test1.java"));
         expect(fs.copyFileSync).not.toHaveBeenCalledWith(path.join("srcDir", "README.md"), expect.anything());
     });
-})
+});
 
-
+/**
+ * Test suite for the `parseTestresult` function.
+ */
 describe("parseTestresult", () => {
     const uuid = "test-uuid";
 
     beforeEach(() => {
         jest.clearAllMocks();
     });
-    //TODO Fix tests
-/*
 
+    /**
+     * Test case to verify that an empty result is returned when there are no test files.
+     */
+    it("returns empty result when there are no test files", () => {
+        jest.spyOn(fs, 'readdirSync').mockReturnValue([]);
+        const result = parseTestresult(uuid);
+        expect(result).toEqual({
+            result: [],
+            testamount: 0,
+            failed: 0
+        });
+    });
+
+    //TODO Fix tests
+    /*
     it("parses test results correctly when there are no failures or errors", () => {
         jest.spyOn(fs, 'readdirSync').mockReturnValue([
             { name: "test-result.xml", isFile: () => true } as unknown as fs.Dirent
@@ -216,15 +258,5 @@ describe("parseTestresult", () => {
             failed: 0
         });
     });
- */
-
-    it("returns empty result when there are no test files", () => {
-        jest.spyOn(fs, 'readdirSync').mockReturnValue([]);
-        const result = parseTestresult(uuid);
-        expect(result).toEqual({
-            result: [],
-            testamount: 0,
-            failed: 0
-        });
-    });
+    */
 });

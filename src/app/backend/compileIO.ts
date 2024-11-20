@@ -4,6 +4,14 @@ import {checkBlacklist, checkWhitelist} from "@/app/backend/compileCleanup";
 import {TestResult} from "@/utils/typecollection";
 import convert from "xml-js";
 
+/**
+ * Writes source files to the specified directory.
+ *
+ * @param whitelist - An object containing whitelisted content for each class.
+ * @param uuid - A unique identifier for the workspace.
+ * @param classes - An array of objects containing class names and their content.
+ * @returns A promise that resolves when the files are written.
+ */
 export async function writeSourceFiles(whitelist: { [key: string]: string[] }, uuid: string, classes: { name: string, content: string }[]): Promise<void> {
     const folderPath = path.join("./workspace/", `${uuid}/src/`);
     if (!fs.existsSync(folderPath)) {
@@ -18,6 +26,12 @@ export async function writeSourceFiles(whitelist: { [key: string]: string[] }, u
     }
 }
 
+/**
+ * Copies test files from the source directory to the destination directory.
+ *
+ * @param srcDir - The source directory containing the test files.
+ * @param destDir - The destination directory where the test files will be copied.
+ */
 export function copyTestFiles(srcDir: string, destDir: string) {
     const testDir = path.join(destDir, 'tests');
     if (!fs.existsSync(testDir)) {
@@ -32,6 +46,12 @@ export function copyTestFiles(srcDir: string, destDir: string) {
     });
 }
 
+/**
+ * Parses the test results from the surefire reports.
+ *
+ * @param uuid - A unique identifier for the workspace.
+ * @returns An object containing the test results, the total number of tests, and the number of failed tests.
+ */
 export function parseTestresult(uuid: string): { result: TestResult[], testamount: number, failed: number } {
     const tests: TestResult[] = [];
     const testFiles = fs.readdirSync(`./workspace/${uuid}/target/surefire-reports`);
