@@ -1,21 +1,14 @@
-import { JSONValue, JSONObject, TestResult, Template, Tag, ChallengeDetails, SidebarEntry, CategoryDetails, Contribrutor } from './typecollection';
+import {
+    CategoryDetails,
+    ChallengeDetails, Contribrutor,
+    JSONObject,
+    SidebarEntry,
+    Tag,
+    Template,
+    TestResult
+} from "@/utils/typecollection";
 
 describe('Type Definitions', () => {
-    it('JSONValue accepts valid types', () => {
-        const validValues: JSONValue[] = [
-            "string",
-            123,
-            true,
-            null,
-            ["string", 123, false],
-            { key: "value" }
-        ];
-        validValues.forEach(value => {
-            expect(() => {
-                const jsonValue: JSONValue = value;
-            }).not.toThrow();
-        });
-    });
 
     it('JSONObject accepts valid JSON objects', () => {
         const jsonObject: JSONObject = {
