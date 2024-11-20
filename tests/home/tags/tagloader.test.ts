@@ -15,7 +15,14 @@ jest.mock('@/app/backend/IO', () => ({
     loadAllTags: jest.fn()
 }));
 
+/**
+ * Test suite for the `filterChallengesByTag` function.
+ */
 describe('filterChallengesByTag', () => {
+    /**
+     * Test case for returning challenges that contain the specified tag.
+     * It should return an array of challenges containing the specified tag.
+     */
     it('should return challenges that contain the specified tag', async () => {
         const mockChallenges = [
             { tags: [{ name: 'tag1', color: 'red' }] },
@@ -27,6 +34,10 @@ describe('filterChallengesByTag', () => {
         expect(result).toEqual([{ tags: [{ name: 'tag1', color: 'red' }] }]);
     });
 
+    /**
+     * Test case for returning an empty array if no challenges contain the specified tag.
+     * It should return an empty array when no challenges contain the specified tag.
+     */
     it('should return an empty array if no challenges contain the specified tag', async () => {
         const mockChallenges = [
             { tags: [{ name: 'tag2', color: 'blue' }] }
@@ -38,7 +49,14 @@ describe('filterChallengesByTag', () => {
     });
 });
 
+/**
+ * Test suite for the `getTagForName` function.
+ */
 describe('getTagForName', () => {
+    /**
+     * Test case for returning the tag object for the given tag name.
+     * It should return the tag object when the tag name exists.
+     */
     it('should return the tag object for the given tag name', async () => {
         const mockTags = [
             { name: 'tag1', color: 'red' },
@@ -50,6 +68,10 @@ describe('getTagForName', () => {
         expect(result).toEqual({ name: 'tag1', color: 'red' });
     });
 
+    /**
+     * Test case for returning undefined if the tag name does not exist.
+     * It should return undefined when the tag name does not exist.
+     */
     it('should return undefined if the tag name does not exist', async () => {
         const mockTags = [
             { name: 'tag2', color: 'blue' }
@@ -61,7 +83,14 @@ describe('getTagForName', () => {
     });
 });
 
+/**
+ * Test suite for the `matchColorToTagName` function.
+ */
 describe('matchColorToTagName', () => {
+    /**
+     * Test case for returning the color for the given tag name.
+     * It should return the color of the tag when the tag name exists.
+     */
     it('should return the color for the given tag name', async () => {
         const mockTags = [
             { name: 'tag1', color: 'red' },
@@ -73,6 +102,10 @@ describe('matchColorToTagName', () => {
         expect(result).toBe('red');
     });
 
+    /**
+     * Test case for returning "#000000" if the tag name does not exist.
+     * It should return "#000000" when the tag name does not exist.
+     */
     it('should return "#000000" if the tag name does not exist', async () => {
         const mockTags = [
             { name: 'tag2', color: 'blue' }
@@ -84,7 +117,14 @@ describe('matchColorToTagName', () => {
     });
 });
 
+/**
+ * Test suite for the `loadUsedAllTags` function.
+ */
 describe('loadUsedAllTags', () => {
+    /**
+     * Test case for returning an array of used tags with their usage count.
+     * It should return an array of objects containing tags and their usage count.
+     */
     it('should return an array of used tags with their usage count', async () => {
         const mockChallenges = [
             { tags: [{ name: 'tag1', color: 'red' }] },
@@ -104,6 +144,10 @@ describe('loadUsedAllTags', () => {
         ]);
     });
 
+    /**
+     * Test case for returning an empty array if no tags are used in challenges.
+     * It should return an empty array when no tags are used in challenges.
+     */
     it('should return an empty array if no tags are used in challenges', async () => {
         const mockChallenges = [
             { tags: [{ name: 'tag3', color: 'green' }] }
