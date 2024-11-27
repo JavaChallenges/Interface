@@ -1,5 +1,5 @@
-"use client";
-
+'use client'
+import React from "react";
 import {useActionState, useState} from "react";
 import {useFormStatus} from "react-dom";
 import {validateCode} from "@/app/home/[categorie]/[challenge]/actions";
@@ -8,6 +8,7 @@ import ErrorAlert from "@/app/ui/alerts/errorAlert";
 import SoftAlert from "@/app/ui/alerts/softAlert";
 import RenderedEditor from "@/app/home/ui/editor/RenderedEditor";
 import {Template} from "@/utils/typecollection";
+import {useRouter} from "next/navigation";
 
 const initialState: {
     errormessage?: string,
@@ -37,22 +38,31 @@ function SubmitButton() {
     );
 }
 
-function Report({state}: { state: typeof initialState }) {
+function Report({state, path}: {path:string, state: typeof initialState }) {
     const { pending } = useFormStatus();
+    const router = useRouter();
     if(state.statuscode === 0) {
+        setTimeout(() => {
+            router.push(`/home/success/${path}`)
+        }, 2000);
         return (<SoftAlert title={"Alle Tests bestanden"} message={pending ? "Wird getestet..." : state.testresults}  type={state.statuscode}/>)
     } else if(state.statuscode === 2) {
         return (<SoftAlert title={"Einige Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testresults}  type={state.statuscode}/>)
     } else if(state.statuscode === 3) {
-        return (<SoftAlert title={"Alle Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testresults}  type={state.statuscode}/>)
+        return (
+            <SoftAlert title={"Alle Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testresults}
+                       type={state.statuscode}/>)
+    } else if(state.statuscode === 4){
+        throw new Error("Internal Error");
     } else {
         return (<ErrorAlert title={"Error"} message={pending ? "Wird getestet..." : state.errormessage}/>)
     }
 }
 
-export function CodeForm({templates, challengePath}: {templates: Template[], challengePath: string}) {
+export function CodeForm({templates, challengeName, categoryName}: {templates: Template[], categoryName: string, challengeName: string}) {
     const [state, formAction] = useActionState(validateCode, initialState);
     const initalCode:{ [key: string]: string }= {};
+    const challengePath = `${categoryName}/${challengeName}`;
 
     templates.map((template: Template) => {
         if(localStorage.getItem(`code_${challengePath}/${template.classname}`) !== null) {
@@ -65,7 +75,6 @@ export function CodeForm({templates, challengePath}: {templates: Template[], cha
     const solved = localStorage.getItem(`progress_${challengePath}`) === "solved";
 
     const [code, setCode] = useState(initalCode);
-
 
     const { pending } = useFormStatus();
     if(!pending) {
@@ -112,7 +121,7 @@ export function CodeForm({templates, challengePath}: {templates: Template[], cha
                 )
             }
             <div className="grid grid-cols-1 gap-4 mt-4 lg:grid-cols-[1fr_120px] lg:gap-8">
-                {state.errormessage || state.testresults ? <Report state={state}/> : <span/>}
+                {state.errormessage || state.testresults ? <Report path={challengePath} state={state}/> : <span/>}
                 {solved ? null :
                     <SubmitButton/>
                 }

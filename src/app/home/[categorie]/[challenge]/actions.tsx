@@ -6,6 +6,7 @@ Statuscodes:
 1 = Error
 2 = Attention
 3 = Failure
+4 = Internal Error
 */
 
 import { revalidatePath } from "next/cache";
@@ -14,7 +15,7 @@ import { exec } from "node:child_process";
 import { TestResult } from "@/utils/typecollection";
 import { deleteFolderRecursive } from "@/app/backend/IO";
 import { filterErrorMessages, getErrorPositionsFromErrormessage } from "@/app/backend/compileCleanup";
-import { copyTestFiles, parseTestresult, writeSourceFiles } from "@/app/backend/compileIO";
+import { copyTestFiles, parseTestResult, writeSourceFiles } from "@/app/backend/compileIO";
 
 //TODO Test
 
@@ -63,8 +64,11 @@ export async function validateCode(
         await deleteFolderRecursive(`./workspace/${uuid}`);
         return { testresults: tests, statuscode, errorLines };
     } catch (e) {
-        const errorLines = getErrorPositionsFromErrormessage(e as string);
         await deleteFolderRecursive(`./workspace/${uuid}`);
+        if(e as string === "No test results found"){
+            return { errormessage: "No test results found", statuscode: 4, errorLines: {} };
+        }
+        const errorLines = getErrorPositionsFromErrormessage(e as string);
         return { errormessage: e as string, statuscode: 1, errorLines };
     }
 }
@@ -110,7 +114,12 @@ async function compileAndTest(whitelist: { [key: string]: string[] }, uuid: stri
                 return;
             }
 
-            const result = parseTestresult(uuid);
+            const result = parseTestResult(uuid);
+            if(result === null){
+                reject("No test results found");
+                return;
+            }
+
             const tests: TestResult[] = result.result;
             const [testamount, failed] = [result.testamount, result.failed];
 
