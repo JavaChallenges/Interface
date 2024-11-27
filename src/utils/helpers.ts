@@ -1,4 +1,11 @@
-export const newShade = (hexColor: string, magnitude: number) => {
+/**
+ * Adjusts the shade of a given hex color by a specified magnitude.
+ *
+ * @param {string} hexColor - The hex color code to adjust.
+ * @param {number} magnitude - The magnitude to adjust the color by. Positive values lighten the color, negative values darken it.
+ * @returns {string} - The adjusted hex color code.
+ */
+export const newShade = (hexColor: string, magnitude: number): string => {
     hexColor = hexColor.replace(`#`, ``);
     if (hexColor.length === 6) {
         const decimalColor = parseInt(hexColor, 16);
@@ -17,6 +24,13 @@ export const newShade = (hexColor: string, magnitude: number) => {
     }
 };
 
+/**
+ * Fetches the latest release version from the GitHub API.
+ *
+ * @param {boolean} indev - If true, fetches the latest prerelease version. If false, fetches the latest stable release version.
+ * @returns {Promise<string>} - A promise that resolves to the latest release version.
+ * @throws Will throw an error if the fetch operation fails.
+ */
 export async function getVersion(indev: boolean): Promise<string> {
     const data = await fetchJsonFromUrl("https://api.github.com/repos/JavaChallenges/Challenges/releases")
     let version;
@@ -33,6 +47,13 @@ export async function getVersion(indev: boolean): Promise<string> {
     return version;
 }
 
+/**
+ * Fetches JSON data from a given URL.
+ *
+ * @param {string} url - The URL to fetch JSON data from.
+ * @returns - A promise that resolves to the fetched JSON data.
+ * @throws Will throw an error if the fetch operation fails.
+ */
 async function fetchJsonFromUrl(url: string) {
     try {
         const response = await fetch(url);
@@ -43,4 +64,15 @@ async function fetchJsonFromUrl(url: string) {
         console.error('Error fetching JSON data:', error);
         throw error;
     }
+}
+
+/**
+ * Generates a random number between the specified minimum and maximum values, inclusive.
+ *
+ * @param {number} min - The minimum value for the random number.
+ * @param {number} max - The maximum value for the random number.
+ * @returns {number} - A random number between min and max, inclusive.
+ */
+export function getRandomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }

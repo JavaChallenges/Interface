@@ -1,10 +1,11 @@
 
 import Breadcrumps from "@/app/ui/breadcrumps";
-import {loadCategoryDetails, loadChallengeDetails, loadMarkdown} from "@/app/home/actions";
 import RenderedMarkdown from "@/app/home/ui/markdown";
 import {CodeForm} from "@/app/home/[categorie]/[challenge]/codeform";
 import {notFound} from "next/navigation";
 import {Title} from "@/app/home/[categorie]/[challenge]/title";
+import {loadCategoryDetails, loadChallengeDetails} from "@/app/home/challengeloader";
+import {loadMarkdown} from "@/app/backend/IO";
 
 export default async function Page({params,}: { params: Promise<{ categorie: string, challenge: string }> }) {
     const categorieName = (await params).categorie;
@@ -28,7 +29,7 @@ export default async function Page({params,}: { params: Promise<{ categorie: str
             <div className={"h-full overflow-y-auto pt-6 pr-4 pb-6"}>
                 <Title path={`${categorieDetails.name}/${challengeDetails.name}`} challengeDetails={challengeDetails}/>
                 <RenderedMarkdown markdown={markdown}/>
-                <CodeForm challengePath={`${categorieDetails.name}/${challengeDetails.name}`} templates={challengeDetails.templates}/>
+                <CodeForm challengeName={challengeDetails.name} categoryName={categorieDetails.name} templates={challengeDetails.templates}/>
             </div>
         </>
     );
