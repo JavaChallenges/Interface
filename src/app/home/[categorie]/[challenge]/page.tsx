@@ -29,7 +29,7 @@ export default async function Page({params,}: { params: Promise<{ categorie: str
             <div className={"h-full overflow-y-auto pt-6 pr-4 pb-6"}>
                 <Title path={`${categorieDetails.name}/${challengeDetails.name}`} challengeDetails={challengeDetails}/>
                 <RenderedMarkdown markdown={markdown}/>
-                <CodeForm challengePath={`${categorieDetails.name}/${challengeDetails.name}`} templates={challengeDetails.templates}/>
+                <CodeForm challengeName={challengeDetails.name} categoryName={categorieDetails.name} templates={challengeDetails.templates}/>
             </div>
         </>
     );

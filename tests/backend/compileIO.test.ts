@@ -1,4 +1,4 @@
-import {copyTestFiles, parseTestresult, writeSourceFiles} from "@/app/backend/compileIO";
+import {copyTestFiles, parseTestResult, writeSourceFiles} from "@/app/backend/compileIO";
 import fs from "fs";
 import path from "node:path";
 import { checkWhitelist, checkBlacklist } from "@/app/backend/compileCleanup";
@@ -125,7 +125,7 @@ describe("copyTestFiles", () => {
 });
 
 /**
- * Test suite for the `parseTestresult` function.
+ * Test suite for the `parseTestResult` function.
  */
 describe("parseTestresult", () => {
     const uuid = "test-uuid";
@@ -139,7 +139,7 @@ describe("parseTestresult", () => {
      */
     it("returns empty result when there are no test files", () => {
         jest.spyOn(fs, 'readdirSync').mockReturnValue([]);
-        const result = parseTestresult(uuid);
+        const result = parseTestResult(uuid);
         expect(result).toEqual({
             result: [],
             testamount: 0,
@@ -159,7 +159,7 @@ describe("parseTestresult", () => {
                 <testcase name="test2"/>
             </testsuite>
         `);
-        const result = parseTestresult(uuid);
+        const result = parseTestResult(uuid);
         expect(result).toEqual({
             result: [
                 { name: "test1" },
@@ -184,7 +184,7 @@ describe("parseTestresult", () => {
                 <testcase name="test2"/>
             </testsuite>
         `);
-        const result = parseTestresult(uuid);
+        const result = parseTestResult(uuid);
         expect(result).toEqual({
             result: [
                 {
@@ -215,7 +215,7 @@ describe("parseTestresult", () => {
                 <testcase name="test2"/>
             </testsuite>
         `);
-        const result = parseTestresult(uuid);
+        const result = parseTestResult(uuid);
         expect(result).toEqual({
             result: [
                 {
@@ -245,7 +245,7 @@ describe("parseTestresult", () => {
                 <testcase name="test2"/>
             </testsuite>
         `);
-        const result = parseTestresult(uuid);
+        const result = parseTestResult(uuid);
         expect(result).toEqual({
             result: [
                 {

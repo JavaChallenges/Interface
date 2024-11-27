@@ -65,3 +65,14 @@ async function fetchJsonFromUrl(url: string) {
         throw error;
     }
 }
+
+/**
+ * Generates a random number between the specified minimum and maximum values, inclusive.
+ *
+ * @param {number} min - The minimum value for the random number.
+ * @param {number} max - The maximum value for the random number.
+ * @returns {number} - A random number between min and max, inclusive.
+ */
+export function getRandomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

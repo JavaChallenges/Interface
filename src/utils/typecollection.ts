@@ -85,3 +85,5 @@ export type CategoryDetails = { name: string, friendlyName: string, shortDescrip
  * @property {string} url - The URL of the contributor's profile.
  */
 export type Contribrutor = { name: string, type: string, contributions: number, avatar_url: string, url: string }
+
+export type ProgressItem = { title: string, description?:string, href:string, completed: boolean }
