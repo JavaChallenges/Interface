@@ -1,5 +1,6 @@
 import {Contribrutor} from "@/utils/typecollection";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Contributors({contributorsInterface, contributorsChallenges}: {
     contributorsInterface: Contribrutor[],
@@ -31,9 +32,11 @@ function Contributor({contributor}: { contributor: Contribrutor }) {
     return (
         contributor.type === "User" ?
             <div className="flex items-center gap-4">
-                <img
+                <Image
                     src={contributor.avatar_url}
                     alt={contributor.name}
+                    width={100}
+                    height={100}
                     className="size-10 rounded-lg object-cover"
                 />
 

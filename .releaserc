@@ -45,11 +45,20 @@
           {
             "preset": "angular",
             "parserOpts": {
-              "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
-            },
-            "writerOpts": {
-              "commitsSort": ["subject", "scope"],
-              "include": ["feat", "fix", "chore", "refactor", "test", "docs", "perf", "revert"]
+              "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"],
+              "types": [
+                { "type": "feat", "section": "Features" },
+                { "type": "fix", "section": "Bug Fixes" },
+                { "type": "perf", "section": "Performance Improvements" },
+                { "type": "style", "section": "Styles" },
+                { "type": "test", "section": "Tests" },
+                { "type": "chore", "section": "Chores" },
+                { "type": "ci", "section": "Continuous Integration" },
+                { "type": "build", "section": "Build System" },
+                { "type": "revert", "section": "Reverts" },
+                { "type": "docs", "section": "Documentation" },
+                { "type": "refactor", "section": "Code Refactoring" }
+              ]
             }
           }
         ],
