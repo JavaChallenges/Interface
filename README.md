@@ -1,7 +1,9 @@
 <p align="center">
- <h2 align="center">JavaChallenges</h2>
- <p align="center">Teste dein Können und bereite dich auf die Klausur vor</p>
+ <img src="https://avatars.githubusercontent.com/u/187251554?s=400&u=98293022a103e29a03f4fae822de68175de748e1&v=4" height="240" alt="logo"/>
 </p>
+<h2 align="center">JavaChallenges</h2>
+ <p align="center">Teste dein Können und bereite dich auf die Klausur vor</p>
+
 
   <h4 align="center">Info</h4>
   <p align="center">
@@ -25,13 +27,12 @@
 <p align="center">
   <a href="https://javachallenges.yannic-hock.de" target="_blank">Website</a>
   ·
-  <a href="#">Fehler melden</a>
+  <a href="https://github.com/JavaChallenges/Interface/issues/new?assignees=&labels=bug%2C+needs-review&projects=&template=bug_report.md&title=%5BBUG%5D+DEIN+TITEL" target="_blank">Fehler melden</a>
   ·
-  <a href="#">Verbesserungsvorschlag einreichen</a>
+  <a href="https://github.com/JavaChallenges/Interface/issues/new?assignees=&labels=enhancement%2C+needs-review&projects=&template=verbesserungsvorschlag.md&title=%5BVerbesserungsvorschlag%5D+DEIN+TITEL" target="_blank">Verbesserungsvorschlag einreichen</a>
   ·
-  <a href="#">Mitwirken</a>
+  <a href="https://github.com/JavaChallenges/Interface/blob/f787cd6d07e57048af37ea37ba3e4a1ca00b6c73/.github/CONTRIBUTING.md" target="_blank">Mitwirken</a>
 </p>
 <p align="center">Dir gefällt das Projekt? Gib ihm einen Stern und gib uns Feedback</p>
-</p>
 
 

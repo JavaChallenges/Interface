@@ -40,13 +40,28 @@
             ]
           }
 	    ],
-		"@semantic-release/release-notes-generator",
-		[
-			"@semantic-release/changelog",
-			{
-				"changelogTitle": "# Changelog\n\nAll notable changes to this project will be documented in this file. See\n[Conventional Commits](https://conventionalcommits.org) for commit guidelines."
-			}
-		],
+        [
+          "@semantic-release/release-notes-generator",
+          {
+            "preset": "angular",
+            "parserOpts": {
+              "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"],
+              "types": [
+                { "type": "feat", "section": "Features" },
+                { "type": "fix", "section": "Bug Fixes" },
+                { "type": "perf", "section": "Performance Improvements" },
+                { "type": "style", "section": "Styles" },
+                { "type": "test", "section": "Tests" },
+                { "type": "chore", "section": "Chores" },
+                { "type": "ci", "section": "Continuous Integration" },
+                { "type": "build", "section": "Build System" },
+                { "type": "revert", "section": "Reverts" },
+                { "type": "docs", "section": "Documentation" },
+                { "type": "refactor", "section": "Code Refactoring" }
+              ]
+            }
+          }
+        ],
 		[
 			"@semantic-release/github",
 			{

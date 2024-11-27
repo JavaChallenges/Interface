@@ -7,7 +7,11 @@ assignees: ''
 
 ---
 
-*Beschreibe den Bug**
+## Bevor du fortfährst
+Bitte lies dir die [Richtlinien für Fehlermeldungen](https://github.com/JavaChallenges/Interface/blob/f787cd6d07e57048af37ea37ba3e4a1ca00b6c73/.github/CONTRIBUTING.md#bugs-melden) durch. Wir sind froh über jede Fehlermeldung, aber wir bitten dich, diese zu befolgen, um uns die Arbeit zu erleichtern.
+
+
+**Beschreibe den Bug**
 Eine klare und eindeutige Beschreibung was genau der Bug ist, es reicht hier kurz zu beschreiben, ob es bspw. ein visueller oder ein funktioneller Bug ist.
 
 **Wie tritt der Fehler auf**
@@ -28,7 +32,7 @@ Wenn du der Meinung bist, dass uns Screenshots helfen könnten den Bug besser na
  - Browser [e.g. chrome, safari]
  - Version [e.g. 1.2.4] (Diese findest du am unteren Ende der Einstellungsseite)
 
-**Tablet (Vervollständige bitte diese Liste):*
+**Tablet (Vervollständige bitte diese Liste):**
  - Device: [e.g. IPad Pro 2021]
  - OS: [e.g. iOS8.1]
  - Browser [e.g. vivaldi, firefox]
