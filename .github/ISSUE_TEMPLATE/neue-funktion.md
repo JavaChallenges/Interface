@@ -8,6 +8,10 @@ assignees: ''
 
 ---
 
+## Bevor du fortfährst
+Bitte lies dir die [Richtlinien für Verbesserungsvorschlage](https://github.com/JavaChallenges/Interface/blob/f787cd6d07e57048af37ea37ba3e4a1ca00b6c73/.github/CONTRIBUTING.md#verbesserungsvorschl%C3%A4ge) durch. Wir freuen uns über jede Idee, aber es ist wichtig, dass du die Richtlinien gelesen hast, bevor du fortfährst.
+
+
 ## Vorschlag für neue Funktion
 **Welches Ziel verfolgt die neue Funktion? Bitte erläutere.**
 Bitte versuch so eindeutig wie möglich zu erklären, welches Ziel die Funktion deiner Idee hat. Lässt sich dadurch etwas leichter oder besser bedienen? Ist es etwas, was die Nutzbarkeit der Seite verbessert? 
