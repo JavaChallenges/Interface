@@ -10,7 +10,6 @@ import {
     isChallengeSolved
 } from "@/app/backend/stats";
 import Link from "next/link";
-import {loadAllChallenges} from "@/app/home/challengeloader";
 
 type Nofitication = {
     labelNumber: number,
