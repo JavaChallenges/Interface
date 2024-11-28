@@ -4,6 +4,7 @@ export default function BugIcon({className}: { className: string }) {
              viewBox="0 0 512 512"
              strokeWidth="2"
              stroke="currentColor"
+             fill="currentColor"
              className={className}
         >
             <path

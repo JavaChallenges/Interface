@@ -4,7 +4,6 @@ import {usePathname} from "next/navigation"
 
 export default function Header(pages: {pages:{ref:string, friendlyName:JSX.Element}[]}) {
     const pathname = usePathname()
-    //Element(page.friendlyName, page.link, )
     const elements= pages['pages'].map((page: { friendlyName: JSX.Element; ref: string; }, index) => (<Element key={index} friendlyName={page.friendlyName} ref={page.ref} currentPage={pathname.includes(page.ref.toLowerCase())}/>) );
     return (
         <header className="bg-lightShades-200 dark:bg-darkShades-200 p-3 justify-items-center">

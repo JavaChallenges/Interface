@@ -1,4 +1,4 @@
-FROM node:23-alpine AS base
+FROM node:lts-alpine AS base
 
 ### Dependencies ###
 FROM base AS deps
@@ -23,6 +23,10 @@ RUN npm run build
 
 ### Production image runner ###
 FROM base AS runner
+
+LABEL org.opencontainers.image.source=https://github.com/JavaChallenges
+LABEL org.opencontainers.image.description="JavaChallenges ist eine Plattform, die es ermöglicht, Java-Programmieraufgaben zu erstellen und diese von anderen lösen zu lassen. Die Plattform dient dazu, Programmierkenntnisse zu vertiefen und zu erweitern. Die Plattform ist vor allem für Studierende der HTW Saar gedacht, die einen Informatik-Studiengang belegen. Die Plattform ist Open Source und kann von jedem genutzt werden."
+LABEL org.opencontainers.image.licenses=MIT
 
 # Install Maven and OpenJDK 11
 RUN apk add maven

@@ -4,6 +4,7 @@ export default function LightbulbIcon({className}: { className: string }) {
              viewBox="0 0 384 512"
              strokeWidth="2"
              stroke="currentColor"
+             fill="currentColor"
              className={className}
         >
             <path

@@ -1,10 +1,10 @@
-import {getAllTagedChallenges, getTagForName} from "@/app/home/tags/[tag]/actions";
+import {filterChallengesByTag, getTagForName} from "@/app/home/tags/[tag]/tagloader";
 import {Challenge} from "@/app/home/ui/challengepreview";
 import {RenderedTag} from "@/app/ui/rendered-tag";
 
 export default async function Page({params,}: { params: Promise<{ tag: string}> }) {
     const atag = (await params).tag;
-    const challenges = await getAllTagedChallenges({name: atag, color: ""});
+    const challenges = await filterChallengesByTag({name: atag, color: ""});
     const tag = await getTagForName(atag);
 
     return (

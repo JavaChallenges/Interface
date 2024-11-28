@@ -1,14 +1,15 @@
 import Breadcrumps from "@/app/ui/breadcrumps";
 
-import {loadCategories, loadCategoryDetails, loadMarkdown} from "@/app/home/actions";
 import Slider from "@/app/ui/slider";
 import RenderedMarkdown from "@/app/home/ui/markdown";
 import Link from "next/link";
 import Divider from "@/app/ui/divider";
 import {Tag} from "@/utils/typecollection";
 import {RenderedTag} from "@/app/ui/rendered-tag";
-import {loadAllTags, loadUsedAllTags} from "@/app/home/tags/[tag]/actions";
 import {Challenge} from "@/app/home/ui/challengepreview";
+import {loadAllTags, loadCategories, loadMarkdown} from "@/app/backend/IO";
+import {loadCategoryDetails} from "@/app/home/challengeloader";
+import {loadUsedAllTags} from "@/app/home/tags/[tag]/tagloader";
 
 export const revalidate = 0;
 
