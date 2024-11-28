@@ -1,72 +1,133 @@
 {
-    "branches": [
-        "master",
-        {
-            "name": "development",
-            "prerelease": true,
-            "channel": "prerelease"
-        }
+  "branches": [
+    "master",
+    {
+      "name": "development",
+      "prerelease": true,
+      "channel": "prerelease"
+    }
+  ],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "angular",
+        "releaseRules": [
+          {
+            "type": "feat",
+            "release": "minor"
+          },
+          {
+            "type": "fix",
+            "release": "patch"
+          },
+          {
+            "type": "perf",
+            "release": "patch"
+          },
+          {
+            "type": "style",
+            "release": "patch"
+          },
+          {
+            "type": "test",
+            "release": "patch"
+          },
+          {
+            "type": "chore",
+            "release": "patch"
+          },
+          {
+            "type": "ci",
+            "release": "patch"
+          },
+          {
+            "type": "build",
+            "release": "patch"
+          },
+          {
+            "type": "revert",
+            "release": "patch"
+          },
+          {
+            "type": "docs",
+            "release": false
+          },
+          {
+            "type": "refactor",
+            "release": "patch"
+          },
+          {
+            "scope": "no-release",
+            "release": false
+          }
+        ]
+      }
     ],
-	"plugins": [
-	    [
-          "@semantic-release/commit-analyzer",
-          {
-            "preset": "angular",
-            "releaseRules": [
-              {
-                "type": "feat",
-                "release": "minor"
-              },
-              {
-                "type": "fix",
-                "release": "patch"
-              },
-              {
-                "type": "perf",
-                "release": "patch"
-              },
-              { "type": "style", "release": "patch" },
-              { "type": "test", "release": "patch" },
-              { "type": "chore", "release": "patch" },
-              { "type": "ci", "release": "patch" },
-              { "type": "build", "release": "patch" },
-              { "type": "revert", "release": "patch" },
-              {
-                "type": "docs",
-                "release": false
-              },
-              { "type": "refactor", "release": "patch" },
-              { "scope": "no-release", "release": false }
-            ]
-          }
-	    ],
-        [
-          "@semantic-release/release-notes-generator",
-          {
-            "preset": "angular",
-            "parserOpts": {
-              "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"],
-              "types": [
-                { "type": "feat", "section": "Features" },
-                { "type": "fix", "section": "Bug Fixes" },
-                { "type": "perf", "section": "Performance Improvements" },
-                { "type": "style", "section": "Styles" },
-                { "type": "test", "section": "Tests" },
-                { "type": "chore", "section": "Chores" },
-                { "type": "ci", "section": "Continuous Integration" },
-                { "type": "build", "section": "Build System" },
-                { "type": "revert", "section": "Reverts" },
-                { "type": "docs", "section": "Documentation" },
-                { "type": "refactor", "section": "Code Refactoring" }
-              ]
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "angular",
+        "parserOpts": {
+          "noteKeywords": [
+            "BREAKING CHANGE",
+            "BREAKING CHANGES",
+            "BREAKING"
+          ],
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {
+              "type": "perf",
+              "section": "Performance Improvements"
+            },
+            {
+              "type": "style",
+              "section": "Styles"
+            },
+            {
+              "type": "test",
+              "section": "Tests"
+            },
+            {
+              "type": "chore",
+              "section": "Chores"
+            },
+            {
+              "type": "ci",
+              "section": "Continuous Integration"
+            },
+            {
+              "type": "build",
+              "section": "Build System"
+            },
+            {
+              "type": "revert",
+              "section": "Reverts"
+            },
+            {
+              "type": "docs",
+              "section": "Documentation"
+            },
+            {
+              "type": "refactor",
+              "section": "Code Refactoring"
             }
-          }
-        ],
-		[
-			"@semantic-release/github",
-			{
-				"assets": "pack/*.tgz"
-			}
-		]
-	]
+          ]
+        }
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": "pack/*.tgz"
+      }
+    ]
+  ]
 }
