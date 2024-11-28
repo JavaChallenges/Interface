@@ -13,8 +13,8 @@
     <img alt="Open Issues" src="https://img.shields.io/github/issues/JavaChallenges/Interface?logo=git" />
     <img alt="License" src="https://img.shields.io/github/license/JavaChallenges/Interface" />
     <br />
-    <img alt="Status" src="https://img.shields.io/website?url=https%3A%2F%2Fjavachallenges.yannic-hock.de&up_message=online&down_message=offline&label=Seite" />
-    <img alt="Status Indev" src="https://img.shields.io/website?url=https%3A%2F%2Findev.javachallenges.yannic-hock.de&up_message=online&down_message=offline&label=BETA%20Seite" />
+    <img alt="Status" src="https://img.shields.io/website?url=https%3A%2F%2Fjavachallenges.yannic-hock.de%2Fsettings&up_message=online&down_message=offline&label=Seite" />
+    <img alt="Status Indev" src="https://img.shields.io/website?url=https%3A%2F%2Findev.javachallenges.yannic-hock.de%2Fsettings&up_message=online&down_message=offline&label=BETA%20Seite" />
   </p>
 
   <h4 align="center">Dependencies</h4>
