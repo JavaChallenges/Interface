@@ -11,63 +11,35 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "angular",
+        "preset": "conventionalcommits",
         "releaseRules": [
-          {
-            "type": "feat",
-            "release": "minor"
-          },
-          {
-            "type": "fix",
-            "release": "patch"
-          },
-          {
-            "type": "perf",
-            "release": "patch"
-          },
-          {
-            "type": "style",
-            "release": "patch"
-          },
-          {
-            "type": "test",
-            "release": "patch"
-          },
-          {
-            "type": "chore",
-            "release": "patch"
-          },
-          {
-            "type": "ci",
-            "release": "patch"
-          },
-          {
-            "type": "build",
-            "release": "patch"
-          },
-          {
-            "type": "revert",
-            "release": "patch"
-          },
-          {
-            "type": "docs",
-            "release": false
-          },
-          {
-            "type": "refactor",
-            "release": "patch"
-          },
-          {
-            "scope": "no-release",
-            "release": false
-          }
-        ]
+          {"breaking": true, "release": "major"},
+          {"type": "feat", "release": "minor"},
+          {"type": "fix", "release": "patch"},
+          {"type": "perf", "release": "patch"},
+          {"type": "revert", "release": "patch"},
+          {"type": "docs", "release": "minor"},
+          {"type": "style", "release": "patch"},
+          {"type": "refactor", "release": "patch"},
+          {"type": "test", "release": "patch"},
+          {"type": "build", "release": "patch"},
+          {"type": "ci", "release": "patch"},
+          {"type": "chore", "release": "patch"},
+          {"scope": "no-release", "release": false}
+        ],
+        "parserOpts": {
+          "noteKeywords": [
+            "BREAKING CHANGE",
+            "BREAKING CHANGES",
+            "BREAKING"
+          ]
+        }
       }
     ],
     [
       "@semantic-release/release-notes-generator",
       {
-        "preset": "angular",
+        "preset": "conventionalcommits",
         "parserOpts": {
           "noteKeywords": [
             "BREAKING CHANGE",
@@ -75,20 +47,24 @@
             "BREAKING"
           ]
         },
+        "writerOpts": {
+          "commitsSort": ["subject", "scope"]
+        },
         "presetConfig": {
           "types": [
-            {"type": "feat", "section": "\uD83D\uDEE0 Features"},
-            {"type": "feature", "section": "\uD83D\uDEE0 Features"},
+            {"type": "feat", "section": "🍕 Features"},
+            {"type": "feature", "section": "🍕 Features"},
             {"type": "fix", "section": "🐛 Bug Fixes"},
             {"type": "perf", "section": "🔥 Performance Improvements"},
             {"type": "revert", "section": "⏩ Reverts"},
-            {"type": "docs", "section": "📝 Dokumentation"},
+            {"type": "docs", "section": "📝 Documentation"},
             {"type": "style", "section": "🎨 Styles"},
-            {"type": "refactor", "section": "‍💻 Code Refactoring"},
+            {"type": "refactor", "section": "💻 Code Refactoring"},
             {"type": "test", "section": "✅ Tests"},
             {"type": "build", "section": "🤖 Build System"},
             {"type": "ci", "section": "🔁 Continuous Integration"},
-            {"type": "chore", "section": "🧹 Chores"}
+            {"type": "chore", "section": "🧹 Chores"},
+            {"type": "no-release", "hidden": true}
           ]
         }
       }
