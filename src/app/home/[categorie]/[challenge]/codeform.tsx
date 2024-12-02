@@ -1,6 +1,5 @@
 'use client'
-import React from "react";
-import {useActionState, useState} from "react";
+import React, {useActionState, useState} from "react";
 import {useFormStatus} from "react-dom";
 import {validateCode} from "@/app/home/[categorie]/[challenge]/actions";
 import Loader from "@/app/ui/loader";
@@ -9,6 +8,7 @@ import SoftAlert from "@/app/ui/alerts/softAlert";
 import RenderedEditor from "@/app/home/ui/editor/RenderedEditor";
 import {Template} from "@/utils/typecollection";
 import {useRouter} from "next/navigation";
+import Fanfare from "@/app/ui/fanfare";
 
 const initialState: {
     errormessage?: string,
@@ -44,11 +44,25 @@ function Report({state, path}: {path:string, state: typeof initialState }) {
     if(state.statuscode === 0) {
         setTimeout(() => {
             router.push(`/home/success/${path}`)
-        }, 2000);
-        return (<SoftAlert title={"Alle Tests bestanden"} message={pending ? "Wird getestet..." : state.testresults}  type={state.statuscode}/>)
-    } else if(state.statuscode === 2) {
-        return (<SoftAlert title={"Einige Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testresults}  type={state.statuscode}/>)
-    } else if(state.statuscode === 3) {
+        }, 3100);
+        return (
+            <>
+                <div
+                    className={"absolute z-20 h-full w-full bottom-0 left-0 bg-white dark:bg-darkShades-100 bg-opacity-5 dark:bg-opacity-30 backdrop-blur-[2px] drop-shadow-lg"}>
+                    <span className={"justify-around flex w-full absolute bottom-10"}>
+                        <Fanfare className={"w-1/5 h-fit "}/>
+                        <Fanfare className={"w-1/5 transform scale-x-[-1]"}/>
+                    </span>
+                </div>
+                <SoftAlert title={"Alle Tests bestanden"} message={pending ? "Wird getestet..." : state.testresults}
+                           type={state.statuscode}/>
+            </>
+        )
+    } else if (state.statuscode === 2) {
+        return (
+            <SoftAlert title={"Einige Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testresults}
+                       type={state.statuscode}/>)
+    } else if (state.statuscode === 3) {
         return (
             <SoftAlert title={"Alle Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testresults}
                        type={state.statuscode}/>)
