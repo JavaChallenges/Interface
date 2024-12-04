@@ -1,5 +1,5 @@
 'use client'
-import React, {useActionState, useState} from "react";
+import React, {useActionState, useEffect, useState} from "react";
 import {useFormStatus} from "react-dom";
 import {validateCode} from "@/app/home/[categorie]/[challenge]/actions";
 import Loader from "@/app/ui/loader";
@@ -9,12 +9,14 @@ import RenderedEditor from "@/app/home/ui/editor/RenderedEditor";
 import {Template} from "@/utils/typecollection";
 import {useRouter} from "next/navigation";
 import Fanfare from "@/app/ui/fanfare";
+import StreakMedal from "@/app/ui/streak";
+import {incrementStreak} from "@/app/backend/stats";
 
 const initialState: {
     errormessage?: string,
     statuscode: number,
     errorLines: { [key: string]: number[] },
-    testresults?: { name: string, failtype?: string, failmessage?: string }[],
+    testResults?: { name: string, failType?: string, failMessage?: string }[],
 } = {
     errormessage: "",
     statuscode: 0,
@@ -22,7 +24,7 @@ const initialState: {
 };
 
 function SubmitButton() {
-    const { pending } = useFormStatus();
+    const {pending} = useFormStatus();
     return (
         <button
             style={{lineHeight: 0}}
@@ -38,10 +40,10 @@ function SubmitButton() {
     );
 }
 
-function Report({state, path}: {path:string, state: typeof initialState }) {
-    const { pending } = useFormStatus();
+function Report({state, path}: { path: string, state: typeof initialState }) {
+    const {pending} = useFormStatus();
     const router = useRouter();
-    if(state.statuscode === 0) {
+    if (state.statuscode === 0) {
         setTimeout(() => {
             router.push(`/home/success/${path}`)
         }, 3100);
@@ -54,54 +56,64 @@ function Report({state, path}: {path:string, state: typeof initialState }) {
                         <Fanfare className={"w-1/5 transform scale-x-[-1]"}/>
                     </span>
                 </div>
-                <SoftAlert title={"Alle Tests bestanden"} message={pending ? "Wird getestet..." : state.testresults}
+                <SoftAlert title={"Alle Tests bestanden"} message={pending ? "Wird getestet..." : state.testResults}
                            type={state.statuscode}/>
             </>
         )
     } else if (state.statuscode === 2) {
         return (
-            <SoftAlert title={"Einige Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testresults}
+            <SoftAlert title={"Einige Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testResults}
                        type={state.statuscode}/>)
     } else if (state.statuscode === 3) {
         return (
-            <SoftAlert title={"Alle Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testresults}
+            <SoftAlert title={"Alle Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testResults}
                        type={state.statuscode}/>)
-    } else if(state.statuscode === 4){
+    } else if (state.statuscode === 4) {
         throw new Error("Internal Error");
     } else {
         return (<ErrorAlert title={"Error"} message={pending ? "Wird getestet..." : state.errormessage}/>)
     }
 }
 
-export function CodeForm({templates, challengeName, categoryName}: {templates: Template[], categoryName: string, challengeName: string}) {
+export function CodeForm({templates, challengeName, categoryName}: {
+    templates: Template[],
+    categoryName: string,
+    challengeName: string
+}) {
     const [state, formAction] = useActionState(validateCode, initialState);
-    const initalCode:{ [key: string]: string }= {};
+    const [streak, setStreak] = useState(false);
+    useEffect(() => {
+        if (state.errormessage || state.testresults) {
+            setStreak(incrementStreak());
+        }
+    }, [state.errormessage, state.testresults]);
+    const initialCode: { [key: string]: string } = {};
     const challengePath = `${categoryName}/${challengeName}`;
 
     templates.map((template: Template) => {
-        if(localStorage.getItem(`code_${challengePath}/${template.classname}`) !== null) {
-            initalCode[template.classname] = localStorage.getItem(`code_${challengePath}/${template.classname}`) as string;
+        if (localStorage.getItem(`code_${challengePath}/${template.classname}`) !== null) {
+            initialCode[template.classname] = localStorage.getItem(`code_${challengePath}/${template.classname}`) as string;
         } else {
-            initalCode[template.classname] = template.content;
+            initialCode[template.classname] = template.content;
         }
     })
 
     const solved = localStorage.getItem(`progress_${challengePath}`) === "solved";
 
-    const [code, setCode] = useState(initalCode);
+    const [code, setCode] = useState(initialCode);
 
-    const { pending } = useFormStatus();
-    if(!pending) {
+    const {pending} = useFormStatus();
+    if (!pending) {
         templates.map((template: Template) => {
             localStorage.setItem(`code_${challengePath}/${template.classname}`, code[template.classname]);
         })
-        if(state.testresults){
-            if(state.testresults.length > 0 && state.statuscode === 0){
+        if (state.testresults) {
+            if (state.testresults.length > 0 && state.statuscode === 0) {
                 localStorage.setItem(`progress_${challengePath}`, "solved");
             }
         }
     }
-    const whitelists:{[key:string]:string[]} = {};
+    const whitelists: { [key: string]: string[] } = {};
     for (const templateIndex in templates) {
         const template = templates[templateIndex];
         whitelists[template.classname] = template.whitelist;
@@ -130,11 +142,13 @@ export function CodeForm({templates, challengeName, categoryName}: {templates: T
                             highlightedLines={state?.errorLines} template={template} code={code[template.classname]}
                             setCode={setCode}
                         />
-                        {template.whitelist.length > 0 ? <ImportNotice imports={template.whitelist} className={"mt-1.5"}/> : null}
+                        {template.whitelist.length > 0 ?
+                            <ImportNotice imports={template.whitelist} className={"mt-1.5"}/> : null}
                     </div>
                 )
             }
             <div className="grid grid-cols-1 gap-4 mt-4 lg:grid-cols-[1fr_120px] lg:gap-8">
+                {streak && state.statuscode !== 0 ? <StreakMedal/> : null}
                 {state.errormessage || state.testresults ? <Report path={challengePath} state={state}/> : <span/>}
                 {solved ? null :
                     <SubmitButton/>
@@ -144,7 +158,7 @@ export function CodeForm({templates, challengeName, categoryName}: {templates: T
     );
 }
 
-function ImportNotice({imports, className}: {imports: string[], className?: string}) {
+function ImportNotice({imports, className}: { imports: string[], className?: string }) {
     return (
         <div className={`${className} bg-primary-20 border-l-4 border-primary-100 p-2 text-xs`}>
             <p className="text-primary-700">Die folgenden Imports sind für diese Klasse erlaubt:</p>
