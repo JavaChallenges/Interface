@@ -24,7 +24,7 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-
+//{ref: "stats", friendlyName: <span className={"inline-flex shrink-0 items-center"}><StatisticsIcon className={"size-5 pr-1"}/>  Statistiken</span>},
     const pages = [
         { ref: "home", friendlyName: <span className={"inline-flex shrink-0 items-center"}><HomeIcon className={"size-5 pr-1"} />  Übersicht</span> },
         {ref: "settings", friendlyName: <span className={"inline-flex shrink-0 items-center"}><SettingsIcon className={"size-5 pr-1"} />  Einstellungen</span>},

@@ -9,19 +9,10 @@ const config: Config = {
     theme: {
         screens: {
             'sm': '640px',
-            // => @media (min-width: 640px) { ... }
-
             'md': '1000px',
-            // => @media (min-width: 768px) { ... }
-
             'lg': '1024px',
-            // => @media (min-width: 1024px) { ... }
-
             'xl': '1280px',
-            // => @media (min-width: 1280px) { ... }
-
             '2xl': '1536px',
-            // => @media (min-width: 1536px) { ... }
         },
         extend: {
             colors: {
@@ -51,6 +42,84 @@ const config: Config = {
                     400: "#1e516b",
                     500: "#1a3747",
                     600: "#131e26",
+                }
+            },
+            animation: {
+                'confetti-cone': 'confetti-cone 1.2s ease infinite',
+                'conf-dash': 'conf-dash 1.2s ease infinite',
+                'conf-a': 'conf-a 1.2s ease-out infinite',
+                'conf-b': 'conf-b 1.2s ease-out infinite',
+                'conf-c': 'conf-c 1.2s ease-out infinite',
+                'conf-d': 'conf-d 1.2s ease-out infinite',
+            },
+            keyframes: {
+                'confetti-cone': {
+                    '0%': {transform: 'translate(40px, 95px) rotate(45deg) scale(1, 1)'},
+                    '15%': {transform: 'translate(10px, 145px) rotate(45deg) scale(1.1, 0.85)'},
+                    '70%': {transform: 'translate(40px, 105px) rotate(45deg) scale(1, 1)'},
+                    '100%': {transform: 'translate(40px, 105px) rotate(45deg) scale(1, 1)'},
+                },
+                'conf-dash': {
+                    '0%': {
+                        strokeDasharray: '1000',
+                        strokeDashoffset: '500',
+                        transform: 'translate(-30px, 30px)',
+                        opacity: '0'
+                    },
+                    '2%': {
+                        strokeDasharray: '1000',
+                        strokeDashoffset: '500',
+                        transform: 'translate(-30px, 30px)',
+                        opacity: '0'
+                    },
+                    '35%': {
+                        strokeDasharray: '1000',
+                        strokeDashoffset: '900',
+                        transform: 'translate(-2px, 0px)',
+                        opacity: '1'
+                    },
+                    '75%': {
+                        strokeDasharray: '1000',
+                        strokeDashoffset: '1000',
+                        transform: 'translate(1px, -5px)',
+                        opacity: '1'
+                    },
+                    '90%': {
+                        strokeDasharray: '1000',
+                        strokeDashoffset: '1000',
+                        transform: 'translate(2px, -8px)',
+                        opacity: '0'
+                    },
+                    '100%': {
+                        strokeDasharray: '1000',
+                        strokeDashoffset: '500',
+                        transform: 'translate(2px, -8px)',
+                        opacity: '0'
+                    },
+                },
+                'conf-a': {
+                    '0%': {opacity: '0', transform: 'translate(-30px, 20px) rotate(0)'},
+                    '15%': {opacity: '1', transform: 'translate(25px, -10px) rotate(60deg)'},
+                    '70%': {opacity: '1', transform: 'translate(33px, -18px) rotate(180deg)'},
+                    '100%': {opacity: '0', transform: 'translate(37px, -23px) scale(0.5) rotate(230deg)'},
+                },
+                'conf-b': {
+                    '0%': {opacity: '0', transform: 'translate(-30px, 20px) rotate(0)'},
+                    '15%': {opacity: '1', transform: 'translate(25px, -10px) rotate(60deg)'},
+                    '70%': {opacity: '1', transform: 'translate(33px, -18px) rotate(180deg)'},
+                    '100%': {opacity: '0', transform: 'translate(37px, -23px) scale(0.5) rotate(230deg)'},
+                },
+                'conf-c': {
+                    '0%': {opacity: '0', transform: 'translate(-30px, 20px) rotate(0)'},
+                    '15%': {opacity: '1', transform: 'translate(25px, -10px) rotate(60deg)'},
+                    '70%': {opacity: '1', transform: 'translate(33px, -18px) rotate(180deg)'},
+                    '100%': {opacity: '0', transform: 'translate(37px, -23px) scale(0.5) rotate(230deg)'},
+                },
+                'conf-d': {
+                    '0%': {opacity: '0', transform: 'translate(-30px, 20px) rotate(0)'},
+                    '15%': {opacity: '1', transform: 'translate(25px, -10px) rotate(60deg)'},
+                    '70%': {opacity: '1', transform: 'translate(33px, -18px) rotate(180deg)'},
+                    '100%': {opacity: '0', transform: 'translate(37px, -23px) scale(0.5) rotate(230deg)'},
                 },
             }
         },

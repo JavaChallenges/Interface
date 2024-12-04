@@ -1,7 +1,7 @@
 import {copyTestFiles, parseTestResult, writeSourceFiles} from "@/app/backend/compileIO";
 import fs from "fs";
 import path from "node:path";
-import { checkWhitelist, checkBlacklist } from "@/app/backend/compileCleanup";
+import {checkBlacklist, checkWhitelist} from "@/app/backend/compileCleanup";
 
 jest.mock("fs");
 jest.mock("node:path");
@@ -189,8 +189,8 @@ describe("parseTestresult", () => {
             result: [
                 {
                     name: "test1",
-                    failtype: "AssertionError",
-                    failmessage: "expected true to be false",
+                    failType: "AssertionError",
+                    failMessage: "expected true to be false",
                     failError: "AssertionError: expected true to be false",
                     systemout: undefined
                 },
@@ -220,8 +220,8 @@ describe("parseTestresult", () => {
             result: [
                 {
                     name: "test1",
-                    failtype: "Error",
-                    failmessage: "Error occurred during execution",
+                    failType: "Error",
+                    failMessage: "Error occurred during execution",
                     failError: "Error occurred during execution"
                 },
                 { name: "test2" }
