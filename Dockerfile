@@ -53,6 +53,7 @@ RUN mkdir .next
 COPY --from=builder /app/.next ./.next
 COPY --from=deps /app/node_modules ./node_modules
 
+COPY public ./public
 COPY package.json package-lock.json* ./
 COPY importBlacklist.json ./
 COPY impressum.md ./

@@ -26,13 +26,13 @@ import {copyTestFiles, parseTestResult, writeSourceFiles} from "@/app/backend/co
  * @param {number} prevState.statuscode - The previous status code.
  * @param {Object.<string, number[]>} prevState.errorLines - The previous error lines.
  * @param {string} [prevState.errormessage] - The previous error message.
- * @param {TestResult[]} [prevState.testResults] - The previous test results.
+ * @param {TestResult[]} [prevState.testresults] - The previous test results.
  * @param {FormData} formData - The form data containing the code and whitelist.
  * @returns {Promise<Object>} - The result of the validation.
  * @returns {number} result.statuscode - The status code of the validation.
  * @returns {Object.<string, number[]>} result.errorLines - The error lines of the validation.
  * @returns {string} [result.errormessage] - The error message of the validation.
- * @returns {Object[]} [result.testResults] - The test results of the validation.
+ * @returns {Object[]} [result.testresults] - The test results of the validation.
  */
 export async function validateCode(
     prevState: {

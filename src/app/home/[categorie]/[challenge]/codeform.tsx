@@ -16,7 +16,7 @@ const initialState: {
     errormessage?: string,
     statuscode: number,
     errorLines: { [key: string]: number[] },
-    testResults?: { name: string, failType?: string, failMessage?: string }[],
+    testresults?: { name: string, failtype?: string, failmessage?: string }[],
 } = {
     errormessage: "",
     statuscode: 0,
@@ -56,17 +56,17 @@ function Report({state, path}: { path: string, state: typeof initialState }) {
                         <Fanfare className={"w-1/5 transform scale-x-[-1]"}/>
                     </span>
                 </div>
-                <SoftAlert title={"Alle Tests bestanden"} message={pending ? "Wird getestet..." : state.testResults}
+                <SoftAlert title={"Alle Tests bestanden"} message={pending ? "Wird getestet..." : state.testresults}
                            type={state.statuscode}/>
             </>
         )
     } else if (state.statuscode === 2) {
         return (
-            <SoftAlert title={"Einige Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testResults}
+            <SoftAlert title={"Einige Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testresults}
                        type={state.statuscode}/>)
     } else if (state.statuscode === 3) {
         return (
-            <SoftAlert title={"Alle Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testResults}
+            <SoftAlert title={"Alle Tests fehlgeschlagen"} message={pending ? "Wird getestet..." : state.testresults}
                        type={state.statuscode}/>)
     } else if (state.statuscode === 4) {
         throw new Error("Internal Error");
