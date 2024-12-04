@@ -49,6 +49,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.0.3",
@@ -56,7 +57,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
     "semantic-release": "^24.2.0",
-    "tailwindcss": "^3.4.15",
+    "tailwindcss": "^3.4.16",
     "ts-node": "^10.9.2",
     "typescript": "^5"
   }

@@ -10,6 +10,9 @@ export function ResetButton({className}: { className?: string }) {
             if (key.startsWith("code_") || key.startsWith("progress_")) {
                 localStorage.removeItem(key);
             }
+            if (key.startsWith("streak")) {
+                localStorage.removeItem(key);
+            }
         }
         setConfirmModalOpen(false);
     }
