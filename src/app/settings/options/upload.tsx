@@ -61,6 +61,9 @@ function handleFileChange(event: ChangeEvent<HTMLInputElement>, setAlert: Dispat
                         if (key.startsWith("code_") || key.startsWith("progress_")) {
                             localStorage.removeItem(key);
                         }
+                        if (key == "streak") {
+                            localStorage.removeItem(key);
+                        }
                     }
                     content = content.replace("<javachallenge_progress>", "");
                     const data = content.toString().split("||");
