@@ -32,7 +32,7 @@
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
     "remark-toc": "^9.0.0",
-    "tailwindcss-motion": "^0.4.3-beta",
+    "tailwindcss-motion": "^1.0.0",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
